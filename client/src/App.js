@@ -1,48 +1,35 @@
-import "./App.css";
-import { useState } from 'react'
+import "./css/flightresults.css";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FlightSearchModal } from "./components/utility/flightquerymodel";
 
-
+export { App, queryResponseObj}
+const queryResponseObj = {};
 function App() {
-  const [departureLocation, setDepartureLocation] = useState('X');
-  const responseArr = [];
+  const [departureLocation, setDepartureLocation] = useState([]);
+  const [oneWay, setOneWay] = useState(true);
+
+  const [queryRecieved, setQueryStatus] = useState(false);
+  const navigate = useNavigate();
 
   const flightQuery = async () => {
-    const pull = await fetch('http://localhost:8000/query');
+    navigate('/flightquery')
+    console.log('d')
+    const pull = await fetch("http://localhost:8000/query");
     const data = await pull.json();
-    console.log(pull)
-    setDepartureLocation(data.message.data[0].itineraries[0].segments[0].departure.iataCode)
-    responseArr.push(data.message.data)
-    console.log(responseArr)
-    responseArr.push()
+    // setDepartureLocation(data.message.data);
+    setQueryStatus(!queryRecieved);
+    // responseArr.push(data.message.data);
+    // console.log(departureLocation);
+    setQueryStatus(!queryRecieved);
+    queryResponseObj.queryRes = data;
+  };
+  const tripTypeSelector = () => {
+    setOneWay(!oneWay);
   }
 
-
-
-  // const receiveFlightData = async (accessToken) => {
-  //   const flights = await fetch(
-  //     "https://test.api.amadeus.com/v2/reference-data/urls/checkin-links?airline=IB",
-  //     {
-  //       headers: {
-  //         Authorization: "Bearer " + accessToken,
-  //       },
-  //     }
-  //   );
-  //   const data = await flights.json();
-
-  //   console.log(flights);
-  //   console.log(data);
-  // };
   return (
-    <div className="App">
-      <article>
-        <h1>Flights { departureLocation } </h1>
-        <div>{responseArr[0].map((res) => {
-          <div>{res.id}</div>
-        })}</div>
-      </article>
-      <button onClick={flightQuery}>Click Me</button>
-    </div>
+    <FlightSearchModal />
   );
 }
-
 export default App;

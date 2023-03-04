@@ -1,0 +1,12 @@
+.flightResultsWrap{
+    width: 80%;
+}
+
+.flightResultsTabs{
+    display: flex;
+    /* width: 10rem; */
+    /* flex-flow: column nowrap; */
+    justify-content: space-between;
+    /* height: 100%; */
+    border: solid;
+  }

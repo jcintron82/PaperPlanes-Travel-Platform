@@ -1,9 +1,8 @@
-import "../css/flightresults.css";
+import "./css/flightresults.css";
 import { useState } from "react";
-import { queryResponseObj } from "./utility/flightquerymodel";
 
-export function FlightResultsWrap() {
-  const [departureLocation, setDepartureLocation] = useState(queryResponseObj[0].message.data);
+export function FlightResultTabs() {
+//   const [departureLocation, setDepartureLocation] = useState([]);
 //   const [queryRecieved, setQueryStatus] = useState(false);
 //   const responseArr = [];
 
@@ -20,10 +19,6 @@ export function FlightResultsWrap() {
 //       console.log(departureLocation);
 //     }
 //   };
-const log = (data) => {
-    setDepartureLocation(data);
-    console.log(queryResponseObj)
-}
   return (
     <div className="App">
       <article className="flightResultsWrap">
@@ -40,7 +35,8 @@ const log = (data) => {
             >
               {" "}
               <article className="flightResultsTabs">
-                  <div className="">
+
+                  <div>
                     Dep: {item.itineraries[0].segments[0].departure.iataCode} 
                     {item.itineraries[0].segments[0].departure.at}
                     Arr: {item.itineraries[0].segments[0].arrival.iataCode} 
@@ -58,8 +54,8 @@ const log = (data) => {
           ))}
         </h1>
       </article>
-      <button onClick={log}>Click Me</button>
+      <button onClick={flightQuery}>Click Me</button>
     </div>
   );
 }
-export default FlightResultsWrap;
+export default App;
