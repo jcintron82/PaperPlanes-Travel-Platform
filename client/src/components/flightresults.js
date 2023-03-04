@@ -36,10 +36,10 @@ export function FlightResultTabs() {
               {" "}
               <article className="flightResultsTabs">
 
-                  <div>
+                  <div className="flightmaindetailswrap">
                     Dep: {item.itineraries[0].segments[0].departure.iataCode} 
-                    {item.itineraries[0].segments[0].departure.at}
-                    Arr: {item.itineraries[0].segments[0].arrival.iataCode} 
+                    {item.itineraries[0].segments[0].departure.at + '333'}
+                    Arrs: {item.itineraries[0].segments[0].arrival.iataCode} 
                     {item.itineraries[0].segments[0].arrival.at}
                     {item.itineraries[0].segments[0].arrival.terminal}<br></br>
                     Carrier: {item.itineraries[0].segments[0].carrierCode}

@@ -4,26 +4,18 @@ import { queryResponseObj } from "./utility/flightquerymodel";
 
 export function FlightResultsWrap() {
   const [departureLocation, setDepartureLocation] = useState(queryResponseObj[0].message.data);
-//   const [queryRecieved, setQueryStatus] = useState(false);
+//   const [departureTime, setDepartureTime] = useState(queryResponseObj[0].message.data[0].itineraries[0].segments[0].departure.at.slice(11,19));
+//   console.log(dapartTime.toLocaleTimeString('en-US'))
 //   const responseArr = [];
-
-//   const flightQuery = async () => {
-//     const pull = await fetch("http://localhost:8000/query");
-//     const data = await pull.json();
-//     console.log(pull);
-//     setDepartureLocation(data.message.data);
-//     setQueryStatus(!queryRecieved);
-//     responseArr.push(data.message.data);
-//     console.log(departureLocation);
-//     setQueryStatus(!queryRecieved);
-//     {
-//       console.log(departureLocation);
-//     }
-//   };
 const log = (data) => {
     setDepartureLocation(data);
     console.log(queryResponseObj)
 }
+const formatFlightTimeString = (string) => {
+    const number = Number(string);
+    console.log(number)
+};
+
   return (
     <div className="App">
       <article className="flightResultsWrap">
@@ -40,13 +32,12 @@ const log = (data) => {
             >
               {" "}
               <article className="flightResultsTabs">
-                  <div className="">
-                    Dep: {item.itineraries[0].segments[0].departure.iataCode} 
-                    {item.itineraries[0].segments[0].departure.at}
-                    Arr: {item.itineraries[0].segments[0].arrival.iataCode} 
-                    {item.itineraries[0].segments[0].arrival.at}
-                    {item.itineraries[0].segments[0].arrival.terminal}<br></br>
-                    Carrier: {item.itineraries[0].segments[0].carrierCode}
+                  <div className="flightmaindetailswrap">
+                    <h1 className="flightTimesWrap">{new Date (item.itineraries[0].segments[0].departure.at).toLocaleTimeString('en-US')} - {new Date (item.itineraries[0].segments[0].arrival.at).toLocaleTimeString('en-US')}
+                     </h1>
+                    <h2>{'('+item.itineraries[0].segments[0].departure.iataCode+')'} -  
+                    {' ('+item.itineraries[0].segments[0].arrival.iataCode+')'} </h2>
+                    <h3>Carrier: {item.itineraries[0].segments[0].carrierCode}</h3>
                   </div>
                   <div>Meta</div>
                   <div>

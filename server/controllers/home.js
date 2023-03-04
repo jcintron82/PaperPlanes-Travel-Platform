@@ -1,14 +1,19 @@
 var Amadeus = require('amadeus');
 
 let originLocation = '';
+let departureDate = '';
+// const formattedDate = new Date(departureDate);
 let destinationLocation = '';
+let adults = 1;
 
 module.exports = {
   searchInput: (req, res) => {
     console.log(req.body)
     originLocation = req.body.departure;
-    destinationLocation = req.body.arrival
-    res.send({message:"OK"})
+    destinationLocation = req.body.arrival;
+    departureDate = req.body.departureDate;
+    adults = req.body.numOftravelers;
+    res.send({message:"POST OK"})
   },
   getIndex: (req, res) => {
     var amadeus = new Amadeus({
@@ -16,21 +21,33 @@ module.exports = {
       clientSecret: process.env.CLIENT_SECRET
     });
     amadeus.shopping.flightOffersSearch.get({
-        originLocationCode: originLocation,
-        destinationLocationCode: destinationLocation,
+      originLocationCode: 'LAX',
+        destinationLocationCode: 'JFK',
         departureDate: '2023-06-01',
-        adults: '2',
+        adults: 1,
         currencyCode:'USD',
-        max: 2,
+        max: 10,
         nonStop: true,
+
+        // originLocationCode: originLocation,
+        // destinationLocationCode: destinationLocation,
+        // departureDate: departureDate,
+        // adults: adults,
+        // currencyCode:'USD',
+        // max: 10,
+        // nonStop: true,
     }).then(function(response){
       response.data = response;
       const data = JSON.parse(response.data.body);
-      console.log(response); 
       // confirmFlightPrice(response.data.body.data)
       return res.json({message:data})
     }).catch(function(responseError){
-      console.log(responseError.code);
+      console.log(responseError.code + 'HMMMM');
+      originLocation = 'LAX';
+      departureDate = '2023-06-08';
+      destinationLocation = 'JFK';
+      adults = 1;
+
     });
     const confirmFlightPrice = async (data) => {
       console.log('confirmFlightPrice' + data)

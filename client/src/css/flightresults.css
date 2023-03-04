@@ -1,6 +1,4 @@
-.flightResultsWrap{
-    width: 80%;
-}
+
 
 .flightResultsTabs{
     display: flex;
@@ -10,3 +8,23 @@
     /* height: 100%; */
     border: solid;
   }
+/******For the inidividual flight tab results*******/
+.flightmaindetailswrap{
+    display: flex;
+    font-size: .5em;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    padding: .5rem;
+}
+.flightmaindetailswrap > * {
+    padding: .25rem;
+    font-weight: 500;
+    margin: 0;
+}
+h2{ margin: 0;
+font-size: 1em;}
+.flightTimesWrap{
+    display: flex;
+    margin: 0;
+}
+/******For the inidividual flight tab results*******/
