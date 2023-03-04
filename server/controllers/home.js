@@ -1,38 +1,23 @@
 var Amadeus = require('amadeus');
+
+let originLocation = '';
+let destinationLocation = '';
+
 module.exports = {
+  searchInput: (req, res) => {
+    console.log(req.body)
+    originLocation = req.body.departure;
+    destinationLocation = req.body.arrival
+    res.send({message:"OK"})
+  },
   getIndex: (req, res) => {
-    // var Amadeus = require('amadeus');
     var amadeus = new Amadeus({
       clientId: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET
     });
-  //   amadeus.shopping.flightOffersSearch.get({
-  //     originLocationCode: 'TPA',
-  //     destinationLocationCode: 'LAX',
-  //     departureDate: '2023-06-01',
-  //     adults: '2',
-  //     currencyCode:'USD',
-  //     max: 2,
-  //     nonStop: true,
-  // }).then(function(response){
-  //     return amadeus.shopping.flightOffers.pricing.post(
-  //       JSON.stringify({
-  //         'data': {
-  //           'type': 'flight-offers-pricing',
-  //           'flightOffers': [response.data[0]]
-  //         }
-  //       })
-  //     )
-  // }).then(function(response){
-  //   console.log(response.data)
-  //   return res.json({message:response.data})
-  // }).catch(function(responseError){
-  //     console.log(responseError);
-  // });
-  
     amadeus.shopping.flightOffersSearch.get({
-        originLocationCode: 'TPA',
-        destinationLocationCode: 'LAX',
+        originLocationCode: originLocation,
+        destinationLocationCode: destinationLocation,
         departureDate: '2023-06-01',
         adults: '2',
         currencyCode:'USD',
@@ -42,7 +27,6 @@ module.exports = {
       response.data = response;
       const data = JSON.parse(response.data.body);
       console.log(response); 
-      console.log(response.headers.date); 
       // confirmFlightPrice(response.data.body.data)
       return res.json({message:data})
     }).catch(function(responseError){

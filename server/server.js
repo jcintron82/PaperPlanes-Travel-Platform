@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 app.use(cors());
 const mongoose = require("mongoose");
+// const bp = require('body-parser')
 const passport = require("passport");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
@@ -31,6 +32,8 @@ app.use(express.static("public"));
 //Body Parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+// app.use(bp.json())
+// app.use(bp.urlencoded({ extended: true }))
 
 //Logging
 app.use(logger("dev"));
@@ -63,3 +66,4 @@ app.use("/", mainRoutes);
 app.listen(8000, () => {
   console.log("Server is running on port 8000");
 });
+app.use(express.json());
