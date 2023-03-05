@@ -88,8 +88,9 @@ function FlightSearchModal() {
               placeholder="Arriving To..."
             ></input>
           </label>
+          <section className="addOnsWrap">
           {roundTripSelected ? (
-            <label className="dateselectionwrap">
+            <div className="dateselectionwrap">
               <input
                 required
                 onChange={(e) => recordDepartureDate(e)}
@@ -100,7 +101,7 @@ function FlightSearchModal() {
                 onChange={(e) => recordReturnDate(e)}
                 type="date"
               ></input>
-            </label>
+            </div>
           ) : (
             <label className="dateselectionwrap">
               <input
@@ -109,31 +110,32 @@ function FlightSearchModal() {
                 type="date"
               ></input>
             </label>
-          )}
-          <section className="extrafilterswrap">
-            <span className="passangerselectwrap">
-              Number of Passengers
-              <div className="maxpricewrap">
-                <select required onChange={(e) => recordNumOfTravelers(e)}>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-                <label>
-                  <input placeholder="Max Price?" type="number"></input>
-                </label>
-              </div>
-            </span>
-            <section className="flightclasswrap">
-              <select className="flightclassdropdown">
-                <option>Economy</option>
-                <option>Business</option>
-                <option>First</option>
-              </select>
-            </section>
-          </section>
+          )}<span className="passangerselectwrap">
+          <div className="maxpricewrap">
+            <label className="maxpricelabelwrap">Number of Passengers
+            <select required onChange={(e) => recordNumOfTravelers(e)}>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select></label>
+            <label className="maxpricelabelwrap">Max Price
+              <input placeholder="Max Price?" type="number"></input>
+            </label>
+          </div>
+        </span>
+        </section>
+        
+        <section className="flightclasswrap">
+            <label className="maxpricelabelwrap"> Cabin Class
+          <select className="flightclassdropdown">
+            <option>Economy</option>
+            <option>Business</option>
+            <option>First</option>
+          </select>
+          </label>
+        </section> 
           <button className="searchBtn" onClick={flightQuery}>
             Submit
           </button>
