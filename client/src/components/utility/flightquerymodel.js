@@ -17,8 +17,10 @@ function FlightSearchModal() {
     departure: "",
     departureDate: "",
     arrival: "",
-    numOftravelers: 1,
+    numOfTravelers: 1,
     returnDate: "",
+    maxPrice: 5000,
+    flightClass: 'ECONOMY',
   };
   const flightQuery = async (e) => {
     e.preventDefault();
@@ -45,7 +47,7 @@ function FlightSearchModal() {
   const selectTripType = (value) => {
     setRoundTrip(value);
   };
-  const recordDepartureLoc = (e) => {
+  const recordDepartureLoc = (e,) => {
     body.departure = e.target.value;
   };
   const recordDepartureDate = (e) => {
@@ -54,12 +56,11 @@ function FlightSearchModal() {
   const recordReturnDate = (e) => {
     body.returnDate = e.target.value;
   };
-  const recordArrivalLoc = (e) => {
-    console.log("Arrival Value -  " + e.target.value);
-    body.arrival = e.target.value;
+  const updateSearchParams = (e, valueToUpdate) => {
+    body[valueToUpdate] = e.target.value;
   };
-  const recordNumOfTravelers = (e) => {
-    body.numOftravelers = e.target.value;
+  const updateSearchParamsNum = (e, valueToUpdate) => {
+    body[valueToUpdate] = parseInt(e.target.value);
   };
   return (
     <div className="mainsearchwrap">
@@ -78,13 +79,13 @@ function FlightSearchModal() {
             <input
               className="locationinputs"
               required
-              onChange={(e) => recordDepartureLoc(e)}
+              onChange={(e) => updateSearchParams(e, 'departure')}
               placeholder="Departing From..."
             ></input>
             <input
               className="locationinputs"
               required
-              onChange={(e) => recordArrivalLoc(e)}
+              onChange={(e) => updateSearchParams(e, 'arrival')}
               placeholder="Arriving To..."
             ></input>
           </label>
@@ -93,12 +94,12 @@ function FlightSearchModal() {
             <div className="dateselectionwrap">
               <input
                 required
-                onChange={(e) => recordDepartureDate(e)}
+                onChange={(e) => updateSearchParams(e, 'departureDate')}
                 type="date"
               ></input>
               <input
                 required
-                onChange={(e) => recordReturnDate(e)}
+                onChange={(e) => updateSearchParams(e, 'returnDate')}
                 type="date"
               ></input>
             </div>
@@ -106,22 +107,22 @@ function FlightSearchModal() {
             <label className="dateselectionwrap">
               <input
                 required
-                onChange={(e) => recordDepartureDate(e)}
+                onChange={(e) => updateSearchParams(e, 'departureDate')}
                 type="date"
               ></input>
             </label>
           )}<span className="passangerselectwrap">
           <div className="maxpricewrap">
             <label className="maxpricelabelwrap">Number of Passengers
-            <select required onChange={(e) => recordNumOfTravelers(e)}>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+            <select required onChange={(e) => updateSearchParamsNum(e, 'numOfTravelers')}>
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
             </select></label>
             <label className="maxpricelabelwrap">Max Price
-              <input placeholder="Max Price?" type="number"></input>
+              <input onChange={(e) => updateSearchParamsNum(e, 'maxPrice')} placeholder="Max Price?" type="number"></input>
             </label>
           </div>
         </span>
@@ -129,10 +130,10 @@ function FlightSearchModal() {
         
         <section className="flightclasswrap">
             <label className="maxpricelabelwrap"> Cabin Class
-          <select className="flightclassdropdown">
-            <option>Economy</option>
-            <option>Business</option>
-            <option>First</option>
+          <select onChange={(e) => updateSearchParams(e, 'flightClass')} className="flightclassdropdown">
+            <option value='ECONOMY'>Economy</option>
+            <option value='BUSINESS'>Business</option>
+            <option value='FIRST'>First</option>
           </select>
           </label>
         </section> 

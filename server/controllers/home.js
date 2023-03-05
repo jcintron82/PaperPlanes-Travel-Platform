@@ -1,11 +1,12 @@
 var Amadeus = require('amadeus');
 
 let originLocation = '';
+let destinationLocation = '';
 let departureDate = '';
 let returnDate = '';
-// const formattedDate = new Date(departureDate);
-let destinationLocation = '';
 let adults = 1;
+let maxPrice = 5000;
+let flightClass = '';
 
 
 module.exports = {
@@ -14,7 +15,9 @@ module.exports = {
     originLocation = req.body.departure;
     destinationLocation = req.body.arrival;
     departureDate = req.body.departureDate;
-    adults = req.body.numOftravelers;
+    adults = req.body.numOfTravelers;
+    maxPrice = req.body.maxPrice;
+    flightClass = req.body.flightClass;
     req.body.returnDate === '' ? returnDate = departureDate 
       : returnDate = req.body.returnDate;
     res.send({message:"POST OK"})
@@ -25,14 +28,27 @@ module.exports = {
       clientSecret: process.env.CLIENT_SECRET
     });
     amadeus.shopping.flightOffersSearch.get({
-        originLocationCode: 'LAX',
-        destinationLocationCode: 'JFK',
+        originLocationCode: originLocation,
+        destinationLocationCode: destinationLocation,
         departureDate: departureDate,
+        returnDate: returnDate,
         adults: adults,
         currencyCode:'USD',
         max: 10,
         nonStop: true,
-        returnDate: returnDate,
+        travelClass: flightClass,
+        maxPrice: maxPrice
+
+        // originLocationCode: 'JFK',
+        // destinationLocationCode: 'LAX',
+        // departureDate: '2023-06-01',
+        // returnDate:  '2023-06-15',
+        // adults: 1,
+        // currencyCode:'USD',
+        // max: 10,
+        // nonStop: true,
+        // travelClass: 'BUSINESS',
+        // maxPrice: 5000
 
     }).then(function(response){
       response.data = response;
@@ -41,10 +57,6 @@ module.exports = {
       return res.json({message:data})
     }).catch(function(responseError){
       console.log(responseError.code + 'HMMMM');
-      originLocation = 'LAX';
-      departureDate = '2023-06-08';
-      destinationLocation = 'JFK';
-      adults = 1;
 
     });
     const confirmFlightPrice = async (data) => {
