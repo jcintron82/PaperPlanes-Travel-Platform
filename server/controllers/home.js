@@ -18,8 +18,8 @@ module.exports = {
     adults = req.body.numOfTravelers;
     maxPrice = req.body.maxPrice;
     flightClass = req.body.flightClass;
-    req.body.returnDate === '' ? returnDate = departureDate 
-      : returnDate = req.body.returnDate;
+    returnDate = departureDate 
+  
     res.send({message:"POST OK"})
   },
   getIndex: (req, res) => {
