@@ -1,10 +1,104 @@
 .mainsearchwrap{
     display: flex;
     border: solid;
-    height: 50vh;
+    height: 100vh;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+.flighttypebtnwrap{
+    display: flex;
+    width: 80vw;
+    border: solid;
+    max-width: 41rem;
 }
 .flightsearchform{
+    display: flex;
+    width: 80vw;
+    padding: 0.5rem;
+    height: 60vh;
     border: solid;
+    max-width: 40rem;
+    flex-flow: column nowrap;
+}
+.flightsearchform > * {
+    padding: .15rem 0;
+    height: 100%;
+}
+.locationinputswrap{
+    display: flex;
+    flex-flow: row wrap;
+
+}
+.locationinputs{
+    width: 100%;
+    padding: 0.3rem;
+    border-radius: 0.45rem;
+    height: 1.5rem;
+}
+.dateselectionwrap{
+    display: flex;
+    width: 80%;
+    border: solid;
+}
+input[type=date]{
+    padding: 0.5rem;
+    margin: 0.5rem;
+    border-radius: 0.2rem;
+    max-height: 2rem;
+}
+input[type=number]{
+    padding: .5rem;
+    width: 30%;
+    border-radius: .2rem;
+    max-height: 2rem;
+    max-width: 8rem;
+}
+.passangerselectwrap{
+    display: flex;
+    width: 100%;
+    padding: 1rem 0;
+    justify-content: flex-end;
+    flex-flow: column wrap;
+}
+.maxpricewrap{
+    display: flex;
+    justify-content: space-around;
+}
+select{
+    padding: .3rem;
+    width: 30%;
+    border-radius: .2rem;
+ 
+}
+.extrafilterswrap{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.flightclasswrap{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+.flightclassdropdown{
+    width: 10rem;
+}
+.searchBtn{
+    margin: 1rem 0 2rem;
+    height: 2rem;
+    border-radius: 0.35rem;
+}
+@media(min-width:768px){
+    .flightsearchform {
+        flex-flow: column nowrap;
+    }
+    .locationinputswrap{
+        justify-content: space-between;
+        height: 50%;
+     }
+    .locationinputs{
+       width: 48%;
+    }
 }

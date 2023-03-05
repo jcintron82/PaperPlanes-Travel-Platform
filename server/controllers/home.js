@@ -2,9 +2,11 @@ var Amadeus = require('amadeus');
 
 let originLocation = '';
 let departureDate = '';
+let returnDate = '';
 // const formattedDate = new Date(departureDate);
 let destinationLocation = '';
 let adults = 1;
+
 
 module.exports = {
   searchInput: (req, res) => {
@@ -13,6 +15,8 @@ module.exports = {
     destinationLocation = req.body.arrival;
     departureDate = req.body.departureDate;
     adults = req.body.numOftravelers;
+    req.body.returnDate === '' ? returnDate = departureDate 
+      : returnDate = req.body.returnDate;
     res.send({message:"POST OK"})
   },
   getIndex: (req, res) => {
@@ -21,21 +25,15 @@ module.exports = {
       clientSecret: process.env.CLIENT_SECRET
     });
     amadeus.shopping.flightOffersSearch.get({
-      originLocationCode: 'LAX',
+        originLocationCode: 'LAX',
         destinationLocationCode: 'JFK',
-        departureDate: '2023-06-01',
-        adults: 1,
+        departureDate: departureDate,
+        adults: adults,
         currencyCode:'USD',
         max: 10,
         nonStop: true,
+        returnDate: returnDate,
 
-        // originLocationCode: originLocation,
-        // destinationLocationCode: destinationLocation,
-        // departureDate: departureDate,
-        // adults: adults,
-        // currencyCode:'USD',
-        // max: 10,
-        // nonStop: true,
     }).then(function(response){
       response.data = response;
       const data = JSON.parse(response.data.body);

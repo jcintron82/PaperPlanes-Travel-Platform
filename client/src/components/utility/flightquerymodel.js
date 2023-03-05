@@ -8,6 +8,7 @@ const queryResponseObj = [];
 function FlightSearchModal() {
   const [departureLocation, setDepartureLocation] = useState([]);
   const [oneWay, setOneWay] = useState(true);
+  const [roundTripSelected, setRoundTrip] = useState(true);
 
   const [queryRecieved, setQueryStatus] = useState();
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ function FlightSearchModal() {
     departureDate: "",
     arrival: "",
     numOftravelers: 1,
+    returnDate: "",
   };
   const flightQuery = async (e) => {
     e.preventDefault();
@@ -40,14 +42,17 @@ function FlightSearchModal() {
     navigate("/flightquery");
     return { message: queryResponseObj };
   };
-  const tripTypeSelector = () => {
-    setOneWay(!oneWay);
+  const selectTripType = (value) => {
+    setRoundTrip(value);
   };
   const recordDepartureLoc = (e) => {
     body.departure = e.target.value;
   };
   const recordDepartureDate = (e) => {
     body.departureDate = e.target.value;
+  };
+  const recordReturnDate = (e) => {
+    body.returnDate = e.target.value;
   };
   const recordArrivalLoc = (e) => {
     console.log("Arrival Value -  " + e.target.value);
@@ -58,65 +63,81 @@ function FlightSearchModal() {
   };
   return (
     <div className="mainsearchwrap">
-      {oneWay ? (
+      {" "}
+     
         <form className="flightsearchform">
-          <button type="button" onClick={tripTypeSelector}>
-            Round-Trip
-          </button>
-          <label>
+        <section className="flighttypebtnwrap">
+      <button type="button" onClick={(e) => selectTripType(false)}>
+      One-Way
+      </button>
+      <button type="button" onClick={(e) => selectTripType(true)}>
+      Round-Trip
+      </button>
+      </section>
+          <label className="locationinputswrap">
             <input
+              className="locationinputs"
               required
               onChange={(e) => recordDepartureLoc(e)}
               placeholder="Departing From..."
             ></input>
-          </label>
-          <label>
             <input
+              className="locationinputs"
               required
               onChange={(e) => recordArrivalLoc(e)}
               placeholder="Arriving To..."
             ></input>
-            <label>
+          </label>
+          {roundTripSelected ? (
+            <label className="dateselectionwrap">
+              <input
+                required
+                onChange={(e) => recordDepartureDate(e)}
+                type="date"
+              ></input>
+              <input
+                required
+                onChange={(e) => recordReturnDate(e)}
+                type="date"
+              ></input>
+            </label>
+          ) : (
+            <label className="dateselectionwrap">
               <input
                 required
                 onChange={(e) => recordDepartureDate(e)}
                 type="date"
               ></input>
             </label>
-            <label>
-              <select required onChange={(e) => recordNumOfTravelers(e)}>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+          )}
+          <section className="extrafilterswrap">
+            <span className="passangerselectwrap">
+              Number of Passengers
+              <div className="maxpricewrap">
+                <select required onChange={(e) => recordNumOfTravelers(e)}>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+                <label>
+                  <input placeholder="Max Price?" type="number"></input>
+                </label>
+              </div>
+            </span>
+            <section className="flightclasswrap">
+              <select className="flightclassdropdown">
+                <option>Economy</option>
+                <option>Business</option>
+                <option>First</option>
               </select>
-            </label>
-          </label>
-          <button onClick={flightQuery}>Submit</button>
-        </form>
-      ) : (
-        <form>
-          <button type="button" onClick={tripTypeSelector}>
-            One-Way
+            </section>
+          </section>
+          <button className="searchBtn" onClick={flightQuery}>
+            Submit
           </button>
-          <label>
-            <input
-              onChange={(e) => recordDepartureLoc(e)}
-              placeholder="Departing From..."
-            ></input>
-          </label>
-          <label>
-            <input
-              onChange={(e) => recordArrivalLoc(e)}
-              placeholder="Arriving To..."
-            ></input>
-            <input type="date"></input>
-            <input type="date"></input>
-          </label>
-          <button onClick={flightQuery}>Submit</button>
         </form>
-      )}
     </div>
   );
 }
