@@ -35,7 +35,7 @@ for (let i = 0; i < departureLocation.length; i++){
            Filters to apply 
         </section>
       <article className="flightResultsWrap">
-        <h1>
+
           {departureLocation.map((item, index) => (
             <li
               // onClick={(e) => {
@@ -68,7 +68,6 @@ for (let i = 0; i < departureLocation.length; i++){
               </article>
             </li>
           ))}
-        </h1>
       </article>
       <section className="recommendedwrap">
            Recommended Flights/Stays

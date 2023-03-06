@@ -4,9 +4,12 @@
 }
 .flightResultsWrap{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-evenly;
     border: solid;
     border-radius: 0.7rem;
+    height: 100%;
+    padding: 0 0 1.5rem 0;
 }
 h1{
     margin: 0;
@@ -24,6 +27,7 @@ li::marker{
     max-width: 50rem;
     justify-content: space-between;
     border: solid;
+    font-size: 1.4em;
   }
 /******For the inidividual flight tab results*******/
 .flighttimesmainwrap{
