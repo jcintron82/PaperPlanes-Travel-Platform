@@ -5,18 +5,18 @@ h4{
     display: flex;
     background-color: #05203C;
     color: white;
-    height: 100vh;
+    height: 70vh;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
-/* * {
-    background-color: black;
-    border: solid red;
-} */
 .flighttypebtnwrap{
     display: flex;
     max-width: 41rem;
+}
+.flighttypesvg{
+    width: 30px;
+    fill: black;
 }
 .flightsearchform{
     display: flex;
@@ -42,6 +42,7 @@ h4{
     border-top-right-radius: 1rem;
     border-top-left-radius: 1rem;
     border-radius: 0;
+    border-color: #05203C;
 }
 .locationinputsarrival{
     width: 100%;
@@ -52,13 +53,12 @@ h4{
     border-radius: 0;
     border-top-right-radius: 0.5rem;
     border-top-left-radius: 0.5rem;
+    border-color: #05203C;
 }
 .dateselectionwrap{
     display: flex;
     width: 100%;
     justify-content: center;
-    margin-bottom: 0.5rem;
-
 }
 .depaturedateinput{
     padding: 0.5rem;
@@ -67,7 +67,6 @@ h4{
     width: 100%;
     text-align: center;
     border-radius: 0;
-    border-bottom-left-radius: .5rem;
 }
 .arrivaldateinput{
     padding: 0.5rem;
@@ -76,7 +75,6 @@ h4{
     width: 100%;
     text-align: center;
     border-radius: 0;
-    border-bottom-right-radius: .5rem;
 }
 input[type=number]{
     padding: .5rem;
@@ -85,6 +83,10 @@ input[type=number]{
     height: 100%;
     max-width: 8rem;
 }
+.refinesearchwrap{
+    display: flex;
+}
+
 .passangerselectwrap{
     display: flex;
     width: 50%;
@@ -96,6 +98,7 @@ input[type=number]{
     justify-content: space-evenly;
     width: 80vw;
     max-width: 45rem;
+
 }
 select{
     padding: 0.3rem;
@@ -121,6 +124,9 @@ select{
     border-radius: 0.5rem;
     font-weight: 500;
     font-size: .8em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .flightclasswrap{
     display: flex;
@@ -148,9 +154,10 @@ select{
 .maxpricelabelwrap{
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    width: 3rem;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+    max-width: 5rem;
     text-align: center;
     font-size: .9em;
 }
@@ -158,26 +165,44 @@ select{
     background-color: white;
     background-color: white;
     width: 100%;
+    height: 100%;
     color: black;
 }
 .refinesearchbtn{
-    border-radius: 0.5rem;
-    align-self: center;
-    width: 5rem;
+    align-self: flex-end;
+    width: 50%;
+    max-width: 20rem;
+    font-size: .9em;
+}
+
+.dateselectionwrap > * {
+    border-color: #05203C;
+}
+.refinesearchbtn:first-child{
+    border-radius: 0;
+    border-bottom-left-radius: .5rem;
+    border-color: #05203C;
+
+}
+.refinesearchbtn:last-child{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0;
+    border-bottom-right-radius: .5rem;
+    border-color: #05203C;
 }
 .personsvgandinputwrap{
     display: flex;
     flex-direction: column;
-    width: 100%
-}
-.svgparent{
-    display: flex;
-    justify-content: center;
+    width: 50%
 }
 .personswrap{
     display: flex;
+    justify-content: center;
 }
 .personsvg{
-    fill: white;
+    fill: black;
     width: 34px;
+    padding-right: .5rem;
 }

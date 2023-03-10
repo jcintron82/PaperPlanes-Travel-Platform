@@ -133,15 +133,16 @@ function FlightSearchModal() {
     body[valueToUpdate] = parseInt(e.target.value);
   };
   return (
+    <div>
     <div className="mainsearchwrap">
       <Header />
       {" "}
       <form className="flightsearchform">
         <section className="flighttypebtnwrap">
           {roundTripSelected ?  <button className="triptypebtns" type="button" onClick={selectTripType}>
-          One-Way
+          Round-Trip<svg className="flighttypesvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>chevron-down</title><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
           </button> : <button className="triptypebtns" type="button" onClick={selectTripType}>
-            Round-Trip
+          One-Way <svg className="flighttypesvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>chevron-down</title><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
           </button>}
          
         </section>
@@ -194,21 +195,55 @@ function FlightSearchModal() {
                 onChange={(e) => updateDatesAndFilters(e, "returnDate")}
                 type="date"
               ></input>
+             
             </div>
           ) : (
             <label className="dateselectionwrap">
               <input
+                className="depaturedateinput"
                 required
                 onChange={(e) => updateDatesAndFilters(e, "departureDate")}
                 type="date"
               ></input>
             </label>
           )}
-          <span className="passangerselectwrap">
-            <div className="maxpricewrap">
+          <div className="refinesearchwrap">
               <button className="refinesearchbtn">Refine Search</button>
-              <section className="personsvgandinputwrap">
-              <h1 className="svgparent"><svg className="personsvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account-group</title><path d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" /></svg></h1>
+              <button className="refinesearchbtn"><svg className="personsvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account-group</title><path d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.41,14.5 12,14.5C15.59,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z" /></svg>1 Adult 0 Children</button>
+              </div>
+        </section>
+
+        {/* <section className="flightclasswrap">
+          <label className="maxpricelabelwrap">
+            {" "}
+            Cabin Class
+            <select
+              onChange={(e) => updateDatesAndFilters(e, "flightClass")}
+              className="flightclassdropdown"
+            >
+              <option value="ECONOMY">Economy</option>
+              <option value="BUSINESS">Business</option>
+              <option value="FIRST">First</option>
+            </select>
+          </label>
+        </section> */}
+        <button className="searchBtn" onClick={flightQuery}>
+          Submit
+        </button>
+      </form>
+      </div>
+    <section className="otheritemswrap">
+      <div>
+        <button className='itemtiles'>Hotels</button>
+        <button className='itemtiles'>Explore</button>
+      </div>
+      <button>Save on your Next Stay</button>
+    </section>
+    <span className="passangerselectwrap">
+            <div className="maxpricewrap">
+              
+              {/* <section className="personsvgandinputwrap">
+
               <div className="personswrap">
               <label className="maxpricelabelwrap">
                 Adults
@@ -237,7 +272,7 @@ function FlightSearchModal() {
                 </select>
               </label>
               </div>
-              </section>
+              </section> */}
               {/* <label className="maxpricelabelwrap">
                 Max Price
                 <input
@@ -248,31 +283,6 @@ function FlightSearchModal() {
               </label> */}
             </div>
           </span>
-        </section>
-
-        {/* <section className="flightclasswrap">
-          <label className="maxpricelabelwrap">
-            {" "}
-            Cabin Class
-            <select
-              onChange={(e) => updateDatesAndFilters(e, "flightClass")}
-              className="flightclassdropdown"
-            >
-              <option value="ECONOMY">Economy</option>
-              <option value="BUSINESS">Business</option>
-              <option value="FIRST">First</option>
-            </select>
-          </label>
-        </section> */}
-        <button className="searchBtn" onClick={flightQuery}>
-          Submit
-        </button>
-      </form>
-    <section className="otheritemswrap">
-      
-      <button>Hotels</button>
-      <button>Explore</button>
-    </section>
     </div>
   );
 }
