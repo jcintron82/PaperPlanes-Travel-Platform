@@ -1,0 +1,35 @@
+var express = require('express');
+var router = express.Router();
+const User = require('../models/User')
+module.exports = {
+    postUser: async (req,res) => {
+        // User.findOne({username: req.body.username}), async (err, doc) => {
+        //     if (err) throw err;
+        //     if (doc) res.send("User already exists");
+        //     if(!doc)try {
+        //             await users.create({
+        //               userName: req.body.username, 
+        //               password: req.body.password,
+        //             })
+        //             res.send('/REGISTERED')
+        //           }
+        //           catch (err) {
+        //             console.log(err)
+        //           }
+        // }
+        console.log(req.body);
+        console.log(req.body.username);
+        try {
+            await User.create({
+              userName: req.body.username, 
+              password: req.body.password,
+              email: req.body.email,
+            })
+            res.send('/REGISTERED')
+          }
+          catch (err) {
+            console.log(err)
+          }
+
+    },
+}
