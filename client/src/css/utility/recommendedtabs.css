@@ -1,0 +1,21 @@
+.recommendedtabs{
+    border: solid;
+    display: flex;
+    margin: 0 10%;
+    border-radius: 0.75rem;
+    height: 5rem;
+}
+.imgwrap{
+    display: flex;
+    width: 50%;
+}
+.optionswrap{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.textwraps{
+    display: flex;
+    margin: 0;
+}

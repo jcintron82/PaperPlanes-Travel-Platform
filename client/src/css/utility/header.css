@@ -15,10 +15,10 @@ html{
 .loginsvgandmodalwrap{
     width: 17vw;
 }
-button{
-    width: 50%;
-    font-size: .7em;
-    height: 3rem;
+.logowrap{
+    display: flex;
+    align-items: center;
+    padding-left: 1.5rem;
 }
 .loginwrap{
     display: flex;
@@ -43,8 +43,11 @@ button{
     border-radius: 0.85rem;
 }
 p{
-    align-self: flex-start;
-    padding-left: .5rem;
+    align-items: center;
+    padding-right: 0.12rem;
+    font-size: 1.25em;
+    margin-top: 1rem;
+    font-weight: 500;
 }
 .loginInputs{
     width: 60vw;
@@ -53,6 +56,14 @@ p{
     border-radius: 0.65rem;
     padding: 0.25rem;
     font-size: 1em;
+}
+.paperplanesvg{
+    fill: white
+}
+.accountsvg{
+    width: 37px;
+    fill: white;
+    padding-right: 1.5rem;
 }
 .hide{
     display: none;
