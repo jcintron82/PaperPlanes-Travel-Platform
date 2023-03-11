@@ -1,0 +1,39 @@
+.recommendedtabs{
+    border: solid grey 1px;
+    display: flex;
+    border-radius: 0.75rem;
+    height: 5rem;
+    width: 90vw;
+    max-width: 20rem;
+}
+html, body {
+    padding:0;
+    margin:0;
+}
+.imgwrap{
+    display: flex;
+    width: 50%;
+}
+.recommendedtabsimg{
+    height: 100%;
+    margin: 0;
+    border-radius: 0;
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+}
+.optionswrap{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.textwraps{
+    display: flex;
+    margin: 0;
+}
+.recommendedtabswrap{
+    padding-left: 0;
+    gap: 50px;
+    display: flex;
+    flex-flow: row wrap;
+}
