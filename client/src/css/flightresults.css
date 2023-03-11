@@ -5,14 +5,23 @@
 .flightResultsWrap{
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    border: solid;
+    justify-content: flex-start;
     border-radius: 0.7rem;
     height: 100%;
+    max-height: 45vh;
     padding: 0 0 1.5rem 0;
+    margin-top: 5rem;
+
+}
+.btnwrap{
+    border: solid;
+}
+.seemoreflightsbtn{
+    position: absolute;
 }
 h1{
     margin: 0;
+    text-align: center;
 }
 li{
     height: 9%;
@@ -23,16 +32,29 @@ li::marker{
 .flightResultsTabs{
     display: flex;
     flex-flow: row wrap;
-    width: 90vw;
+    width: 85vw;
     max-width: 50rem;
     justify-content: space-between;
     border: solid;
     font-size: 1.4em;
+    border-radius: .75rem;
+    padding: .5rem;
+    background: #05203C;
   }
-/******For the inidividual flight tab results*******/
+h3{
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2em;
+}
+.durationsvg{
+    width: 70px;
+    stroke: black;
+    stroke-width: 0.95px;
+}
 .flighttimesmainwrap{
     display: flex;
     justify-content: space-around;
+    background-color: white;
 }
 .flightmaindetailswrap{
     display: flex;
@@ -41,23 +63,53 @@ li::marker{
     justify-content: space-around;
     padding: 0.5rem;
     width: 100%;
-    border-bottom: solid darkgrey 2px;
+    background-color: white;
+    border-radius: 0.65rem;
+    margin-bottom: 0.5rem;
 }
 .flightmaindetailswrap > * {
     padding: .25rem;
     font-weight: 500;
     margin: 0;
 }
+.durationwrap{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.durationplanesvg{
+    width: 42px;
+}
+.durationtimelinewrap{
+    width: 100%;
+}
+.durationparatag{
+    padding-right: 0.12rem;
+    font-size: 1.25em;
+    margin-top: 1rem;
+    font-weight: 500;
+    text-align: center;
+    margin: 0 0 0.35rem;
+}
+hr{
+    width: 77%;
+    height: 3px;
+    background-color: black;
+}
 h2{ 
     margin: 0;
-    font-size: 1em;}
+    font-size: 1em;
+}
+
 .flightTimesWrap{
     display: flex;
     margin: 0;
+    font-size: 1.25em;
 }
 .flightdetailspricewrap{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     width: 100%;
 
 }
@@ -71,12 +123,33 @@ h2{
     width: 40vw;
     height: 2rem;
     max-width: 10rem;
+    background-color: #5BC0BE;
+    color: white;
+    font-weight: 600;
+    font-size: .7em;
+    border-radius: 0.75rem;
+    border: transparent;
 }
 .filterswrap{
     width: 30%;
 }
 .recommendedwrap{
-    width: 30%;
+    width: 35%;
+    min-height: 50rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+.recommenedstaysbtns{
+    height: 10rem;
+    border-radius: 0.75rem;
+    border: none;
+    font-size: 1em;
+    font-weight: 500;
+    display: flex;
+    width: 15rem;
 }
 @media(min-width:768px){
     .pricewrap{  
@@ -86,16 +159,19 @@ h2{
     }
     
 }
-@media(max-width:1024px){
-    .filterswrap{  
-      display: none;
+@media(min-width:1024px){
+    .flightResultsTabs{
+        width: 50vw;
     }
-    
+    .flightResultsWrap{
+        width: 50%;
+    }
 }
-@media(max-width:768px){
+@media(max-width:1024px){
     .recommendedwrap{  
         display: none;
     }
     
 }
+
 /******For the inidividual flight tab results*******/
