@@ -5,10 +5,13 @@ import { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import { useNavigate } from "react-router-dom";
 import { Header } from "./header";
+import { TravelersPopup } from './numoftravalersmodal'
 import { RecommendedTab } from './recommendedtraveltabs'
+import { travelerCounts } from "./numoftravalersmodal";
 export { FlightSearchModal, queryResponseObj };
 const queryResponseObj = [];
 const autocompleteAPIValuesHold = {};
+
 function FlightSearchModal() {
   const [departureLocation, setDepartureLocation] = useState("");
   const [arrivalLocation, setArrivalLocation] = useState("");
@@ -35,6 +38,8 @@ function FlightSearchModal() {
     returnDate: "",
     maxPrice: 5000,
     flightClass: "ECONOMY",
+    adults:travelerCounts.adults,
+    children:travelerCounts.children
   };
   const flightQuery = async (e) => {
     e.preventDefault();
@@ -220,6 +225,7 @@ function FlightSearchModal() {
             </button>
           </section>
           <label className="locationinputswrap">
+
             <input
               autoComplete="off"
               list="locationslist"
@@ -229,6 +235,7 @@ function FlightSearchModal() {
               onChange={(e) => updateSearchParams(e, "departure")}
               placeholder="Departing From..."
             ></input>
+           
             <datalist id="locationslist">
               <option
                 onClick={() => console.log("YO")}
@@ -272,6 +279,7 @@ function FlightSearchModal() {
                     required
                     onChange={(e) => updateDatesAndFilters(e, "departureDate")}
                     type="date"
+                    placeholder="MM/DD/YYYY"
                   ></input>
                 </CSSTransition>
                 <input
@@ -304,6 +312,7 @@ function FlightSearchModal() {
                 </svg>
                 1 Adult 0 Children
               </button>
+              <TravelersPopup />
             </div>
           </section>
 
@@ -329,7 +338,7 @@ function FlightSearchModal() {
       <section className="otheritemswrap">
         <div>
         <div className="adwraps">
-          <p className="adslogans"><p>Find Your Paradise.</p><a>Book Now.</a></p>
+          <p className="adslogans"><p>Find Your Paradise</p><a className="booknowlink">Book Now</a></p>
         <img src={adPicOne}></img>
         </div>
         </div>

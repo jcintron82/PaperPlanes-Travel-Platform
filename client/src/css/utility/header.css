@@ -68,9 +68,10 @@ html{
 p{
     align-items: center;
     padding-right: 0.12rem;
-    font-size: 1.25em;
+    font-size: 1.5em;
     margin-top: 1rem;
     font-weight: 500;
+    margin-bottom: 0;
 }
 .loginInputs{
     width: 60vw;

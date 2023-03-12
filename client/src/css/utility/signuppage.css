@@ -22,9 +22,10 @@
 }
 .registerinputs{
     margin-top: 0.25rem;
-    padding: 0.25rem;
+    padding: 0.5rem;
     border-radius: 0.5rem;
-    border: solid 1px;
+    border: solid 1px #B8B8B8;
+    font-size: .9em;
 }
 .registerimgwrap{
     width: 50%;

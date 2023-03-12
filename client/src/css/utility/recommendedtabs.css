@@ -30,10 +30,12 @@ html, body {
 .textwraps{
     display: flex;
     margin: 0;
+    font-size: .8em;
 }
 .recommendedtabswrap{
     padding-left: 0;
     gap: 50px;
     display: flex;
     flex-flow: row wrap;
+    justify-content: center;
 }
