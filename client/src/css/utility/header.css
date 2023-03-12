@@ -113,7 +113,7 @@ a{
 }
 .exitsvg{
     width: 30px;
-    stroke-width: 4px;
+    stroke: 4px;
     stroke: #DB162F;
 }
 .hide{

@@ -92,6 +92,7 @@ input[type=number]{
 }
 .refinesearchwrap{
     display: flex;
+    height: 3.1rem;
 }
 
 .passangerselectwrap{
@@ -234,29 +235,34 @@ img{
 }
 .refinesearchbtn{
     align-self: flex-end;
+    display: flex;
     width: 50%;
     max-width: 20rem;
     font-size: .9em;
-    padding: .5rem;
+    padding: 0.5rem;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
 }
 
 .dateselectionwrap > * {
     border-color: #05203C;
 }
-.refinesearchbtn:first-child{
+.refinesearchbtn{
     border-radius: 0;
     border-bottom-left-radius: .5rem;
     border-color: #05203C;
     height: 100%;
-
+    width: 50%;
 }
-.refinesearchbtn:last-child{
+.travelersbtn{
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 0;
     border-bottom-right-radius: .5rem;
     border-color: #05203C;
+    width: 50%;
 }
 .personsvgandinputwrap{
     display: flex;

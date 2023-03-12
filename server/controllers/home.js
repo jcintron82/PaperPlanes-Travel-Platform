@@ -5,6 +5,7 @@ let destinationLocation = '';
 let departureDate = '';
 let returnDate = '';
 let adults = 1;
+let children = 0;
 let maxPrice = 5000;
 let flightClass = '';
 
@@ -15,7 +16,8 @@ module.exports = {
     originLocation = req.body.departure;
     destinationLocation = req.body.arrival;
     departureDate = req.body.departureDate;
-    adults = req.body.numOfTravelers;
+    adults = req.body.adults;
+    children = req.body.children;
     maxPrice = req.body.maxPrice;
     flightClass = req.body.flightClass;
     returnDate = departureDate 
@@ -28,26 +30,27 @@ module.exports = {
       clientSecret: process.env.CLIENT_SECRET
     });
     amadeus.shopping.flightOffersSearch.get({
-        // originLocationCode: originLocation,
-        // destinationLocationCode: destinationLocation,
-        // departureDate: departureDate,
-        // returnDate: returnDate,
-        // adults: adults,
-        // currencyCode:'USD',
-        // max: 10,
-        // nonStop: true,
-        // travelClass: flightClass,
-        // maxPrice: maxPrice
-        originLocationCode: 'JFK',
-        destinationLocationCode: 'LAX',
-        departureDate: '2023-06-01',
-        returnDate:  '2023-06-15',
-        adults: 1,
+        originLocationCode: originLocation,
+        destinationLocationCode: destinationLocation,
+        departureDate: departureDate,
+        returnDate: returnDate,
+        adults: adults,
+        children:children,
         currencyCode:'USD',
-        max:5,
+        max: 10,
         nonStop: true,
-        travelClass: 'BUSINESS',
-        maxPrice: 5000
+        travelClass: flightClass,
+        maxPrice: maxPrice
+        // originLocationCode: 'JFK',
+        // destinationLocationCode: 'LAX',
+        // departureDate: '2023-06-01',
+        // returnDate:  '2023-06-15',
+        // adults: 1,
+        // currencyCode:'USD',
+        // max:5,
+        // nonStop: true,
+        // travelClass: 'BUSINESS',
+        // maxPrice: 5000
 
     }).then(function(response){
       response.data = response;
