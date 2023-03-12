@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "../App";
-import { FlightResultsWrap } from "../components/flightresultswrap";
+import { FlightResultsWrap } from "../components/flightresults/flightresultswrap";
 import { SignUpPage } from "../components/utility/signup"
 import { Profile } from "../components/utility/profile"
 const RouteSwitch = () => {

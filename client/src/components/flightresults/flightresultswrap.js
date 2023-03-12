@@ -1,10 +1,22 @@
-import "../css/flightresults.css";
-import { Header } from "./utility/header";
-import { queryResponseObj } from "./utility/flightquerymodel";
+import "../../css/flightresults.css";
+import { Header } from "../utility/header";
+import { queryResponseObj } from "../utility/flightquerymodel";
+import { RecommendedTravelsTabs } from './flightpagerectraveltabs'
+import { useEffect } from "react";
 
+import  londonimg from '../../images/home/london.avif'
+import  nycimg from '../../images/home/nyc.avif';
+import  miamiimg from '../../images/home/miami.avif'
+import  sanfranimg from '../../images/home/sanfran.avif'
+import  adoneimg from '../../images/home/adone.avif'
+
+
+
+//-------------End of img imports for rec travel tabs-------------//
 export function FlightResultsWrap() {
   const flightsInfo = queryResponseObj[0].message.data;
-
+  let imgArr = [londonimg, nycimg, miamiimg, sanfranimg, adoneimg]
+  
   //This block is necessary for converting the carrier codes into full names
   //The other option is use the carrier code API but this was the DRYest solution
   for (let i = 0; i < flightsInfo.length; i++) {
@@ -99,7 +111,7 @@ export function FlightResultsWrap() {
         <h1>Recommended Travels</h1>
         <button className="recommenedstaysbtns">Philadelphia</button>
         <button className="recommenedstaysbtns">Miami</button>
-        <button className="recommenedstaysbtns">Vancouver</button>
+        <RecommendedTravelsTabs bgImg={imgArr[1]} className="recommenedstaysbtns" text='NYC' />
       </section>
     </div>
   );

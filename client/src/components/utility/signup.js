@@ -1,5 +1,8 @@
-import "../../css/utility/header.css";
+import "../../css/utility/signuppage.css";
+import registerpagepic from '../../images/register/registerpagepic.avif'
 import { useState } from "react";
+import { Header } from './header.js'
+
 
 
 export function SignUpPage() {
@@ -12,45 +15,62 @@ export function SignUpPage() {
               body: JSON.stringify(body),
             });
     }
-    catch(err){
+    catch(err){ 
         console.log(err)
     }
 }
+const recordFirstName = (e) => {
+    body.firstName = e.target.value;
+    console.log(body)
+}
+const recordLastName = (e) => {
+    body.lastName = e.target.value;
+    console.log(body)
+}
 const recordUsername = (e) => {
-    body.username = e.target.value
+    body.username = e.target.value;
+    console.log(body)
 }
 const recordPassword = (e) => {
-    body.password = e.target.value
+    body.password = e.target.value;
     console.log(body)
 }
 const recordConfirmPassword = (e) => {
-    body.confirmPassword = e.target.value
-    console.log(body)
-}
-const recordEmail = (e) => {
-    body.email = e.target.value
+    body.confirmPassword = e.target.value;
     console.log(body)
 }
   return (
- <form>
-    <label>Username
-        <input onChange={(e) => recordUsername(e)}>
+    <body>
+    <Header />
+    <div className="mainregisterpagewrap">
+    <section className="registerimgwrap">
+        <img className="registerpageimg" src={registerpagepic}></img>
+    </section>
+ <form className="registerform">
+     <label className="registerlabels">First Name
+        <input className="registerinputs" onChange={(e) => recordFirstName(e)}>
         </input>
     </label>
-    <label>email
-        <input onChange={(e) => recordEmail(e)}>
+    <label className="registerlabels">Last Name
+        <input className="registerinputs" onChange={(e) => recordLastName(e)}>
         </input>
     </label>
-    <label>Password
-        <input onChange={(e) => recordPassword(e)}>
+    <label className="registerlabels">Email
+        <input className="registerinputs" onChange={(e) => recordUsername(e)}>
         </input>
     </label>
-    <label>Confirm Password
-        <input onChange={(e) => recordConfirmPassword(e)}>
+    <label className="registerlabels">Password
+        <input className="registerinputs" onChange={(e) => recordPassword(e)}>
         </input>
     </label>
-    <button onClick={registerUser}>Register</button>
+    <label className="registerlabels">Confirm Password
+        <input className="registerinputs" onChange={(e) => recordConfirmPassword(e)}>
+        </input>
+    </label>
+    <button className="registerbtn" onClick={registerUser}>Register</button>
  </form>
+ </div>
+ </body>
   )
 }
 export default SignUpPage;
