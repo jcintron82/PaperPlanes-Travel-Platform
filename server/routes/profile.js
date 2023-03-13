@@ -10,7 +10,7 @@ const { ensureAuth } = require('../middleware/auth');
 
 // router.get('/', profileController.postLogin,  profileController.postLogin);
 
-router.get("/", ensureAuth)
+// router.get("/", ensureAuth)
 
 
 
