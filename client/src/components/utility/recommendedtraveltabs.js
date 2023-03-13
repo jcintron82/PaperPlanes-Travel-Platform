@@ -1,6 +1,8 @@
 import '../../css/utility/recommendedtabs.css'
 //--------------End of module imports---------------//
-import nycphoto from '../../images/home/nyc.avif'
+import nycphoto from '../../images/home/nyc.avif';
+import londonphoto from '../../images/home/london.avif';
+import miamiphoto from '../../images/home/miami.avif';
 //--------------End of photo imports---------------//
 export function RecommendedTab({ img, }) {
   return (

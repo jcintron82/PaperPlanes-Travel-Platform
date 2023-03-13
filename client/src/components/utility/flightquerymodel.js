@@ -1,13 +1,15 @@
 import "../../css/flightresults.css";
 import "../../css/utility/home.css";
 import adPicOne from '../../images/home/adone.avif'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CSSTransition } from "react-transition-group";
 import { useNavigate } from "react-router-dom";
-import { Header } from "./header";
-import { TravelersPopup } from './numoftravalersmodal'
+import { Header, name} from "./header";
+import { TravelersPopup } from './numoftravalersmodal';
+import { RefineSearchPopup } from './refinsesearchmodal';
 import { RecommendedTab } from './recommendedtraveltabs'
 import { travelerCounts} from "./numoftravalersmodal";
+import { searchParams } from "./refinsesearchmodal";
 export { FlightSearchModal, queryResponseObj };
 const queryResponseObj = [];
 const autocompleteAPIValuesHold = {};
@@ -17,10 +19,14 @@ function FlightSearchModal() {
   const [arrivalLocation, setArrivalLocation] = useState("");
   const [hotelOrFlight, sethotelOrFlight] = useState(true);
   const [roundTripSelected, setRoundTrip] = useState(false);
-  const [travelersPopup, setTravelersPopupdults] = useState(false);
   const [queryRecieved, setQueryStatus] = useState();
   const [adultCount, setAdultCount] = useState(1);
   const [childCount, setChildCount] = useState(0);
+
+  const [travelersPopup, setTravelersPopupdults] = useState(false);
+  const [refineSearchPopup, setRefineSearchPopup] = useState(false);
+  const [stately, setStately] = useState(false);
+  const [arrivalMessage, setArrivalMessage] = useState(localStorage.getItem('username') ? "Where's your next adventure " + localStorage.getItem('username') + "?" : 'Arriving at...');
 
   const [autocompleteOne, setautocompleteOne] = useState("");
   const [autocompleteTwo, setautocompleteTwo] = useState("");
@@ -30,6 +36,8 @@ function FlightSearchModal() {
   const [autocompleteTwoArrival, setautocompleteTwoArrival] = useState("");
   const [autocompleteThreeArrival, setautocompleteThreeArrival] = useState("");
   const navigate = useNavigate();
+  //The listings in this body aren't technically needed but they are there
+  //for reference to easily know all the parameters being/which can be used
   const body = {
     departure: departureLocation,
     departureDate: "",
@@ -39,10 +47,14 @@ function FlightSearchModal() {
     flightClass: "ECONOMY",
     adults:1,
     children:0,
+    nonStop:false,
   };
   const flightQuery = async (e) => {
     body.adults = travelerCounts.adults;
     body.children = travelerCounts.children;
+    body.maxPrice = searchParams.maxPrice;
+    body.nonStop = searchParams.nonstop;
+    body.flightClass = searchParams.cabinClass;
     e.preventDefault();
     body.departure = body.departure.slice(-3);
     body.arrival = body.arrival.slice(-3);
@@ -128,6 +140,7 @@ function FlightSearchModal() {
       );
     } catch (err) {
     }
+   
   };
   const hotelFlightSwitch = () => {
     sethotelOrFlight(!hotelOrFlight)
@@ -149,14 +162,17 @@ function FlightSearchModal() {
   const updateDatesAndFilters = (e, valueToUpdate) => {
     body[valueToUpdate] = e.target.value;
   };
-  const updateSearchParamsNum = (e, valueToUpdate) => {
-    body[valueToUpdate] = parseInt(e.target.value);
-  };
+   useEffect(() => {
+    setArrivalMessage(arrivalMessage)
+    });
+  const x = async () => {
+     setArrivalMessage("Where's your dddnext adventure " + localStorage.getItem('username') + "?")
+  }
   return (
     <div>
 
-       <Header />{" "}
-      <div className="mainsearchwrap">    
+       <Header  renderLogoutState={(e) => {setArrivalMessage('Arriving at...')}} />{" "}
+      <div className="mainsearchwrap"> 
         <form className="flightsearchform">
           <section className="flighttypebtnwrap">
             <button
@@ -238,8 +254,6 @@ function FlightSearchModal() {
               ></option>
               <option value={autocompleteTwo}></option>
               <option value={autocompleteThree}></option>
-              {/* <option value="Strawberry"></option>
-              <option value="Vanilla"></option> */}
             </datalist>
             <input
               autoComplete="off"
@@ -248,17 +262,14 @@ function FlightSearchModal() {
               className="locationinputs"
               required
               onChange={(e) => updateArrivalParams(e, "arrival")}
-              placeholder="Arriving To..."
+              placeholder={arrivalMessage}
             ></input>
             <datalist id="arrivallist">
               <option
-                onClick={() => console.log("YO")}
                 value={autocompleteOneArrival}
               ></option>
               <option value={autocompleteTwoArrival}></option>
               <option value={autocompleteThreeArrival}></option>
-              {/* <option value="Strawberry"></option>
-              <option value="Vanilla"></option> */}
             </datalist>
           </label>
           <section className="addOnsWrap">
@@ -295,7 +306,7 @@ function FlightSearchModal() {
               </label>
             )}
             <div className="refinesearchwrap">
-              <button className="refinesearchbtn">Refine Search</button>
+              <button type='button' onClick={(e) => {setRefineSearchPopup(!refineSearchPopup)}} className="refinesearchbtn">Refine Search</button>
               <button className="travelersbtn"
               onClick={(e) => {setTravelersPopupdults(!travelersPopup)}}
               type='button'>
@@ -309,25 +320,11 @@ function FlightSearchModal() {
                 </svg>
                 {adultCount} Adult {childCount} Children
               </button>
+              {refineSearchPopup ? <RefineSearchPopup close={(e) => {setRefineSearchPopup(!refineSearchPopup)}} /> : null}
              {travelersPopup ? <TravelersPopup numAdults={(e) => {setAdultCount(travelerCounts.adults)}} 
              numChildren={(e) => {setChildCount(travelerCounts.children)}} close={(e) => {setTravelersPopupdults(!travelersPopup)}} /> : null } 
             </div>
           </section>
-
-          {/* <section className="flightclasswrap">
-          <label className="maxpricelabelwrap">
-            {" "}
-            Cabin Class
-            <select
-              onChange={(e) => updateDatesAndFilters(e, "flightClass")}
-              className="flightclassdropdown"
-            >
-              <option value="ECONOMY">Economy</option>
-              <option value="BUSINESS">Business</option>
-              <option value="FIRST">First</option>
-            </select>
-          </label>
-        </section> */}
           <button className="searchBtn" onClick={flightQuery}>
             Submit
           </button>
@@ -336,7 +333,7 @@ function FlightSearchModal() {
       <section className="otheritemswrap">
         <div>
         <div className="adwraps">
-          <p className="adslogans"><p>Find Your Paradise</p><a className="booknowlink">Book Now</a></p>
+          <p className="adslogans"><p>Find Your Paradise</p><a href="/register" className="booknowlink">Book Now</a></p>
         <img src={adPicOne}></img>
         </div>
         </div>
@@ -348,45 +345,6 @@ function FlightSearchModal() {
       </article>
       <span className="passangerselectwrap">
         <div className="maxpricewrap">
-          {/* <section className="personsvgandinputwrap">
-
-              <div className="personswrap">
-              <label className="maxpricelabelwrap">
-                Adults
-                <select
-                  required
-                  onChange={(e) => updateSearchParamsNum(e, "numOfTravelers")}
-                >
-                  <option value={1}>1</option>
-                  <option value={2}>2</option>
-                  <option value={3}>3</option>
-                  <option value={4}>4</option>
-                  <option value={5}>5</option>
-                </select>
-              </label>
-              <label className="maxpricelabelwrap">
-                Children
-                <select
-                  required
-                  onChange={(e) => updateSearchParamsNum(e, "numOfTravelers")}
-                >
-                  <option value={1}>1</option>
-                  <option value={2}>2</option>
-                  <option value={3}>3</option>
-                  <option value={4}>4</option>
-                  <option value={5}>5</option>
-                </select>
-              </label>
-              </div>
-              </section> */}
-          {/* <label className="maxpricelabelwrap">
-                Max Price
-                <input
-                  onChange={(e) => updateSearchParamsNum(e, "maxPrice")}
-                  placeholder="Max Price?"
-                  type="number"
-                ></input>
-              </label> */}
         </div>
       </span>
     </div>

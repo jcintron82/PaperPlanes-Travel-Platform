@@ -30,27 +30,27 @@ module.exports = {
       clientSecret: process.env.CLIENT_SECRET
     });
     amadeus.shopping.flightOffersSearch.get({
-        originLocationCode: originLocation,
-        destinationLocationCode: destinationLocation,
-        departureDate: departureDate,
-        returnDate: returnDate,
-        adults: adults,
-        children:children,
-        currencyCode:'USD',
-        max: 10,
-        nonStop: true,
-        travelClass: flightClass,
-        maxPrice: maxPrice
-        // originLocationCode: 'JFK',
-        // destinationLocationCode: 'LAX',
-        // departureDate: '2023-06-01',
-        // returnDate:  '2023-06-15',
-        // adults: 1,
+        // originLocationCode: originLocation,
+        // destinationLocationCode: destinationLocation,
+        // departureDate: departureDate,
+        // returnDate: returnDate,
+        // adults: adults,
+        // children:children,
         // currencyCode:'USD',
-        // max:5,
+        // max: 10,
         // nonStop: true,
-        // travelClass: 'BUSINESS',
-        // maxPrice: 5000
+        // travelClass: flightClass,
+        // maxPrice: maxPrice
+        originLocationCode: 'JFK',
+        destinationLocationCode: 'LAX',
+        departureDate: '2023-06-01',
+        returnDate:  '2023-06-15',
+        adults: 1,
+        currencyCode:'USD',
+        max:5,
+        nonStop: true,
+        travelClass: 'ECONOMY',
+        maxPrice: 5000
 
     }).then(function(response){
       response.data = response;

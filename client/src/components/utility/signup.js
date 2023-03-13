@@ -2,10 +2,12 @@ import "../../css/utility/signuppage.css";
 import registerpagepic from '../../images/register/registerpagepic.avif'
 import { useState } from "react";
 import { Header } from './header.js'
+import { useNavigate } from "react-router-dom";
 
 
 
 export function SignUpPage() {
+    const navigate = useNavigate();
     const body = {};
     const registerUser = async () => {
         try {
@@ -14,6 +16,8 @@ export function SignUpPage() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(body),
             });
+            navigate('/');
+            console.log('navigate')
     }
     catch(err){ 
         console.log(err)
@@ -60,14 +64,14 @@ const recordConfirmPassword = (e) => {
         </input>
     </label>
     <label className="registerlabels">Password
-        <input className="registerinputs" onChange={(e) => recordPassword(e)}>
+        <input type='password' className="registerinputs" onChange={(e) => recordPassword(e)}>
         </input>
     </label>
     <label className="registerlabels">Confirm Password
-        <input className="registerinputs" onChange={(e) => recordConfirmPassword(e)}>
+        <input type='password' className="registerinputs" onChange={(e) => recordConfirmPassword(e)}>
         </input>
     </label>
-    <button className="registerbtn" onClick={registerUser}>Register</button>
+    <button type='button' className="registerbtn" onClick={registerUser}>Register</button>
  </form>
  </div>
  </body>

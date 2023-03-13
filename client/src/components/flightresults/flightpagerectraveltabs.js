@@ -2,11 +2,11 @@
 
 export function RecommendedTravelsTabs({ bgImg, text, className }) {
   return (
-    <a className={className}  style={{
+    <button className={className}  style={{
       backgroundImage: `url(${bgImg})`
     }}>
       { text }
-    </a>
+    </button>
   );
 }
 export default RecommendedTravelsTabs;

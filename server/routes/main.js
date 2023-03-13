@@ -40,6 +40,14 @@ router.get("/getUser", (req, res) => {
   }
 });
 
+router.post('/logout', function(req, res, next) {
+  req.logOut(function(err) {
+    console.log(req.user)
+    if (err) { return next(err); }
+    res.redirect('http://localhost:3000/');
+  });
+});
+
 router.post("/register", registerController.postUser);
 
 module.exports = router;

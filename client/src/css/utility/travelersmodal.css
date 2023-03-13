@@ -23,13 +23,14 @@
     font-size: 1em;
     font-weight: 600;
     max-width: 5rem;
-    padding-left: 1rem;
     border-radius: 0.5rem;
     background-color: #F0F0F0;
     color: #05203C;
     text-align-last:left;
-    padding-left: 29px;
+    padding-left: 15px;
     direction: ltr;
+    border: transparent;
+    text-align:center;
 }
 .travelersselectinput > option {
     font-weight: 600;

@@ -1,5 +1,4 @@
 import "../../css/utility/travelersmodal.css";
-import registerpagepic from '../../images/register/registerpagepic.avif'
 import { useState } from "react";
 
 
@@ -11,11 +10,10 @@ const travelerCounts = {
 };
  function TravelersPopup({ close, numAdults, numChildren }) {
     const [adultTravelers, setAdultTravelers] = useState();
-    const [childrenTravelers, setchildrenTravelers] = useState();
     
     const recordAdults = (e) => {
         travelerCounts.adults = parseInt(e.target.value);
-        setAdultTravelers(e.target.value)
+        // setAdultTravelers(e.target.value)
     };
     const recordChildren = (e) => {
         travelerCounts.children = parseInt(e.target.value);

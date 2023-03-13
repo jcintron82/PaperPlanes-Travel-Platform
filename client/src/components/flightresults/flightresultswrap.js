@@ -2,7 +2,7 @@ import "../../css/flightresults.css";
 import { Header } from "../utility/header";
 import { queryResponseObj } from "../utility/flightquerymodel";
 import { RecommendedTravelsTabs } from './flightpagerectraveltabs'
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import  londonimg from '../../images/home/london.avif'
 import  nycimg from '../../images/home/nyc.avif';
@@ -14,6 +14,7 @@ import  adoneimg from '../../images/home/adone.avif'
 
 //-------------End of img imports for rec travel tabs-------------//
 export function FlightResultsWrap() {
+  const [infoModal, setInfoModal] = useState();
   const flightsInfo = queryResponseObj[0].message.data;
   let imgArr = [londonimg, nycimg, miamiimg, sanfranimg, adoneimg]
   
@@ -28,12 +29,6 @@ export function FlightResultsWrap() {
   return (
     <div className="flightresultspagemainbody">
       <Header />
-      {/* <section>
-        <label>tyh
-          <input placeholder="">
-          </input>
-        </label>
-      </section> */}
       <article className="flightResultsWrap">
         {flightsInfo.map((item, index) => (
           <li
@@ -46,8 +41,8 @@ export function FlightResultsWrap() {
             <article className="flightResultsTabs">
               <div className="flightmaindetailswrap">
                 <h3>
-                  <span>{item.itineraries[0].segments[0].carrierCode}</span>{" "}
-                  {"$" + item.price.total}{" "}
+                  <span className="carrierwrap">{item.itineraries[0].segments[0].carrierCode}</span>{" "}
+                  <h1>{"$" + item.travelerPricings[0].price.total}{" "}<p className="perticketdisclaimer">per ticket</p></h1>
                 </h3>
                 <section className="flighttimesmainwrap">
                   <h1 className="flightTimesWrap">
@@ -100,7 +95,7 @@ export function FlightResultsWrap() {
               </div>
               <section className="flightdetailspricewrap">
                 <div>
-                  <button className="selectflightbtn">Select</button>
+                  <button onClick={() => setInfoModal(!infoModal)} className="selectflightbtn">Select</button>
                 </div>
               </section>
             </article>
@@ -109,9 +104,10 @@ export function FlightResultsWrap() {
       </article>
       <section className="recommendedwrap">
         <h1>Recommended Travels</h1>
-        <button className="recommenedstaysbtns">Philadelphia</button>
-        <button className="recommenedstaysbtns">Miami</button>
+        <RecommendedTravelsTabs bgImg={imgArr[0]} className="recommenedstaysbtns" text='London' />
+        <RecommendedTravelsTabs bgImg={imgArr[2]} className="recommenedstaysbtns" text='Miami' />
         <RecommendedTravelsTabs bgImg={imgArr[1]} className="recommenedstaysbtns" text='NYC' />
+       
       </section>
     </div>
   );
