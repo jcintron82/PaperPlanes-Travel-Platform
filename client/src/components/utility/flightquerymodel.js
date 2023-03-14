@@ -42,7 +42,6 @@ function FlightSearchModal() {
     departure: departureLocation,
     departureDate: "",
     arrival: arrivalLocation,
-    returnDate: "",
     maxPrice: 5000,
     flightClass: "ECONOMY",
     adults:1,
@@ -78,7 +77,6 @@ function FlightSearchModal() {
     console.log(queryResponseObj);
     navigate("/flightquery");
     callCitySearchAPI();
-    console.log(process.env.REACT_APP_CLIENT_ID);
     return { message: queryResponseObj };
   };
 
@@ -333,7 +331,7 @@ function FlightSearchModal() {
       <section className="otheritemswrap">
         <div>
         <div className="adwraps">
-          <p className="adslogans"><p>Find Your Paradise</p><a href="/register" className="booknowlink">Book Now</a></p>
+          <div className="adslogans"><p>Find Your Paradise</p><a href="/register" className="booknowlink">Book Now</a></div>
         <img src={adPicOne}></img>
         </div>
         </div>

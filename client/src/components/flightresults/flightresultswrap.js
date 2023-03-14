@@ -1,23 +1,21 @@
 import "../../css/flightresults.css";
 import { Header } from "../utility/header";
 import { queryResponseObj } from "../utility/flightquerymodel";
-import { RecommendedTravelsTabs } from './flightpagerectraveltabs'
+import { RecommendedTravelsTabs } from "./flightpagerectraveltabs";
 import { useEffect, useState } from "react";
-
-import  londonimg from '../../images/home/london.avif'
-import  nycimg from '../../images/home/nyc.avif';
-import  miamiimg from '../../images/home/miami.avif'
-import  sanfranimg from '../../images/home/sanfran.avif'
-import  adoneimg from '../../images/home/adone.avif'
-
-
+import { FlightDetailsModal } from "./flightdetailsmodal";
+import londonimg from "../../images/home/london.avif";
+import nycimg from "../../images/home/nyc.avif";
+import miamiimg from "../../images/home/miami.avif";
+import sanfranimg from "../../images/home/sanfran.avif";
+import adoneimg from "../../images/home/adone.avif";
 
 //-------------End of img imports for rec travel tabs-------------//
 export function FlightResultsWrap() {
   const [infoModal, setInfoModal] = useState();
   const flightsInfo = queryResponseObj[0].message.data;
-  let imgArr = [londonimg, nycimg, miamiimg, sanfranimg, adoneimg]
-  
+  let imgArr = [londonimg, nycimg, miamiimg, sanfranimg, adoneimg];
+
   //This block is necessary for converting the carrier codes into full names
   //The other option is use the carrier code API but this was the DRYest solution
   for (let i = 0; i < flightsInfo.length; i++) {
@@ -37,13 +35,80 @@ export function FlightResultsWrap() {
             // }
             key={index}
           >
-            {" "}
+            {infoModal ? (
+              <FlightDetailsModal
+                tripTypeTwoWay={item.itineraries[1] ? true : false}
+                originLocation={
+                  " (" +
+                  item.itineraries[0].segments[0].departure.iataCode +
+                  ")" +
+                  " Terminal" +
+                  item.itineraries[0].segments[0].departure.terminal
+                }
+                originDepartureTime={new Date(
+                  item.itineraries[0].segments[0].departure.at
+                ).toLocaleTimeString("en-US", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+                arrivalLocation={
+                  " (" +
+                  item.itineraries[0].segments[0].arrival.iataCode +
+                  ")" +
+                  " Terminal" +
+                  item.itineraries[0].segments[0].arrival.terminal
+                }
+                arrivalTime={new Date(
+                  item.itineraries[0].segments[0].arrival.at
+                ).toLocaleTimeString("en-US", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+                returnTripOrigin={
+                  item.itineraries[1] ?
+                  " (" +
+                  item.itineraries[1].segments[0].arrival.iataCode +
+                  ")" +
+                  " Terminal" +
+                  item.itineraries[1].segments[0].arrival.terminal :
+                  null
+                }
+                returnDepartureTime={ item.itineraries[1] ? new Date(
+                  item.itineraries[1].segments[0].departure.at
+                ).toLocaleTimeString("en-US", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }) : null}
+                returnArrival={
+                  item.itineraries[1] ?
+                  " (" +
+                  item.itineraries[1].segments[0].arrival.iataCode +
+                  ")" +
+                  " Terminal" +
+                  item.itineraries[1].segments[0].arrival.terminal :
+                  null
+                }
+                returnArrivalTime={ item.itineraries[1] ? new Date(
+                  item.itineraries[1].segments[0].arrival.at
+                ).toLocaleTimeString("en-US", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }) : null}
+                perTicketPrice={"$" + item.travelerPricings[0].price.total}
+                totalPrice={"$" + item.price.total}
+              />
+            ) : null}{" "}
             <article className="flightResultsTabs">
               <div className="flightmaindetailswrap">
-                <h3>
-                  <span className="carrierwrap">{item.itineraries[0].segments[0].carrierCode}</span>{" "}
-                  <h1>{"$" + item.travelerPricings[0].price.total}{" "}<p className="perticketdisclaimer">per ticket</p></h1>
-                </h3>
+                <div>
+                  <span className="carrierwrap">
+                    {item.itineraries[0].segments[0].carrierCode}
+                  </span>{" "}
+                  <h1>
+                    {"$" + item.travelerPricings[0].price.total}{" "}
+                    <span className="perticketdisclaimer">per ticket</span>
+                  </h1>
+                </div>
                 <section className="flighttimesmainwrap">
                   <h1 className="flightTimesWrap">
                     {new Date(
@@ -67,7 +132,7 @@ export function FlightResultsWrap() {
                       <path d="M2.5,19H21.5V21H2.5V19M22.07,9.64C21.86,8.84 21.03,8.36 20.23,8.58L14.92,10L8,3.57L6.09,4.08L10.23,11.25L5.26,12.58L3.29,11.04L1.84,11.43L3.66,14.59L4.43,15.92L6.03,15.5L11.34,14.07L15.69,12.91L21,11.5C21.81,11.26 22.28,10.44 22.07,9.64Z" />
                     </svg>
                     <div className="durationtimelinewrap">
-                      <p className="durationparatag">Duration 10hr</p>
+                      <span className="durationparatag">Duration 10hr</span>
                       <hr></hr>
                     </div>
                     <svg
@@ -95,7 +160,12 @@ export function FlightResultsWrap() {
               </div>
               <section className="flightdetailspricewrap">
                 <div>
-                  <button onClick={() => setInfoModal(!infoModal)} className="selectflightbtn">Select</button>
+                  <button
+                    onClick={() => setInfoModal(!infoModal)}
+                    className="selectflightbtn"
+                  >
+                    Select
+                  </button>
                 </div>
               </section>
             </article>
@@ -104,10 +174,21 @@ export function FlightResultsWrap() {
       </article>
       <section className="recommendedwrap">
         <h1>Recommended Travels</h1>
-        <RecommendedTravelsTabs bgImg={imgArr[0]} className="recommenedstaysbtns" text='London' />
-        <RecommendedTravelsTabs bgImg={imgArr[2]} className="recommenedstaysbtns" text='Miami' />
-        <RecommendedTravelsTabs bgImg={imgArr[1]} className="recommenedstaysbtns" text='NYC' />
-       
+        <RecommendedTravelsTabs
+          bgImg={imgArr[0]}
+          className="recommenedstaysbtns"
+          text="London"
+        />
+        <RecommendedTravelsTabs
+          bgImg={imgArr[2]}
+          className="recommenedstaysbtns"
+          text="Miami"
+        />
+        <RecommendedTravelsTabs
+          bgImg={imgArr[1]}
+          className="recommenedstaysbtns"
+          text="NYC"
+        />
       </section>
     </div>
   );
