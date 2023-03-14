@@ -13,6 +13,8 @@ import adoneimg from "../../images/home/adone.avif";
 //-------------End of img imports for rec travel tabs-------------//
 export function FlightResultsWrap() {
   const [infoModal, setInfoModal] = useState();
+  const [selectIndex, setSelectIndex] = useState();
+
   const flightsInfo = queryResponseObj[0].message.data;
   let imgArr = [londonimg, nycimg, miamiimg, sanfranimg, adoneimg];
 
@@ -28,76 +30,80 @@ export function FlightResultsWrap() {
     <div className="flightresultspagemainbody">
       <Header />
       <article className="flightResultsWrap">
-        {flightsInfo.map((item, index) => (
-          <li
-            // className={
-            //   deleteIndex === index ? "highlightselectedproduct" : "priceli"
-            // }
-            key={index}
-          >
-            {infoModal ? (
+      {infoModal ? (
               <FlightDetailsModal
-                tripTypeTwoWay={item.itineraries[1] ? true : false}
+                tripTypeTwoWay={ flightsInfo[selectIndex].itineraries[1] ? true : false}
                 originLocation={
                   " (" +
-                  item.itineraries[0].segments[0].departure.iataCode +
+                  flightsInfo[selectIndex].itineraries[0].segments[0].departure.iataCode +
                   ")" +
-                  " Terminal" +
-                  item.itineraries[0].segments[0].departure.terminal
+                  " Terminal " +
+                  flightsInfo[selectIndex].itineraries[0].segments[0].departure.terminal
                 }
                 originDepartureTime={new Date(
-                  item.itineraries[0].segments[0].departure.at
+                  flightsInfo[selectIndex].itineraries[0].segments[0].departure.at
                 ).toLocaleTimeString("en-US", {
                   hour: "2-digit",
                   minute: "2-digit",
                 })}
                 arrivalLocation={
                   " (" +
-                  item.itineraries[0].segments[0].arrival.iataCode +
+                  flightsInfo[selectIndex].itineraries[0].segments[0].arrival.iataCode +
                   ")" +
-                  " Terminal" +
-                  item.itineraries[0].segments[0].arrival.terminal
+                  " Terminal " +
+                  flightsInfo[selectIndex].itineraries[0].segments[0].arrival.terminal
                 }
                 arrivalTime={new Date(
-                  item.itineraries[0].segments[0].arrival.at
+                  flightsInfo[selectIndex].itineraries[0].segments[0].arrival.at
                 ).toLocaleTimeString("en-US", {
                   hour: "2-digit",
                   minute: "2-digit",
                 })}
                 returnTripOrigin={
-                  item.itineraries[1] ?
+                  flightsInfo[selectIndex].itineraries[1] ?
                   " (" +
-                  item.itineraries[1].segments[0].arrival.iataCode +
+                  flightsInfo[selectIndex].itineraries[1].segments[0].departure.iataCode +
                   ")" +
-                  " Terminal" +
-                  item.itineraries[1].segments[0].arrival.terminal :
+                  " Terminal " +
+                  flightsInfo[selectIndex].itineraries[1].segments[0].departure.terminal :
                   null
                 }
-                returnDepartureTime={ item.itineraries[1] ? new Date(
-                  item.itineraries[1].segments[0].departure.at
+                returnDepartureTime={ flightsInfo[selectIndex].itineraries[1] ? new Date(
+                  flightsInfo[selectIndex].itineraries[1].segments[0].departure.at
                 ).toLocaleTimeString("en-US", {
                   hour: "2-digit",
                   minute: "2-digit",
                 }) : null}
                 returnArrival={
-                  item.itineraries[1] ?
+                  flightsInfo[selectIndex].itineraries[1] ?
                   " (" +
-                  item.itineraries[1].segments[0].arrival.iataCode +
-                  ")" +
-                  " Terminal" +
-                  item.itineraries[1].segments[0].arrival.terminal :
+                  flightsInfo[selectIndex].itineraries[1].segments[0].arrival.iataCode +
+                  ") " +
+                  " Terminal " +
+                  flightsInfo[selectIndex].itineraries[1].segments[0].arrival.terminal :
                   null
                 }
-                returnArrivalTime={ item.itineraries[1] ? new Date(
-                  item.itineraries[1].segments[0].arrival.at
+                returnArrivalTime={ flightsInfo[selectIndex].itineraries[1] ? new Date(
+                  flightsInfo[selectIndex].itineraries[1].segments[0].arrival.at
                 ).toLocaleTimeString("en-US", {
                   hour: "2-digit",
                   minute: "2-digit",
                 }) : null}
-                perTicketPrice={"$" + item.travelerPricings[0].price.total}
-                totalPrice={"$" + item.price.total}
+//---------------End of departure/arrival inputs block---------------------//
+                perTicketPrice={"$" + flightsInfo[selectIndex].travelerPricings[0].price.total}
+                totalPrice={"$" + flightsInfo[selectIndex].price.total}
+                cabinClass={flightsInfo[selectIndex].travelerPricings[0].fareDetailsBySegment[0].cabin}
+                includedCheckedbags={flightsInfo[selectIndex].travelerPricings[0].fareDetailsBySegment[0].includedCheckedBags.quantity}
               />
             ) : null}{" "}
+        {flightsInfo.map((item, index) => (
+          <li
+            // className={
+            //   deleteIndex === index ? "highlightselectedproduct" : "priceli"
+            // }
+            key={index}
+          >{console.log(flightsInfo[index])}
+          
             <article className="flightResultsTabs">
               <div className="flightmaindetailswrap">
                 <div>
@@ -161,7 +167,7 @@ export function FlightResultsWrap() {
               <section className="flightdetailspricewrap">
                 <div>
                   <button
-                    onClick={() => setInfoModal(!infoModal)}
+                    onClick={() =>{ setInfoModal(true); setSelectIndex(index)}}
                     className="selectflightbtn"
                   >
                     Select
