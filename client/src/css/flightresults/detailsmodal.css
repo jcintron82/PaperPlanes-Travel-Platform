@@ -1,36 +1,60 @@
 .flightdetailmodalwrap{
     display: flex;
     justify-content: space-evenly;
-    max-width: 35rem;
     align-items: center;
     flex-flow: column nowrap;
     position: absolute;
-    background-color:#05203C;
+    background-color: #05203C;
     color: white;
-    top: 0%;
+    top: 10%;
     left: 0;
     z-index: 5;
-    width:75vw;
+    width: 90%;
     border-top-right-radius: 0.85rem;
     border-bottom-right-radius: 0.85rem;
     padding: 1rem 0 2rem;
 }
 .closemodalbtn{
     border-radius: 50%;
-    background: maroon;
+    background: transparent;
     color: white;
-    width: 25%;
-    height: 2.5rem;
+    /* width: 25%; */
+    /* height: 2.5rem; */
     font-size: 1em;
-    padding: 0.5rem;
+    /* padding: 0.5rem; */
     align-self: flex-end;
     margin-right: 0.5rem;
+    border: transparent;
+}
+.exitmodalsvg{
+    width: 2rem;
+    fill: #05203C;
+    stroke: red;
+    stroke-width: 1.5px
+}
+.metainfowrap > * {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: .5rem;
+}
+.luggagewrap{
+    justify-content: flex-end;
+}
+.finalpricingwrap{
+    font-size: .7em;
+    font-weight: 400;
+    margin: 0;
+    width: 5rem;
+    text-align: left;
 }
 .durationandstopswrap{
     display: flex;
     width: 90%;
+    height: 6rem;
     justify-content: center;
     align-items: center;
+    text-align: left;
 }
 .tickettotalswrap{
     border: solid;
@@ -44,28 +68,96 @@
 }
 .timeswrap{
     display: inline;
-    text-align: center;
+    text-align: left;
     width: 6rem;
 }
-.metainfowrap{
+.modaltravelerswrap{
     display: flex;
-    width: 95%;
+}
+
+.metainfowrap{
+    width: 85%;
+    display: flex;
+    justify-content: flex-start;
+    font-size: .9em;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
 }
 .arrowsvgs{
     width: 100%;
     stroke-width: 0.6px;
     height: 10rem
 }
+.offerbtnwrap{
+    display: flex;
+    justify-content: center;
+}
 .selectOfferBtn{
-    align-self: flex-end;
-    margin-right: 1rem;
+    margin: 1rem 0;
     height: 2.25rem;
-    width: 60%;
+    width: 11rem;
     border-radius: 0.5rem;
     font-size: 1em;
     font-weight: 600;
     border: transparent;
-    max-width: 15rem;
     background-color: #5BC0BE;
     color: white;
+    align-self: center;
 }
+.durationdesktopwrap{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    justify-content: flex-end;
+    /* padding-left: 1rem; */
+    top: -26px;
+    height: 15rem;
+    width: 100%;
+}
+.cabinwrap{
+    text-align: left;
+    width: 5rem;
+}
+@media(max-width:425px){
+    .luggagewrap{
+        justify-content: center;
+    }
+}
+@media(min-width:768px){
+    .flightdetailmodalwrap{
+        position: fixed;
+        justify-content: flex-start;
+        flex-direction: row;
+        top: 3.2rem;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        width: 100%;
+        padding: 1rem 0 0.5rem;
+        border-top: solid 1px lightgrey;
+    }
+    .durationandstopswrap{
+        height: 5rem;
+    }
+    .metainfowrap{
+        width: 30%;
+        flex-direction: column;
+    }
+    .closemodalbtn{
+        position: absolute;
+        top: 0.5rem;
+        right: 0;
+    }
+    .durationdesktopwrap{
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        align-items: center;
+        justify-content: flex-end;
+        /* padding-left: 1rem; */
+        top: -26px;
+        height: 15rem;
+        width: 100%;
+    }
+} 

@@ -15,6 +15,7 @@ export function FlightDetailsModal({
   cabinClass,
   totalPrice,
   includedCheckedbags,
+  infoModalClose
 }) {
   const [returnOrigin, setReturnOrigin] = useState();
 
@@ -23,14 +24,16 @@ export function FlightDetailsModal({
   });
   return (
     <article className="flightdetailmodalwrap">
-      <button className="closemodalbtn">Close</button>
+      <button onClick={infoModalClose} className="closemodalbtn">X</button>
       <section className="metainfowrap">
-        Tickets: {perTicketPrice}/ea Cabin: {cabinClass}
-        <br></br># Adults # Children<br></br>
-        Trip Total: {totalPrice}
-        <br></br>
-        Incl. Checked Luggage: {includedCheckedbags}
+        <p className="pricingparagraph"><h1 className="finalpricingwrap">Tickets:<br></br> {perTicketPrice}/ea</h1><h1  className="finalpricingwrap">Total:<br></br> {totalPrice}</h1></p>
+        <div className="modaltravelerswrap"># Adults<br></br> # Children <div className="cabinwrap">Cabin:<br></br> {cabinClass}</div></div>
+        <div className="luggagewrap">Incl. Checked Luggage: {includedCheckedbags}</div>
       </section>
+
+
+    <div className="durationdesktopwrap">
+      
       <section className="durationandstopswrap">
         <div className="timeswrap">
           {originLocation}
@@ -88,9 +91,9 @@ export function FlightDetailsModal({
           {returnDepartureTime}{" "}
           </div>
         </section>
-      ) : null}
-      <div>Layovers</div>
-      <button className="selectOfferBtn">Buy Offer</button>
+      ) : null}</div>
+      {/* <div>Layovers</div> */}
+      <div className="offerbtnwrap"><button className="selectOfferBtn">Buy Offer</button></div>
     </article>
   );
 }

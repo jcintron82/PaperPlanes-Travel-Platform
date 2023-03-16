@@ -94,6 +94,7 @@ export function FlightResultsWrap() {
                 totalPrice={"$" + flightsInfo[selectIndex].price.total}
                 cabinClass={flightsInfo[selectIndex].travelerPricings[0].fareDetailsBySegment[0].cabin}
                 includedCheckedbags={flightsInfo[selectIndex].travelerPricings[0].fareDetailsBySegment[0].includedCheckedBags.quantity}
+                infoModalClose={() =>{ setInfoModal(false) }}
               />
             ) : null}{" "}
         {flightsInfo.map((item, index) => (
@@ -102,8 +103,7 @@ export function FlightResultsWrap() {
             //   deleteIndex === index ? "highlightselectedproduct" : "priceli"
             // }
             key={index}
-          >{console.log(flightsInfo[index])}
-          
+          >
             <article className="flightResultsTabs">
               <div className="flightmaindetailswrap">
                 <div>
