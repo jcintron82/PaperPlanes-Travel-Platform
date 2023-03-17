@@ -15,19 +15,24 @@ export function FlightDetailsModal({
   cabinClass,
   totalPrice,
   includedCheckedbags,
-  infoModalClose
+  infoModalClose,
+  numAdults,
+  numChildren
 }) {
   const [returnOrigin, setReturnOrigin] = useState();
 
   useEffect(() => {
     setReturnOrigin(returnTripOrigin);
   });
+  const confirmFlightOffer = () => {
+    
+  };
   return (
     <article className="flightdetailmodalwrap">
       <button onClick={infoModalClose} className="closemodalbtn">X</button>
       <section className="metainfowrap">
         <p className="pricingparagraph"><h1 className="finalpricingwrap">Tickets:<br></br> {perTicketPrice}/ea</h1><h1  className="finalpricingwrap">Total:<br></br> {totalPrice}</h1></p>
-        <div className="modaltravelerswrap"># Adults<br></br> # Children <div className="cabinwrap">Cabin:<br></br> {cabinClass}</div></div>
+        <div className="modaltravelerswrap">{numAdults} Adults<br></br> {numChildren} Children <div className="cabinwrap">Cabin:<br></br> {cabinClass}</div></div>
         <div className="luggagewrap">Incl. Checked Luggage: {includedCheckedbags}</div>
       </section>
 
@@ -93,7 +98,7 @@ export function FlightDetailsModal({
         </section>
       ) : null}</div>
       {/* <div>Layovers</div> */}
-      <div className="offerbtnwrap"><button className="selectOfferBtn">Buy Offer</button></div>
+      <div onClick={confirmFlightOffer} className="offerbtnwrap"><button className="selectOfferBtn">Buy Offer</button></div>
     </article>
   );
 }

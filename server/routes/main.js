@@ -48,6 +48,11 @@ router.post('/logout', function(req, res, next) {
   });
 });
 
+
 router.post("/register", registerController.postUser);
+
+router.post("/flightconfirmation",(req, res, next) => {
+  
+});
 
 module.exports = router;
