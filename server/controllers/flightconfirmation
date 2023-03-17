@@ -1,0 +1,5 @@
+
+var Amadeus = require('amadeus');
+module.exports = {
+    postUser: async (req,res) => {}
+}

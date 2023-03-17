@@ -115,7 +115,7 @@ function FlightSearchModal() {
       const data = await pull.json();
       // console.log(data);
       autocompleteAPIValuesHold.options = data;
-      console.log(data);
+      // console.log(data);
 
       setautocompleteOne(
         data.data[0].address.cityName + ", " + data.data[0].iataCode

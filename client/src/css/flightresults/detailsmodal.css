@@ -68,7 +68,7 @@
 }
 .timeswrap{
     display: inline;
-    text-align: left;
+    text-align: center;
     width: 6rem;
 }
 .modaltravelerswrap{
@@ -91,7 +91,9 @@
 }
 .offerbtnwrap{
     display: flex;
+    /* height: 10rem; */
     justify-content: center;
+    align-items: center;
 }
 .selectOfferBtn{
     margin: 1rem 0;
@@ -110,11 +112,10 @@
     flex-direction: column;
     position: relative;
     align-items: center;
-    justify-content: flex-end;
-    /* padding-left: 1rem; */
+    justify-content: center;
     top: -26px;
-    height: 15rem;
     width: 100%;
+    padding-top: 2rem;
 }
 .cabinwrap{
     text-align: left;
@@ -141,8 +142,13 @@
         height: 5rem;
     }
     .metainfowrap{
-        width: 30%;
+        width: 20%;
         flex-direction: column;
+        align-self: flex-start;
+        padding-left: 1.5rem;
+    }
+    .luggagewrap{
+        justify-content: flex-start;
     }
     .closemodalbtn{
         position: absolute;
@@ -154,10 +160,14 @@
         flex-direction: column;
         position: relative;
         align-items: center;
-        justify-content: flex-end;
-        /* padding-left: 1rem; */
-        top: -26px;
-        height: 15rem;
-        width: 100%;
+        justify-content: flex-start;
+        top: -4px;
+        height: 11rem;
+        width: 55%;
+        padding: 0;
+    }
+    .selectOfferBtn{
+        margin: 1rem 1.5rem 2.5rem 0
+    
     }
 } 
