@@ -1,5 +1,29 @@
-
-var Amadeus = require('amadeus');
+var Amadeus = require("amadeus");
 module.exports = {
-    postUser: async (req,res) => {}
+  confirmFlight: (req, res) => {
+    // console.log(req.body)
+    const amadeus = new Amadeus({
+      clientId: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+    });
+    amadeus.shopping.flightOffers.pricing
+      .post(
+        JSON.stringify({
+          data: {
+            type: "flight-offers-pricing",
+            flightOffers: [req.body[0]],
+          },
+        })
+      )
+      .then(function (response) {
+        console.log("RES ONE")
+        console.log(response.data);
+        res.json({ message: "YER" });
+      })
+      .catch(function (responseError) {
+        console.log("ERROR")
+        console.log(responseError);
+      });
+    
+  },
 }

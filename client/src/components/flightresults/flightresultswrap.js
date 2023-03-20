@@ -172,7 +172,7 @@ export function FlightResultsWrap() {
               <section className="flightdetailspricewrap">
                 <div>
                   <button
-                    onClick={() =>{ setInfoModal(true); setSelectIndex(index)}}
+                    onClick={() =>{  setInfoModal(true); setSelectIndex(index)}}
                     className="selectflightbtn"
                   >
                     Select

@@ -4,6 +4,7 @@ const passport = require("passport");
 const { ensureAuth } = require("../middleware/auth");
 const authController = require("../controllers/auth");
 const homeController = require("../controllers/home");
+const flightPriceconfirmationController = require("../controllers/flightconfirmation");
 const registerController = require("../controllers/register");
 
 router.get("/query", homeController.getIndex);
@@ -51,8 +52,5 @@ router.post('/logout', function(req, res, next) {
 
 router.post("/register", registerController.postUser);
 
-router.post("/flightconfirmation",(req, res, next) => {
-  
-});
-
+router.post("/flightconfirmation",flightPriceconfirmationController.confirmFlight)
 module.exports = router;

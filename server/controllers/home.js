@@ -60,6 +60,7 @@ module.exports = {
     }).then(function(response){
       response.data = response;
       const data = JSON.parse(response.data.body);
+      
 
   
         return res.json({message:data, carriers: data.dictionaries.carriers, travelerCounts})
@@ -69,5 +70,7 @@ module.exports = {
       console.log(responseError.code + 'HMMMM');
 
     });
+
+
  
 }}

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { queryResponseObj } from "../utility/flightquerymodel";
 import "../../css/flightresults/detailsmodal.css";
 
 export function FlightDetailsModal({
@@ -18,15 +19,32 @@ export function FlightDetailsModal({
   infoModalClose,
   numAdults,
   numChildren
-}) {
+}){
   const [returnOrigin, setReturnOrigin] = useState();
 
   useEffect(() => {
     setReturnOrigin(returnTripOrigin);
   });
-  const confirmFlightOffer = () => {
-    
-  };
+  const confirmFlightOffer = async (selectedIndex) => {
+    console.log(queryResponseObj)
+    //Converting the converted carrier code back to its airline code for
+    //search purposes
+    queryResponseObj[0].message.data[0].itineraries[0].segments[0].carrierCode = 
+    queryResponseObj[0].message.data[0].itineraries[0].segments[0].operating.carrierCode;
+    try {
+      const pull = await fetch("http://localhost:8000/flightconfirmation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(queryResponseObj[0].message.data[selectedIndex])
+      });
+      const data = await pull.json();
+      console.log(pull);
+      console.log(data)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+ 
   return (
     <article className="flightdetailmodalwrap">
       <button onClick={infoModalClose} className="closemodalbtn">X</button>
