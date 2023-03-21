@@ -3,7 +3,6 @@ Currently in development.
 <div>PaperPlanes Travel Booker</div></h1> <br>
 <p align="center">
   <a href="https://gitpoint.co/">
-
   </a>
 </p>
 
