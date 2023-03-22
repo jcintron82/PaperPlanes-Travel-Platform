@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { queryResponseObj } from "../utility/flightquerymodel";
 import "../../css/flightresults/detailsmodal.css";
-
+import "../../css/flightresults/travelersinfomodal.css";
 export function FlightDetailsModal({
   tripTypeTwoWay,
   originLocation,
@@ -28,35 +28,63 @@ export function FlightDetailsModal({
     setReturnOrigin(returnTripOrigin);
   });
   const confirmFlightOffer = async () => {
-    console.log(queryResponseObj)
+    console.log(queryResponseObj[1].message.data[1])
+    console.log(queryResponseObj[0].message.data[1])
     //Converting the converted carrier code back to its airline code for
     //search purposes
-    queryResponseObj[0].message.data[flightID].itineraries[0].segments[0].carrierCode = 
-    queryResponseObj[0].message.data[flightID].itineraries[0].segments[0].operating.carrierCode;
-    try {
+    // queryResponseObj[1].message.data[1].itineraries[0].segments[0].carrierCode = 
+    // queryResponseObj[1].message.data[1].itineraries[0].segments[0].operating.carrierCode;
+    // queryResponseObj[1].message.data[1].itineraries[1].segments[0].carrierCode = 
+    // queryResponseObj[1].message.data[1].itineraries[1].segments[0].operating.carrierCode;
       const pull = await fetch("http://localhost:8000/flightconfirmation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(queryResponseObj[0].message.data[flightID])
+        body: JSON.stringify(queryResponseObj[1].message.data[1])
       });
       const x = await pull.json()
       console.log(pull)
       console.log(x)
-    } catch (err) {
-      console.log(err);
-    }
-    // await finalConfirmation()
+
+
+    // await finalConfirmation();
   }
  const finalConfirmation = async () => {
-  const data =  await fetch("http://localhost:8000/flightconfirmation");
-      const final = await data.json();
-      console.log(final);
-      console.log(data)
+  console.log("GET RUNNING")
+  try {
+    const data = fetch("http://localhost:8000/flightconfirmation");
+    const res = await data.json();
+    console.log(res) 
+  }
+  catch(err){
+    console.log(err)
+  }
+  
 
  }
   return (
     <article className="flightdetailmodalwrap">
-      { travelerInfoModal ? <form className="">
+      { travelerInfoModal ? <form className="travelersinfomodal">
+      <label>Title
+          <input></input>
+        </label>
+        <label>First Name
+          <input></input>
+        </label>
+        <label>Middle Name
+          <input></input>
+        </label>
+        <label>Last Name
+          <input></input>
+        </label>
+        <label>Date of Birth
+          <input></input>
+        </label>
+        <label>Suffix
+          <input></input>
+        </label>
+        <label>Male
+          <input></input>
+        </label>
         <label>First Name
           <input></input>
         </label>

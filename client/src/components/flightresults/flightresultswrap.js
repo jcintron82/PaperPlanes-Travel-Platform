@@ -20,12 +20,12 @@ export function FlightResultsWrap() {
 
   //This block is necessary for converting the carrier codes into full names
   //The other option is use the carrier code API but this was the DRYest solution
-  for (let i = 0; i < flightsInfo.length; i++) {
-    for (const [key, value] of Object.entries(queryResponseObj[0].carriers)) {
-      if (flightsInfo[i].itineraries[0].segments[0].carrierCode === key)
-        flightsInfo[i].itineraries[0].segments[0].carrierCode = value;
-    }
-  }
+  // for (let i = 0; i < flightsInfo.length; i++) {
+  //   for (const [key, value] of Object.entries(queryResponseObj[0].carriers)) {
+  //     if (flightsInfo[i].itineraries[0].segments[0].carrierCode === key)
+  //       flightsInfo[i].itineraries[0].segments[0].carrierCode = value;
+  //   }
+  // }
   return (
     <div className="flightresultspagemainbody">
       <Header />

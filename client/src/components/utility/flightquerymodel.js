@@ -85,7 +85,7 @@ function FlightSearchModal() {
     // setDepartureLocation(data.message.data);
     setQueryStatus(!queryRecieved);
     queryResponseObj[0] = data;
-    console.log(queryResponseObj);
+    queryResponseObj[1] = data;
     navigate("/flightquery");
     callCitySearchAPI();
     return { message: queryResponseObj };
