@@ -52,5 +52,6 @@ router.post('/logout', function(req, res, next) {
 
 router.post("/register", registerController.postUser);
 
-router.post("/flightconfirmation",flightPriceconfirmationController.confirmFlight)
+router.post("/flightconfirmation",flightPriceconfirmationController.confirmFlight);
+router.get("/flightconfirmation",flightPriceconfirmationController.postflightConfirmation)
 module.exports = router;

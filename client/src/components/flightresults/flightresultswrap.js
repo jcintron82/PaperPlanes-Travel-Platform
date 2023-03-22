@@ -97,6 +97,7 @@ export function FlightResultsWrap() {
                 infoModalClose={() =>{ setInfoModal(false) }}
                 numAdults={queryResponseObj[0].travelerCounts.adults}
                 numChildren={queryResponseObj[0].travelerCounts.children}
+                flightID={selectIndex}
               />
             ) : null}{" "}
         {flightsInfo.map((item, index) => (
@@ -172,7 +173,7 @@ export function FlightResultsWrap() {
               <section className="flightdetailspricewrap">
                 <div>
                   <button
-                    onClick={() =>{  setInfoModal(true); setSelectIndex(index)}}
+                    onClick={() =>{  setInfoModal(true); setSelectIndex(index); }}
                     className="selectflightbtn"
                   >
                     Select

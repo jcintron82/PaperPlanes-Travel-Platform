@@ -21,7 +21,7 @@ html{
     align-items: center;
     justify-content: center;
     border: none;
-    background: transparent;
+    background: lightgray;
     position: relative;
     bottom: 5%;
 }
@@ -42,28 +42,37 @@ html{
     margin-bottom: .12rem;
     font-weight: 500;
     text-decoration: none;
+    color: white;
 }
 .loginwrap{
     display: flex;
     height: 100%;
-    justify-content: center;
+    justify-content: flex-end;
+    align-items: center;
     position: absolute;
     right: 0;
+    width: 3rem;
+    background: transparent;
+    border: transparent;
 }
 .loginpopup{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    top: 20vh;
-    right: 9.5%;
-    width: 80vw;
-    max-width: 20rem;
-    height: 50vh;
-    background-color:darkgray ;
+    position: fixed;
+    top: 50vh;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 95vw;
+    min-height: 15rem;
+    max-width: 28rem;
+    max-height: 25rem;
+    background-color: darkgray;
     border-radius: 0.85rem;
-    gap: 5px;
+    gap: 24px;
+    z-index: 1;
+    padding: 1rem 0;
 }
 p{
     align-items: center;
@@ -74,67 +83,115 @@ p{
     margin-bottom: 0;
 
 }
-.loginInputs{
-    width: 60vw;
-    max-width: 11.5rem;
-    height: 2rem;
-    border-radius: 0.65rem;
+.notmemberwrap{
+    font-size: .75em;
+    font-weight: 400;
+    color: #05203C;
     padding: 0.25rem;
-    font-size: 1em;
-    margin-bottom: 10px;
-    border: none;
+    margin: .2rem 0;
 }
-
+.loginInputs{
+    width: 80vw;
+    max-width: 21.5rem;
+    height: 6vh;
+    padding: 0.45rem;
+    padding-left: .8rem;
+    font-size: 1em;
+    border: transparent;
+    border-radius: .5rem;
+}
+.loginInputs:nth-child(3){
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+.loginInputs:nth-child(2) {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
 .paperplanesvg{
     fill: white
 }
 .accountsvg{
     width: 37px;
     fill: white;
-    padding-right: 1rem;
+    padding-right: .5rem;
 }
 .signupcalltoaction{
     font-size: .76em;
     margin: 0 0 .8rem;
-    text-indent: 4px;
+    width: 100%;
+    text-align: left;
+    color: #05203C;
 }
 a{
-    color: white;
-    padding-left: .25rem;;
+    color: #05203C;
+    padding-left: .25rem;
 }
 .loginbtn{
-    width: 50%;
-    height: 2rem;
-    border-radius: 0.5rem;
+    width: 86%;
+    height: 3rem;
+    border-radius: 0.85rem;
     border: none;
-    font-size: .9em;
+    font-size: 1.2em;
     font-weight: 600;
     color: white;
-    background-color: #5BC0BE
+    background-color: #0770e3
 }
 .exitsvg{
     width: 30px;
-    stroke: 4px;
-    stroke: #DB162F;
+    border-radius: 50%;
+    stroke-width: 4px;
+    stroke: lightslategray;
 }
 .hide{
     display: none;
 }
+.inputswrap{
+    display: flex;
+    flex-direction: column;
+}
+.loggedoutwrap{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
 
-@media(min-width:768px){
-    .loginpopup{
-        top: 100%;
-        right: .5%;
-        height: 17rem;
-        border-radius: 0;
-        border-bottom-left-radius: .85rem;
-        border-bottom-left-radius: .85rem;
+.loginpopup-enter {
+    opacity: 0;
+  }
+  .loginpopup-enter-active {
+    opacity: 1;
+    transition: opacity 500ms;
+  }
+  .loginpopup-exit {
+    opacity: 1;
+  }
+  .loginpopup-exit-active {
+    opacity: 0;
+    display: none;
+    transition: opacity 500ms;
+  }
+  .loginpopup-exit-done{
+    display: none;
+  }
+
+
+@media(min-width:710px){
+    .loginbtn{
+        background-color: #05203C;
     }
+   
 }
 @media(min-width:1024px){
-    .loginwrap:hover{
-        cursor: pointer;
-        opacity: .9;;
+    .loginbtn:hover {
+        background-color: #0770e3;
     }
+    .exitbtn:hover{
+        background-color: maroon;
+        opacity: .8;
+    }
+ 
 
 }

@@ -57,7 +57,20 @@
 .travelertypeh1{
     color: #05203C;
 }
-
+.modals-enter {
+    opacity: 0;
+  }
+  .modals-enter-active {
+    opacity: 1;
+    transition: opacity 1000ms;
+  }
+  .modals-exit {
+    opacity: 1;
+  }
+  .modals-exit-active {
+    opacity: 0;
+    transition: opacity 1000ms;
+  }
 @media(min-width:1024px){
     .travelersnumpopup{
         position: absolute;

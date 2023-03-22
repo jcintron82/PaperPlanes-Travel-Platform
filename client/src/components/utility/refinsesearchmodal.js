@@ -1,5 +1,6 @@
 import "../../css/utility/travelersmodal.css";
 import { useState } from "react";
+import { CSSTransition } from "react-transition-group";
 
 
 export { RefineSearchPopup, searchParams}
@@ -9,9 +10,10 @@ const searchParams = {
     maxPrice:5000,
     nonstop:false,
 };
- function RefineSearchPopup({ close, cabin, maxPrice, nonStop }) {
+ function RefineSearchPopup({ close, cabin, maxPrice, nonStop, className }) {
     const [adultTravelers, setAdultTravelers] = useState();
     const [childrenTravelers, setchildrenTravelers] = useState();
+    const [refineSearchPopup, setRefineSearchPopup] = useState(true);
     
     const recordMaxPrice = (e) => {
         searchParams.maxPrice = parseInt(e.target.value);
@@ -24,7 +26,9 @@ const searchParams = {
         searchParams.cabinClass = (e.target.value);
     };
   return (
-    <section type='button' className="travelersnumpopup">
+
+    <section className={className}>
+            
             <label className="travelerlabelwraps">
                 <h1 className="travelertypeh1">Cabin Class</h1>
             <select onChange={(e) => {recordCabinClass(e)}} className="travelersselectinput">
@@ -35,7 +39,7 @@ const searchParams = {
             </select></label>
         <label className="travelerlabelwraps">
             <h1 className="travelertypeh1" >Max Price</h1>
-        <input type='number' placeholder={500.00} onChange={(e) => {recordMaxPrice(e)}} className="travelersselectinput">
+        <input type='number' placeholder='500.00' onChange={(e) => {recordMaxPrice(e)}} className="travelersselectinput">
             </input>
             </label>
             <label className="travelerlabelwraps">
@@ -45,6 +49,7 @@ const searchParams = {
                 <option value={false}>No</option>
             </select>
             </label>
+
             <button onClick={(e) => {close(); cabin(); maxPrice(); nonStop();}} type="button" className="travelersconfirmbtn">Confirm</button>
 
     </section>

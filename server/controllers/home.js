@@ -49,8 +49,8 @@ module.exports = {
         destinationLocationCode: 'LON',
         departureDate: '2023-06-01',
         returnDate:  '2023-06-15',
-        adults: 2,
-        children:2,
+        adults: 1,
+        children:0,
         currencyCode:'USD',
         max:5,
         nonStop: true,
@@ -59,11 +59,12 @@ module.exports = {
 
     }).then(function(response){
       response.data = response;
+      const offers = response.data
       const data = JSON.parse(response.data.body);
       
 
   
-        return res.json({message:data, carriers: data.dictionaries.carriers, travelerCounts})
+        return res.json({message:data, carriers: data.dictionaries.carriers, travelerCounts,})
       } )
 
     .catch(function(responseError){

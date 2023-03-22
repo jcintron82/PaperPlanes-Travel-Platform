@@ -1,7 +1,30 @@
 var Amadeus = require("amadeus");
+const travelersInfo = {
+  id: "1",
+  dateOfBirth: "1990-01-01",
+  name: {
+    firstName: "John",
+    lastName: "Doe",
+    title: "MR",
+    middleName: "Middle",
+    suffix: "Jr",
+  },
+  gender: "MALE",
+  contact: {
+    emailAddress: "johndoe@example.com",
+    phones: [
+      {
+        deviceType: "MOBILE",
+        countryCallingCode: "1",
+        number: "5555555555",
+      },
+    ],
+  },
+};
+
 module.exports = {
   confirmFlight: (req, res) => {
-    // console.log(req.body)
+    console.log(req.body);
     const amadeus = new Amadeus({
       clientId: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
@@ -11,19 +34,27 @@ module.exports = {
         JSON.stringify({
           data: {
             type: "flight-offers-pricing",
-            flightOffers: [req.body[0]],
+            flightOffers: [req.body],
+            travelers: [travelersInfo],
           },
+          params: {
+            'credit-card-fee': 10.00, // Add a credit card fee of $10
+            'pricingDetailSources': ['GDS'], // Get detailed fare rules
+          }
         })
       )
       .then(function (response) {
-        console.log("RES ONE")
         console.log(response.data);
-        res.json({ message: "YER" });
+        res.json(response.data);
       })
       .catch(function (responseError) {
-        console.log("ERROR")
+        console.log("ERROR");
         console.log(responseError);
       });
-    
   },
-}
+  postflightConfirmation: (req, res) => {
+    res.json({ message: req.body });
+    console.log(req.body);
+
+  },
+};
