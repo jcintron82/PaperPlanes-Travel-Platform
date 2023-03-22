@@ -1,0 +1,11 @@
+.travelersinfomodal{
+    border: solid black;
+    position: absolute;
+    top: 90%;
+    right: 38%;
+    height: 20rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: darkgray;
+}

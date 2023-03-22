@@ -5,7 +5,7 @@ h4{
     display: flex;
     background-color: #05203C;
     color: white;
-    height: 60vh;
+    height: 35rem;
     padding-top: 10vh;
     justify-content: center;
     align-items: center;
@@ -286,6 +286,16 @@ img{
     text-decoration: underline;
     justify-content: flex-end;
 }
+
+.gridloader{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.pageopacity{
+    opacity: .15;
+}
+
 @media(min-width:768px){
     .adslogans{
         font-size: 1.5em;
@@ -293,6 +303,7 @@ img{
     .booknowlink{
         max-width: 8rem;
     }
+
 }
 @media(min-width:1024px){
     button:hover{

@@ -1,14 +1,16 @@
 import "../../css/flightresults.css";
 import "../../css/utility/home.css";
-import adPicOne from '../../images/home/adone.avif'
+import "../../css/utility/travelersmodal.css";
+import adPicOne from "../../images/home/adone.avif";
 import { useState, useEffect } from "react";
+import BounceLoader from "react-spinners/BounceLoader";
 import { CSSTransition } from "react-transition-group";
 import { useNavigate } from "react-router-dom";
-import { Header, name} from "./header";
-import { TravelersPopup } from './numoftravalersmodal';
-import { RefineSearchPopup } from './refinsesearchmodal';
-import { RecommendedTab } from './recommendedtraveltabs'
-import { travelerCounts} from "./numoftravalersmodal";
+import { Header, name } from "./header";
+import { TravelersPopup } from "./numoftravalersmodal";
+import { RefineSearchPopup } from "./refinsesearchmodal";
+import { RecommendedTab } from "./recommendedtraveltabs";
+import { travelerCounts } from "./numoftravalersmodal";
 import { searchParams } from "./refinsesearchmodal";
 export { FlightSearchModal, queryResponseObj };
 const queryResponseObj = [];
@@ -19,14 +21,20 @@ function FlightSearchModal() {
   const [arrivalLocation, setArrivalLocation] = useState("");
   const [hotelOrFlight, sethotelOrFlight] = useState(true);
   const [roundTripSelected, setRoundTrip] = useState(false);
+  const [oneWaySelected, setOneWay] = useState(false);
   const [queryRecieved, setQueryStatus] = useState();
   const [adultCount, setAdultCount] = useState(1);
   const [childCount, setChildCount] = useState(0);
 
   const [travelersPopup, setTravelersPopupdults] = useState(false);
   const [refineSearchPopup, setRefineSearchPopup] = useState(false);
-  const [stately, setStately] = useState(false);
-  const [arrivalMessage, setArrivalMessage] = useState(localStorage.getItem('username') ? "Where's your next adventure " + localStorage.getItem('username') + "?" : 'Arriving at...');
+  const [isLoading, setIsLoading] = useState(false);
+  const [width, setWidth] = useState(window.innerWidth);
+  const [arrivalMessage, setArrivalMessage] = useState(
+    localStorage.getItem("username")
+      ? "Where's your next adventure " + localStorage.getItem("username") + "?"
+      : "Arriving at..."
+  );
 
   const [autocompleteOne, setautocompleteOne] = useState("");
   const [autocompleteTwo, setautocompleteTwo] = useState("");
@@ -36,20 +44,21 @@ function FlightSearchModal() {
   const [autocompleteTwoArrival, setautocompleteTwoArrival] = useState("");
   const [autocompleteThreeArrival, setautocompleteThreeArrival] = useState("");
   const navigate = useNavigate();
+  const breakpoint = 1024;
   //The listings in this body aren't technically needed but they are there
   //for reference to easily know all the parameters being/which can be used
   const body = {
     departure: departureLocation,
     departureDate: "",
     arrival: arrivalLocation,
-    returnDate: "",
     maxPrice: 5000,
     flightClass: "ECONOMY",
-    adults:1,
-    children:0,
-    nonStop:false,
+    adults: 1,
+    children: 0,
+    nonStop: false,
   };
   const flightQuery = async (e) => {
+    setIsLoading(!isLoading);
     body.adults = travelerCounts.adults;
     body.children = travelerCounts.children;
     body.maxPrice = searchParams.maxPrice;
@@ -59,6 +68,7 @@ function FlightSearchModal() {
     body.departure = body.departure.slice(-3);
     body.arrival = body.arrival.slice(-3);
     console.log(body);
+
     try {
       const pull = await fetch("http://localhost:8000/query", {
         method: "POST",
@@ -75,10 +85,9 @@ function FlightSearchModal() {
     // setDepartureLocation(data.message.data);
     setQueryStatus(!queryRecieved);
     queryResponseObj[0] = data;
-    console.log(queryResponseObj);
+    queryResponseObj[1] = data;
     navigate("/flightquery");
     callCitySearchAPI();
-    console.log(process.env.REACT_APP_CLIENT_ID);
     return { message: queryResponseObj };
   };
 
@@ -117,7 +126,7 @@ function FlightSearchModal() {
       const data = await pull.json();
       // console.log(data);
       autocompleteAPIValuesHold.options = data;
-      console.log(data);
+      // console.log(data);
 
       setautocompleteOne(
         data.data[0].address.cityName + ", " + data.data[0].iataCode
@@ -138,18 +147,18 @@ function FlightSearchModal() {
       setautocompleteThreeArrival(
         data.data[2].address.cityName + ", " + data.data[2].iataCode
       );
-    } catch (err) {
-    }
-   
+    } catch (err) {}
   };
   const hotelFlightSwitch = () => {
-    sethotelOrFlight(!hotelOrFlight)
-  }
-  const selectTripType = (value) => {
-    setRoundTrip(true);
+    sethotelOrFlight(!hotelOrFlight);
   };
-  const selectTripTypeOneWay = (value) => {
+  const selectTripType = () => {
+    setRoundTrip(true);
+    setOneWay(false);
+  };
+  const selectTripTypeOneWay = () => {
     setRoundTrip(false);
+    setOneWay(true);
   };
   const updateSearchParams = (e) => {
     callCitySearchAPI(e.target.value);
@@ -162,27 +171,52 @@ function FlightSearchModal() {
   const updateDatesAndFilters = (e, valueToUpdate) => {
     body[valueToUpdate] = e.target.value;
   };
-   useEffect(() => {
-    setArrivalMessage(arrivalMessage)
-    });
+  useEffect(() => {
+    setArrivalMessage(arrivalMessage);
+    const handleResizeWindow = () => setWidth(window.innerWidth);
+    // subscribe to window resize event "onComponentDidMount"
+    window.addEventListener("resize", handleResizeWindow);
+    return () => {
+      // unsubscribe "onComponentDestroy"
+      window.removeEventListener("resize", handleResizeWindow);
+    };
+  });
   const x = async () => {
-     setArrivalMessage("Where's your dddnext adventure " + localStorage.getItem('username') + "?")
-  }
+    setArrivalMessage(
+      "Where's your dddnext adventure " + localStorage.getItem("username") + "?"
+    );
+  };
+  const opacityColor = "rgba(255, 0 ,0)";
   return (
     <div>
-
-       <Header  renderLogoutState={(e) => {setArrivalMessage('Arriving at...')}} />{" "}
-      <div className="mainsearchwrap"> 
+      <Header
+        renderLogoutState={(e) => {
+          setArrivalMessage("Arriving at...");
+        }}
+      />{" "}
+      {isLoading ? (
+        <BounceLoader
+          speedMultiplier={0.9}
+          className="gridloader"
+          color="#05203C"
+          cssOverride={{
+            position: "absolute",
+          }}
+          size={width > breakpoint ? 500 : 300}
+        />
+      ) : null}
+      <div
+        className={isLoading ? "mainsearchwrap pageopacity" : "mainsearchwrap"}
+      >
         <form className="flightsearchform">
           <section className="flighttypebtnwrap">
             <button
-              type='button'
+              type="button"
               className={
                 roundTripSelected
                   ? "triptypebtnselected triptypebtnround"
                   : "triptypebtnround"
               }
-         
               onClick={selectTripType}
             >
               Round-Trip
@@ -196,7 +230,7 @@ function FlightSearchModal() {
               </svg>
             </button>{" "}
             <button
-            type='button'
+              type="button"
               className={
                 roundTripSelected
                   ? "triptypebtnone"
@@ -215,9 +249,10 @@ function FlightSearchModal() {
               </svg>
             </button>
             <button
-            type='button'
-            onClick={hotelFlightSwitch}
-             className="flighthotelbtn">
+              type="button"
+              onClick={hotelFlightSwitch}
+              className="flighthotelbtn"
+            >
               {hotelOrFlight ? (
                 <svg
                   className="flighthotelsvg"
@@ -228,15 +263,19 @@ function FlightSearchModal() {
                   <path d="M19,7H11V14H3V5H1V20H3V17H21V20H23V11A4,4 0 0,0 19,7M7,13A3,3 0 0,0 10,10A3,3 0 0,0 7,7A3,3 0 0,0 4,10A3,3 0 0,0 7,13Z" />
                 </svg>
               ) : (
-                <svg className="flighthotelsvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <svg
+                  className="flighthotelsvg"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
                   <title>airplane</title>
                   <path d="M20.56 3.91C21.15 4.5 21.15 5.45 20.56 6.03L16.67 9.92L18.79 19.11L17.38 20.53L13.5 13.1L9.6 17L9.96 19.47L8.89 20.53L7.13 17.35L3.94 15.58L5 14.5L7.5 14.87L11.37 11L3.94 7.09L5.36 5.68L14.55 7.8L18.44 3.91C19 3.33 20 3.33 20.56 3.91Z" />
                 </svg>
               )}
             </button>
           </section>
-          <label className="locationinputswrap">
-
+         
+          <label className="locationinputswrap"> 
             <input
               autoComplete="off"
               list="locationslist"
@@ -246,7 +285,7 @@ function FlightSearchModal() {
               onChange={(e) => updateSearchParams(e, "departure")}
               placeholder="Departing From..."
             ></input>
-           
+
             <datalist id="locationslist">
               <option
                 onClick={() => console.log("YO")}
@@ -265,29 +304,22 @@ function FlightSearchModal() {
               placeholder={arrivalMessage}
             ></input>
             <datalist id="arrivallist">
-              <option
-                value={autocompleteOneArrival}
-              ></option>
+              <option value={autocompleteOneArrival}></option>
               <option value={autocompleteTwoArrival}></option>
               <option value={autocompleteThreeArrival}></option>
             </datalist>
           </label>
           <section className="addOnsWrap">
-            {roundTripSelected ? (
+          <CSSTransition
+              in={oneWaySelected} timeout={400} classNames='modals'
+                >{roundTripSelected ? (
               <div className="dateselectionwrap">
-                <CSSTransition
-                  in={roundTripSelected}
-                  timeout={420}
-                  classNames="depdateFade"
-                >
-                  <input
-                    className="depaturedateinput"
-                    required
-                    onChange={(e) => updateDatesAndFilters(e, "departureDate")}
-                    type="date"
-                    placeholder="MM/DD/YYYY"
-                  ></input>
-                </CSSTransition>
+                 <input
+                  className="depaturedateinput"
+                  required
+                  onChange={(e) => updateDatesAndFilters(e, "departureDate")}
+                  type="date"
+                ></input>
                 <input
                   className="arrivaldateinput"
                   required
@@ -297,6 +329,7 @@ function FlightSearchModal() {
               </div>
             ) : (
               <label className="dateselectionwrap">
+                
                 <input
                   className="depaturedateinput"
                   required
@@ -304,12 +337,25 @@ function FlightSearchModal() {
                   type="date"
                 ></input>
               </label>
-            )}
+            )}</CSSTransition>
+            
             <div className="refinesearchwrap">
-              <button type='button' onClick={(e) => {setRefineSearchPopup(!refineSearchPopup)}} className="refinesearchbtn">Refine Search</button>
-              <button className="travelersbtn"
-              onClick={(e) => {setTravelersPopupdults(!travelersPopup)}}
-              type='button'>
+              <button
+                type="button"
+                onClick={(e) => {
+                  setRefineSearchPopup(!refineSearchPopup);
+                }}
+                className="refinesearchbtn"
+              >
+                Refine Search
+              </button>
+              <button
+                className="travelersbtn"
+                onClick={(e) => {
+                  setTravelersPopupdults(!travelersPopup);
+                }}
+                type="button"
+              >
                 <svg
                   className="personsvg"
                   xmlns="http://www.w3.org/2000/svg"
@@ -320,9 +366,35 @@ function FlightSearchModal() {
                 </svg>
                 {adultCount} Adult {childCount} Children
               </button>
-              {refineSearchPopup ? <RefineSearchPopup close={(e) => {setRefineSearchPopup(!refineSearchPopup)}} /> : null}
-             {travelersPopup ? <TravelersPopup numAdults={(e) => {setAdultCount(travelerCounts.adults)}} 
-             numChildren={(e) => {setChildCount(travelerCounts.children)}} close={(e) => {setTravelersPopupdults(!travelersPopup)}} /> : null } 
+
+              
+                {" "}
+                {refineSearchPopup ? (
+                  <CSSTransition
+                  classNames="travelersnumpopup"
+                  timeout={400}
+                  in={refineSearchPopup}
+                ><RefineSearchPopup
+                className='travelersnumpopup'
+                    close={(e) => {
+                      setRefineSearchPopup(!refineSearchPopup);         
+                    }}
+                  /></CSSTransition>
+                ) : null}
+              
+              {travelersPopup ? (
+                <TravelersPopup
+                  numAdults={(e) => {
+                    setAdultCount(travelerCounts.adults);
+                  }}
+                  numChildren={(e) => {
+                    setChildCount(travelerCounts.children);
+                  }}
+                  close={(e) => {
+                    setTravelersPopupdults(!travelersPopup);
+                  }}
+                />
+              ) : null}
             </div>
           </section>
           <button className="searchBtn" onClick={flightQuery}>
@@ -332,20 +404,25 @@ function FlightSearchModal() {
       </div>
       <section className="otheritemswrap">
         <div>
-        <div className="adwraps">
-          <p className="adslogans"><p>Find Your Paradise</p><a href="/register" className="booknowlink">Book Now</a></p>
-        <img src={adPicOne}></img>
-        </div>
+          <div className={isLoading ? "adwraps pageopacity" : "adwraps"}>
+            <div className="adslogans">
+              <p>Find Your Paradise</p>
+              <a href="/register" className="booknowlink">
+                Book Now
+              </a>
+            </div>
+            <img src={adPicOne}></img>
+          </div>
         </div>
       </section>
-      <p>Popular destinations <br></br>
-     </p>
+      <p>
+        Popular destinations <br></br>
+      </p>
       <article>
         <RecommendedTab />
       </article>
       <span className="passangerselectwrap">
-        <div className="maxpricewrap">
-        </div>
+        <div className="maxpricewrap"></div>
       </span>
     </div>
   );

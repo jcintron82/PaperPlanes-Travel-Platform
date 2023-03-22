@@ -103,12 +103,17 @@ h2{
 }
 .carrierwrap{
     display: flex;
-    align-items: center;
+    justify-content: space-between;
 }
 .flightTimesWrap{
     display: flex;
     margin: 0;
     font-size: 1.25em;
+}
+.planesvgwrap{
+    height: 100%;
+    display: flex;
+    align-items: baseline;
 }
 .flightdetailspricewrap{
     display: flex;

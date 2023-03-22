@@ -1,5 +1,3 @@
-
-
 export function RecommendedTravelsTabs({ bgImg, text, className }) {
   return (
     <button className={className}  style={{

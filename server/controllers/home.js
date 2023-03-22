@@ -8,7 +8,10 @@ let adults = 1;
 let children = 0;
 let maxPrice = 5000;
 let flightClass = '';
-
+const travelerCounts = {
+  adults:1,
+  children:0
+};
 
 module.exports = {
   searchInput: (req, res) => {
@@ -20,8 +23,9 @@ module.exports = {
     children = req.body.children;
     maxPrice = req.body.maxPrice;
     flightClass = req.body.flightClass;
-    returnDate = departureDate 
-  
+    returnDate = req.body.returnDate 
+    travelerCounts.adults = req.body.adults;
+    travelerCounts.children = req.body.children;
     res.send({message:"POST OK"})
   },
   getIndex: (req, res) => {
@@ -30,75 +34,41 @@ module.exports = {
       clientSecret: process.env.CLIENT_SECRET
     });
     amadeus.shopping.flightOffersSearch.get({
-        // originLocationCode: originLocation,
-        // destinationLocationCode: destinationLocation,
-        // departureDate: departureDate,
-        // returnDate: returnDate,
-        // adults: adults,
-        // children:children,
-        // currencyCode:'USD',
-        // max: 10,
-        // nonStop: true,
-        // travelClass: flightClass,
-        // maxPrice: maxPrice
-        originLocationCode: 'JFK',
-        destinationLocationCode: 'LAX',
-        departureDate: '2023-06-01',
-        returnDate:  '2023-06-15',
-        adults: 1,
+        originLocationCode: originLocation,
+        destinationLocationCode: destinationLocation,
+        departureDate: departureDate,
+        returnDate: returnDate,
+        adults: adults,
+        children:children,
         currencyCode:'USD',
-        max:5,
+        max: 10,
         nonStop: true,
-        travelClass: 'ECONOMY',
-        maxPrice: 5000
+        travelClass: flightClass,
+        maxPrice: maxPrice
+        // originLocationCode: 'JFK',
+        // destinationLocationCode: 'LAX',
+        // departureDate: '2023-06-01',
+        // returnDate:  '2023-06-15',
+        // adults: 1,
+        // children:0,
+        // currencyCode:'USD',
+        // max:5,
+        // nonStop: true,
+        // travelClass: 'ECONOMY',
+        // maxPrice: 5000
 
     }).then(function(response){
       response.data = response;
+      const offers = response.data
       const data = JSON.parse(response.data.body);
-      // confirmFlightPrice(response.data.body.data)
-      // console.log(data.dictionaries.carriers)
-
-      // for (let i = 0; i< response.data.body.length;i++){
-      //   amadeus.referenceData.airlines.get({
-      //     airlineCodes : data.data[i].itineraries[i].segments[i].carrierCode,
-      //  }).then((response) => {
-      //   console.log( response.data[0].businessName + 'HI')
-      //   carrierCodes.push(response)
-      //  });
-      // }
-
-  
-        return res.json({message:data, carriers: data.dictionaries.carriers})
+      return res.json({message:data, carriers: data.dictionaries.carriers, travelerCounts,})
       } )
-    
-      
-    //   for(let i = 0; i < response.length; i++) {      
-        
-    //     amadeus.referenceData.airlines.get({
-    //     airlineCodes : data.data[0].itineraries[0].segments[0].carrierCode,
-    //  }).then((response) => {
-    //   console.log(response)
-    //   code = response
-    //  });}
 
     .catch(function(responseError){
       console.log(responseError.code + 'HMMMM');
 
     });
 
-    // const confirmFlightPrice = async (data) => {
-    //   console.log('confirmFlightPrice' + data)
-    //   const pull = await fetch("https://test.api.amadeus.com/v1/shopping/flight-offers/pricing?include=credit-card-fees&forceClass=false", {
-    //     body: data,
-    //     headers: {
-    //       Accept: "application/vnd.amadeus+json",
-    //       Authorization: "Bearer r4ZGymi0BGQUApvopt3GwoHUipIl",
-    //       "Content-Type": "application/vnd.amadeus+json"
-    //     },
-    //     method: "POST"
-    //   });
-    //   const result = await pull.json();
-    //   console.log(result)
-    // };
+
  
 }}

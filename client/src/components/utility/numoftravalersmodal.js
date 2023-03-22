@@ -1,6 +1,6 @@
 import "../../css/utility/travelersmodal.css";
 import { useState } from "react";
-
+import { CSSTransition } from "react-transition-group";
 
 export { TravelersPopup, travelerCounts}
 
@@ -21,6 +21,7 @@ const travelerCounts = {
 
   return (
     <section type='button' className="travelersnumpopup">
+        
             <label className="travelerlabelwraps">
                 <h1 className="travelertypeh1">Adults</h1>
             <select onChange={(e) => {recordAdults(e)}} className="travelersselectinput">
