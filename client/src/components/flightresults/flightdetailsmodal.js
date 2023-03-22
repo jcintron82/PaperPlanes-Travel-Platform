@@ -18,35 +18,49 @@ export function FlightDetailsModal({
   includedCheckedbags,
   infoModalClose,
   numAdults,
-  numChildren
+  numChildren,
+  flightID
 }){
   const [returnOrigin, setReturnOrigin] = useState();
+  const [travelerInfoModal, setTravelerInfoModal] = useState(true);
 
   useEffect(() => {
     setReturnOrigin(returnTripOrigin);
   });
-  const confirmFlightOffer = async (selectedIndex) => {
+  const confirmFlightOffer = async () => {
     console.log(queryResponseObj)
     //Converting the converted carrier code back to its airline code for
     //search purposes
-    queryResponseObj[0].message.data[0].itineraries[0].segments[0].carrierCode = 
-    queryResponseObj[0].message.data[0].itineraries[0].segments[0].operating.carrierCode;
+    queryResponseObj[0].message.data[flightID].itineraries[0].segments[0].carrierCode = 
+    queryResponseObj[0].message.data[flightID].itineraries[0].segments[0].operating.carrierCode;
     try {
       const pull = await fetch("http://localhost:8000/flightconfirmation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(queryResponseObj[0].message.data[selectedIndex])
+        body: JSON.stringify(queryResponseObj[0].message.data[flightID])
       });
-      const data = await pull.json();
-      console.log(pull);
-      console.log(data)
+      const x = await pull.json()
+      console.log(pull)
+      console.log(x)
     } catch (err) {
       console.log(err);
     }
+    // await finalConfirmation()
   }
- 
+ const finalConfirmation = async () => {
+  const data =  await fetch("http://localhost:8000/flightconfirmation");
+      const final = await data.json();
+      console.log(final);
+      console.log(data)
+
+ }
   return (
     <article className="flightdetailmodalwrap">
+      { travelerInfoModal ? <form className="">
+        <label>First Name
+          <input></input>
+        </label>
+      </form> : null}
       <button onClick={infoModalClose} className="closemodalbtn">X</button>
       <section className="metainfowrap">
         <p className="pricingparagraph"><h1 className="finalpricingwrap">Tickets:<br></br> {perTicketPrice}/ea</h1><h1  className="finalpricingwrap">Total:<br></br> {totalPrice}</h1></p>
@@ -116,7 +130,7 @@ export function FlightDetailsModal({
         </section>
       ) : null}</div>
       {/* <div>Layovers</div> */}
-      <div onClick={confirmFlightOffer} className="offerbtnwrap"><button className="selectOfferBtn">Buy Offer</button></div>
+      <div  className="offerbtnwrap"><button onClick={confirmFlightOffer} className="selectOfferBtn">Buy Offer</button></div>
     </article>
   );
 }
