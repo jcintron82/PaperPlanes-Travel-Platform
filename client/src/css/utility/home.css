@@ -80,10 +80,8 @@ h4{
     border-radius: 0;
 
 }
-::-webkit-calendar-picker-indicator {
-    /* width: 100%; */
-  }
-input[type=number]{
+
+.inputnumber{
     margin: 0;
     width: 1.7rem;
     border: aliceblue;

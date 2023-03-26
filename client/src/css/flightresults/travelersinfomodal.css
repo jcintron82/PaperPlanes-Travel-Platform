@@ -1,11 +1,76 @@
 .travelersinfomodal{
     border: solid black;
     position: absolute;
-    top: 90%;
-    right: 38%;
-    height: 20rem;
+    height: 80vh;
     display: flex;
+    top: 50%;
+    left: 55%;
     justify-content: center;
     align-items: center;
     background: darkgray;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    flex-flow: row wrap;
+    z-index: 5;
+    align-self: center;
+    max-width: 42rem;
+}
+.infowrap{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+    gap: 38px;
+}
+.infowrappeople{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    gap: 58px;
+    width: 100%;
+}
+.infowrappeople > label {
+    width: 40%;
+}
+.infowrappeople > button {
+    width: 41%;
+    align-self: center;
+    border-radius: 0.25rem;
+    border: transparent;
+    height: 2.5rem;
+    font-weight: 600;
+    font-size: 100%;
+    background-color: #05203C;
+    color: white;
+}
+.infowrappeople:first-child{
+    min-width: 100%;
+}
+label {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 100%;
+    gap: 5px;
+    color: black;
+    font-weight: 400;
+    font-size: 1.02em;
+    text-indent: 5px;
+}
+input {
+    width: 100%;
+    border-radius: 0.7rem;
+    border: transparent;
+    padding: 0.25rem 0;
+    text-indent: 10px;
+}
+.nextbtn{
+    width: 100%;
+    align-self: center;
+    border-radius: 0.25rem;
+    border: transparent;
+    height: 1.85rem;
+    font-weight: 600;
+    font-size: 100%;
+    background-color: #05203C;
+    color: white;
 }

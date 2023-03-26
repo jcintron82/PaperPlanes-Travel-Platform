@@ -4,8 +4,8 @@ let originLocation = '';
 let destinationLocation = '';
 let departureDate = '';
 let returnDate = '';
-let adults = 1;
-let children = 0;
+let adults = 2;
+let children = 1;
 let maxPrice = 5000;
 let flightClass = '';
 const travelerCounts = {
@@ -34,28 +34,28 @@ module.exports = {
       clientSecret: process.env.CLIENT_SECRET
     });
     amadeus.shopping.flightOffersSearch.get({
-        originLocationCode: originLocation,
-        destinationLocationCode: destinationLocation,
-        departureDate: departureDate,
-        returnDate: returnDate,
-        adults: adults,
-        children:children,
-        currencyCode:'USD',
-        max: 10,
-        nonStop: true,
-        travelClass: flightClass,
-        maxPrice: maxPrice
-        // originLocationCode: 'JFK',
-        // destinationLocationCode: 'LAX',
-        // departureDate: '2023-06-01',
-        // returnDate:  '2023-06-15',
-        // adults: 1,
-        // children:0,
+        // originLocationCode: originLocation,
+        // destinationLocationCode: destinationLocation,
+        // departureDate: departureDate,
+        // returnDate: returnDate,
+        // adults: adults,
+        // children:children,
         // currencyCode:'USD',
-        // max:5,
+        // max: 10,
         // nonStop: true,
-        // travelClass: 'ECONOMY',
-        // maxPrice: 5000
+        // travelClass: flightClass,
+        // maxPrice: maxPrice
+        originLocationCode: 'JFK',
+        destinationLocationCode: 'LAX',
+        departureDate: '2023-06-01',
+        returnDate:  '2023-06-15',
+        adults: 2,
+        children:1,
+        currencyCode:'USD',
+        max:5,
+        nonStop: true,
+        travelClass: 'ECONOMY',
+        maxPrice: 5000
 
     }).then(function(response){
       response.data = response;

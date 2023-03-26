@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { queryResponseObj } from "../utility/flightquerymodel";
+import TravelerInfoModal, { travelerInfoModal } from './travelerInfoModal'
 import "../../css/flightresults/detailsmodal.css";
 import "../../css/flightresults/travelersinfomodal.css";
 export function FlightDetailsModal({
@@ -23,13 +24,23 @@ export function FlightDetailsModal({
 }){
   const [returnOrigin, setReturnOrigin] = useState();
   const [travelerInfoModal, setTravelerInfoModal] = useState(true);
+  const [emailScreen, setEmailScreen] = useState(true);
+  const [travelerInfoscren, setTravelerInfoScreen] = useState(false);
+  const [documentsScreen, setDocumentsScreen] = useState(false);
+  const travelerInfo = {
+    title:'',
+    firstName:'',
+    middleName:'',
+    lastName:'',
+    suffix:'',
 
+  };
+  
   useEffect(() => {
     setReturnOrigin(returnTripOrigin);
   });
   const confirmFlightOffer = async () => {
     console.log(queryResponseObj[1].message.data[1])
-    console.log(queryResponseObj[0].message.data[1])
     //Converting the converted carrier code back to its airline code for
     //search purposes
     // queryResponseObj[1].message.data[1].itineraries[0].segments[0].carrierCode = 
@@ -39,56 +50,32 @@ export function FlightDetailsModal({
       const pull = await fetch("http://localhost:8000/flightconfirmation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(queryResponseObj[1].message.data[1])
+        body: JSON.stringify(queryResponseObj[1].message.data[3])
       });
       const x = await pull.json()
       console.log(pull)
       console.log(x)
+  }
+const recordTravelerInfo = (input, key) => {
+    // return {
 
+    //   firstName: firstName,
+    //   lastName: lastName,
+    //   getFullName() {
+    //     return firstName + ' ' + lastName;
+    //   },
+    // };
 
-    // await finalConfirmation();
-  }
- const finalConfirmation = async () => {
-  console.log("GET RUNNING")
-  try {
-    const data = fetch("http://localhost:8000/flightconfirmation");
-    const res = await data.json();
-    console.log(res) 
-  }
-  catch(err){
-    console.log(err)
-  }
+    const recordOrderEmail = () => {
+      setEmailScreen(false);
+      setTravelerInfoScreen(true);
+    };
   
-
- }
+};
+ 
   return (
     <article className="flightdetailmodalwrap">
-      { travelerInfoModal ? <form className="travelersinfomodal">
-      <label>Title
-          <input></input>
-        </label>
-        <label>First Name
-          <input></input>
-        </label>
-        <label>Middle Name
-          <input></input>
-        </label>
-        <label>Last Name
-          <input></input>
-        </label>
-        <label>Date of Birth
-          <input></input>
-        </label>
-        <label>Suffix
-          <input></input>
-        </label>
-        <label>Male
-          <input></input>
-        </label>
-        <label>First Name
-          <input></input>
-        </label>
-      </form> : null}
+      { travelerInfoModal ? <TravelerInfoModal /> : null}
       <button onClick={infoModalClose} className="closemodalbtn">X</button>
       <section className="metainfowrap">
         <p className="pricingparagraph"><h1 className="finalpricingwrap">Tickets:<br></br> {perTicketPrice}/ea</h1><h1  className="finalpricingwrap">Total:<br></br> {totalPrice}</h1></p>
