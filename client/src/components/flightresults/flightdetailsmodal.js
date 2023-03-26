@@ -23,7 +23,7 @@ export function FlightDetailsModal({
   flightID
 }){
   const [returnOrigin, setReturnOrigin] = useState();
-  const [travelerInfoModal, setTravelerInfoModal] = useState(true);
+  const [travelerInfoModal, setTravelerInfoModal] = useState(false);
   const [emailScreen, setEmailScreen] = useState(true);
   const [travelerInfoscren, setTravelerInfoScreen] = useState(false);
   const [documentsScreen, setDocumentsScreen] = useState(false);
@@ -75,7 +75,7 @@ const recordTravelerInfo = (input, key) => {
  
   return (
     <article className="flightdetailmodalwrap">
-      { travelerInfoModal ? <TravelerInfoModal /> : null}
+      { travelerInfoModal ? <TravelerInfoModal openModal={true}/> : null}
       <button onClick={infoModalClose} className="closemodalbtn">X</button>
       <section className="metainfowrap">
         <p className="pricingparagraph"><h1 className="finalpricingwrap">Tickets:<br></br> {perTicketPrice}/ea</h1><h1  className="finalpricingwrap">Total:<br></br> {totalPrice}</h1></p>
@@ -145,7 +145,7 @@ const recordTravelerInfo = (input, key) => {
         </section>
       ) : null}</div>
       {/* <div>Layovers</div> */}
-      <div  className="offerbtnwrap"><button onClick={confirmFlightOffer} className="selectOfferBtn">Buy Offer</button></div>
+      <div  className="offerbtnwrap"><button onClick={() => setTravelerInfoModal(true)}>Get This flight</button><button onClick={confirmFlightOffer} className="selectOfferBtn">Buy Offer</button></div>
     </article>
   );
 }
