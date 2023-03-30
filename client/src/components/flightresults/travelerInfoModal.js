@@ -113,8 +113,8 @@ export function TravelerInfoModal({ openModal, btnClick }) {
 
   const confirmTravNum = async (e) => {
     e.preventDefault();
-    const id = (travelersArr.length + 1);
-     const newObj = {
+    const id = travelersArr.length + 1;
+    const newObj = {
       id: id.toString(),
       dateOfBirth: "1990-01-01",
       name: {
@@ -128,7 +128,11 @@ export function TravelerInfoModal({ openModal, btnClick }) {
       contact: {
         emailAddress: "johndoe@example.com",
         phones: [
-          { deviceType: "MOBILE", countryCallingCode: "1", number: "5555555555" },
+          {
+            deviceType: "MOBILE",
+            countryCallingCode: "1",
+            number: "5555555555",
+          },
         ],
         address: {
           lines: ["123 Main St"],
@@ -149,11 +153,11 @@ export function TravelerInfoModal({ openModal, btnClick }) {
           nationality: "US",
         },
       ],
-     };
-      // let newObj = Object.create(travelersInfo);
-      console.dir(newObj);
-      console.log(travelersInfo);
-      travelersArr.push(newObj);
+    };
+    // let newObj = Object.create(travelersInfo);
+    console.dir(newObj);
+    console.log(travelersInfo);
+    travelersArr.push(newObj);
     console.log(travelersArr);
     setTravlerCount(false);
     setEmailScreen(true);
@@ -166,13 +170,13 @@ export function TravelerInfoModal({ openModal, btnClick }) {
       : (travelersInfo.contact.phones[0][value] = e.target.value);
   };
   const recordTravelerInfo = (e, key, nestedkey, travelerId) => {
-    console.log(travelersArr)
-    console.log(key,nestedkey,travelerId)
+    console.log(travelersArr);
+    console.log(key, nestedkey, travelerId);
     nestedkey === null
       ? (travelersArr[travelerId][key] = e.target.value)
       : (travelersArr[travelerId][key][nestedkey] = e.target.value);
     // travelersArr[travelerId].firstName = e.target.value
-      console.log(travelersArr)
+    console.log(travelersArr);
   };
   const recordTravelerAddress = (e, key, travelerId) => {
     travelersArr[travelerId].contact.address[key] = e.target.value;
@@ -183,10 +187,10 @@ export function TravelerInfoModal({ openModal, btnClick }) {
     } else {
       travelersArr[travelerId].documents[0][key] = e.target.value;
       console.dir(travelersArr[0]);
-      setConfirmationScreenData( travelersArr[travelerId])
+      setConfirmationScreenData(travelersArr[travelerId]);
       // updateSearchParams(e)
     }
-    console.dir(travelersArr)
+    console.dir(travelersArr);
   };
   const updateSearchParams = (e) => {
     console.log(e.target.value);
@@ -229,18 +233,36 @@ export function TravelerInfoModal({ openModal, btnClick }) {
       console.log(err);
     }
   };
-const finalTravelerNumber = queryResponseObj[0].travelerCounts.adults + queryResponseObj[0].travelerCounts.children
+  const finalTravelerNumber =
+    queryResponseObj[0].travelerCounts.adults +
+    queryResponseObj[0].travelerCounts.children;
   return (
-    
-    <form className={ openModal === true ? "travelersinfomodal" : "hide"}>
+    <form className={openModal === true ? "travelersinfomodal" : "hide"}>
       {travelerCount ? (
-        <section> 
-          
-          <h1>Traveler {travelerId + 1} of {finalTravelerNumber}</h1>
-          <button type="button" onClick={confirmTravNum}>
-        Confirm{" "}
-      </button></section>
-       
+        <section className="mainsectionwrap">
+          <h1 className="travelerNumWrap">
+            Traveler {travelerId + 1} of {finalTravelerNumber}
+          </h1>
+          <svg
+            fill="#5BC0BE"
+            height='35vh'
+            stroke="#05203C"
+            stroke-width="1.5"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+            ></path>
+          </svg>
+          <br></br>
+          <button className="nextbtn" type="button" onClick={confirmTravNum}>
+            Confirm Traveler{" "}
+          </button>
+        </section>
       ) : null}
       {emailScreen === true ? (
         <article className="infowrap">
@@ -263,14 +285,13 @@ const finalTravelerNumber = queryResponseObj[0].travelerCounts.adults + queryRes
               type="number"
             ></input>
           </label>
-            <button
+          <button
             className="nextbtn"
             onClick={(e) => {
               setEmailScreen(false);
               setTravlerCount(true);
             }}
           >
-            
             back
           </button>
           <button
@@ -368,67 +389,62 @@ const finalTravelerNumber = queryResponseObj[0].travelerCounts.adults + queryRes
               classNames="addressscreen"
             > */}
             {addressScreen ? (
-              
-                <div className="addressscreen"> 
-                  <label>
-                    Street Address
-                    <input
-                      onChange={(e) =>
-                        recordTravelerAddress(e, "lines", travelerId)
-                      }
-                    ></input>
-                  </label>
-                  <label>
-                    City
-                    <input
-                      onChange={(e) =>
-                        recordTravelerAddress(e, "cityName", travelerId)
-                      }
-                    ></input>
-                  </label>
-                  <label>
-                    State
-                    <select
-                      onChange={(e) =>
-                        recordTravelerAddress(e, "stateCode", travelerId)
-                      }
-                    >
-                      <option value=""></option>
-                      {stateCodes.map((value, index) => {
-                        return (
-                          <option key={index} value={value}>
-                            {value};
-                          </option>
-                        );
-                      })}
-                      ;
-                    </select>
-                  </label>
-                  <label>
-                    Country
-                    <input
-                      onChange={(e) =>
-                        recordTravelerAddress(e, "countryCode", travelerId)
-                      }
-                    ></input>
-                  </label>
-                  <label>
-                    Zip Code
-                    <input
-                      onChange={(e) =>
-                        recordTravelerAddress(e, "postalCode", travelerId)
-                      }
-                    ></input>
-                  </label>
-                  <button
-                    type="button"
-                    onClick={(e) => setAddressScreen(false)}
+              <div className="addressscreen">
+                <label>
+                  Street Address
+                  <input
+                    onChange={(e) =>
+                      recordTravelerAddress(e, "lines", travelerId)
+                    }
+                  ></input>
+                </label>
+                <label>
+                  City
+                  <input
+                    onChange={(e) =>
+                      recordTravelerAddress(e, "cityName", travelerId)
+                    }
+                  ></input>
+                </label>
+                <label>
+                  State
+                  <select
+                    onChange={(e) =>
+                      recordTravelerAddress(e, "stateCode", travelerId)
+                    }
                   >
-                    Confirm
-                  </button> 
-                </div> 
-              
-            ) : null} 
+                    <option value=""></option>
+                    {stateCodes.map((value, index) => {
+                      return (
+                        <option key={index} value={value}>
+                          {value};
+                        </option>
+                      );
+                    })}
+                    ;
+                  </select>
+                </label>
+                <label>
+                  Country
+                  <input
+                    onChange={(e) =>
+                      recordTravelerAddress(e, "countryCode", travelerId)
+                    }
+                  ></input>
+                </label>
+                <label>
+                  Zip Code
+                  <input
+                    onChange={(e) =>
+                      recordTravelerAddress(e, "postalCode", travelerId)
+                    }
+                  ></input>
+                </label>
+                <button type="button" onClick={(e) => setAddressScreen(false)}>
+                  Confirm
+                </button>
+              </div>
+            ) : null}
             <button
               className="pplscreenbtn"
               onClick={(e) => {
@@ -550,12 +566,11 @@ const finalTravelerNumber = queryResponseObj[0].travelerCounts.adults + queryRes
               Back To Traveler Info
             </button>
             <button
-            type='button'
+              type="button"
               className="nextbtn"
               onClick={(e) => {
                 setDocumentsScreen(false);
                 setConfirmationScreen(true);
-               
               }}
             >
               Next
@@ -563,29 +578,36 @@ const finalTravelerNumber = queryResponseObj[0].travelerCounts.adults + queryRes
           </article>
         </div>
       ) : null}
-      {confirmationScreen ? 
-      <div>
-        {console.log(travelersArr)}
-        Name {travelersArr[travelerId].name.firstName + ' ' + travelersArr[travelerId].name.lastName}
-      {travelersArr.length === finalTravelerNumber ? <button onClick={btnClick} type='button'>DONE</button>: <button
-      type='button'
+      {confirmationScreen ? (
+        <div>
+          {console.log(travelersArr)}
+          Name{" "}
+          {travelersArr[travelerId].name.firstName +
+            " " +
+            travelersArr[travelerId].name.lastName}
+          {travelersArr.length === finalTravelerNumber ? (
+            <button onClick={btnClick} type="button">
+              DONE
+            </button>
+          ) : (
+            <button
+              type="button"
               className="nextbtn"
               onClick={(e) => {
-                  setConfirmationScreen(false);
-                  setTravlerCount(true);
-                  setTravelerId(travelersArr.length);
-                  // openModal = () => {
-                  //   openModal(false)
-                  // }
-              
-                  
-               
+                setConfirmationScreen(false);
+                setTravlerCount(true);
+                setTravelerId(travelersArr.length);
+                // openModal = () => {
+                //   openModal(false)
+                // }
               }}
             >
               Next
-            </button>} </div>: null}
-      
-    </form> 
+            </button>
+          )}{" "}
+        </div>
+      ) : null}
+    </form>
   );
 }
 export default TravelerInfoModal;

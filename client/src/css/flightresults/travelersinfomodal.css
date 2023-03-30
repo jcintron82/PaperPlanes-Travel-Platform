@@ -3,7 +3,7 @@
     position: absolute;
     height: 80vh;
     display: flex;
-    top: 50%;
+    top: 70%;
     left: 55%;
     justify-content: center;
     align-items: center;
@@ -68,11 +68,13 @@ input, select {
     align-self: center;
     border-radius: 0.25rem;
     border: transparent;
-    height: 1.85rem;
+    height: 5vh;
+    min-height: 2.2rem;
     font-weight: 600;
     font-size: 100%;
     background-color: #05203C;
     color: white;
+    max-width: 10rem;
 }
 .countrypopup{
     position: absolute;
@@ -100,6 +102,25 @@ input, select {
 .hide{
     display:none
 }
+.mainsectionwrap{
+    width: 100%;
+    flex-flow: column nowrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    gap: 15px;
+}
+.travelerNumWrap{
+    position: absolute;
+    top: 0;
+    background: #05203C;
+    width: 100%;
+    height: 3rem;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
 .addressscreen-enter {
     opacity: 1;
   }
@@ -113,4 +134,16 @@ input, select {
   .addressscreen-exit-active {
     opacity: 0;
     transition: opacity 1000ms;
+  }
+  @media(min-width:760px){
+    .travelersinfomodal{
+        top: 45vh;
+        width: 89%;
+        max-width: 50rem;
+        left: 50%;
+    }
+    .travelerNumWrap{
+        justify-content: flex-start;
+        padding-left: .5rem;
+    }
   }
