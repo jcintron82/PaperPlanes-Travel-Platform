@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { queryResponseObj } from "../utility/flightquerymodel";
-import TravelerInfoModal, { travelerInfoModal } from './travelerInfoModal'
+import { TravelerInfoModal } from './travelerInfoModal'
 import "../../css/flightresults/detailsmodal.css";
 import "../../css/flightresults/travelersinfomodal.css";
 export function FlightDetailsModal({
@@ -56,26 +56,17 @@ export function FlightDetailsModal({
       console.log(pull)
       console.log(x)
   }
-const recordTravelerInfo = (input, key) => {
-    // return {
-
-    //   firstName: firstName,
-    //   lastName: lastName,
-    //   getFullName() {
-    //     return firstName + ' ' + lastName;
-    //   },
-    // };
-
     const recordOrderEmail = () => {
       setEmailScreen(false);
       setTravelerInfoScreen(true);
     };
-  
-};
+  const endTravelerInfoModal = () => {
+    setTravelerInfoModal(false);
+  }
  
   return (
     <article className="flightdetailmodalwrap">
-      { travelerInfoModal ? <TravelerInfoModal openModal={true}/> : null}
+      { travelerInfoModal ? <TravelerInfoModal btnClick={() => endTravelerInfoModal()(false)}openModal={travelerInfoModal}/> : null}
       <button onClick={infoModalClose} className="closemodalbtn">X</button>
       <section className="metainfowrap">
         <p className="pricingparagraph"><h1 className="finalpricingwrap">Tickets:<br></br> {perTicketPrice}/ea</h1><h1  className="finalpricingwrap">Total:<br></br> {totalPrice}</h1></p>

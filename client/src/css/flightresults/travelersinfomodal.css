@@ -56,7 +56,7 @@ label {
     font-size: 1.02em;
     text-indent: 5px;
 }
-input {
+input, select {
     width: 100%;
     border-radius: 0.7rem;
     border: transparent;
@@ -74,3 +74,43 @@ input {
     background-color: #05203C;
     color: white;
 }
+.countrypopup{
+    position: absolute;
+    background: darkgray;
+    min-height: 20rem;
+    min-width: 80vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid;
+    border-radius: 0.85rem;
+}
+.addressscreen{
+    position: absolute;
+    background: darkgray;
+    min-height: 25rem;
+    min-width: 80vw;
+    display: flex;
+    flex-flow: row wrap;;
+    align-items: center;
+    justify-content: center;
+    border: solid;
+    border-radius: 0.85rem;
+}
+.hide{
+    display:none
+}
+.addressscreen-enter {
+    opacity: 1;
+  }
+  .addressscreen-enter-active {
+    opacity: 0;
+    transition: opacity 1000ms;
+  }
+  .addressscreen-exit {
+    opacity: 1;
+  }
+  .addressscreen-exit-active {
+    opacity: 0;
+    transition: opacity 1000ms;
+  }
