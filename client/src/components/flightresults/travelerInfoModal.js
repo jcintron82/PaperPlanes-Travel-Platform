@@ -13,8 +13,10 @@ export function TravelerInfoModal({ openModal, btnClick }) {
   const [documentsScreen, setDocumentsScreen] = useState(false);
   const [confirmationScreen, setConfirmationScreen] = useState(false);
   const [confirmationScreenData, setConfirmationScreenData] = useState([]);
+  const [travelerAddressPlaceholder, setTravelerAddressPlaceholder] =
+    useState("");
   const [travelersArr, setTravelersArr] = useState([]);
-  const [travelerId, setTravelerId] = useState(travelersArr.length);
+  const [travelerId, setTravelerId] = useState(0);
   const [travelersInfo, setTravelerInfo] = useState({
     id: "1",
     dateOfBirth: "1990-01-01",
@@ -51,6 +53,15 @@ export function TravelerInfoModal({ openModal, btnClick }) {
       },
     ],
   });
+  const passportInfo = [];
+  const personalInfo = [];
+  const loopedObject = travelersArr.length < 1 ? null : Object.entries(travelersArr[travelersArr.length - 1]);
+
+  const formatDate = (value) => {
+    const date = new Date(value);
+    const options = { month:'long', day:'numeric', year:'numeric'};
+    return new Intl.DateTimeFormat("en-US", options).format(date);
+  };
   const stateCodes = [
     "AK",
     "AL",
@@ -120,18 +131,22 @@ export function TravelerInfoModal({ openModal, btnClick }) {
       name: {
         firstName: "John",
         lastName: "Doe",
-        title: "MR",
-        middleName: "Middle",
-        suffix: "Jr",
+        title: "",
+        middleName: "",
+        suffix: "",
       },
       gender: "MALE",
       contact: {
-        emailAddress: "johndoe@example.com",
+        emailAddress: travelersArr[0]
+          ? travelersArr[0].contact.emailAddress
+          : "johndoe@example.com",
         phones: [
           {
             deviceType: "MOBILE",
             countryCallingCode: "1",
-            number: "5555555555",
+            number: travelersArr[0]
+              ? travelersArr[0].contact.phones[0].number
+              : "5555555555",
           },
         ],
         address: {
@@ -154,48 +169,82 @@ export function TravelerInfoModal({ openModal, btnClick }) {
         },
       ],
     };
-    // let newObj = Object.create(travelersInfo);
     console.dir(newObj);
-    console.log(travelersInfo);
     travelersArr.push(newObj);
-    console.log(travelersArr);
+
     setTravlerCount(false);
-    setEmailScreen(true);
+    if (travelersArr.length > 1) {
+      setEmailScreen(false);
+      setTravelerInfoScreen(true);
+    } else {
+      setEmailScreen(true);
+    }
   };
   //Changes the ORDER email and contact number, changing it
   //on the obj template so all descendents have mathching values
   const recordOrderEmail = (e, value) => {
-    value = "emailAddress"
-      ? (travelersInfo.contact[value] = e.target.value)
-      : (travelersInfo.contact.phones[0][value] = e.target.value);
+    travelersInfo.contact.emailAddress = e.target.value.toLowerCase();
+    travelersArr[travelerId].contact.emailAddress =
+      e.target.value.toLowerCase();
+  };
+  const recordOrderNum = (e, value) => {
+    travelersInfo.contact.phones[0].number = e.target.value;
+    travelersArr[travelerId].contact.phones[0].number = e.target.value;
   };
   const recordTravelerInfo = (e, key, nestedkey, travelerId) => {
-    console.log(travelersArr);
-    console.log(key, nestedkey, travelerId);
+    const capitalizedWords = capitalizeWords(e.target.value);
     nestedkey === null
-      ? (travelersArr[travelerId][key] = e.target.value)
-      : (travelersArr[travelerId][key][nestedkey] = e.target.value);
+      ? (travelersArr[travelerId][key] = capitalizedWords)
+      : (travelersArr[travelerId][key][nestedkey] = capitalizedWords);
     // travelersArr[travelerId].firstName = e.target.value
-    console.log(travelersArr);
   };
   const recordTravelerAddress = (e, key, travelerId) => {
-    travelersArr[travelerId].contact.address[key] = e.target.value;
+    const capitalizedWords = capitalizeWords(e.target.value);
+    travelersArr[travelerId].contact.address[key] = capitalizedWords;
   };
   const recordDocumentData = (e, key, travelerId) => {
+    const capitalizedWords = capitalizeWords(e.target.value);
     if (e.target.value === "null") {
       setCountrySearchPopUp(true);
-    } else {
-      travelersArr[travelerId].documents[0][key] = e.target.value;
+    }
+    if (key === "nationality" || key === "issuanceCountry") {
+      travelersArr[travelerId].documents[0][key] = e.target.value.toUpperCase();
       console.dir(travelersArr[0]);
       setConfirmationScreenData(travelersArr[travelerId]);
-      // updateSearchParams(e)
+    } else {
+      travelersArr[travelerId].documents[0][key] = capitalizedWords;
+      console.dir(travelersArr[0]);
+      setConfirmationScreenData(travelersArr[travelerId]);
     }
     console.dir(travelersArr);
   };
   const updateSearchParams = (e) => {
-    console.log(e.target.value);
     locationSearch(e.target.value);
   };
+  const capitalizeWords = (str) => {
+    return str
+      .split(/[, ]+/)
+      .map((word) => {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join(" ");
+  };
+  const confirmFlightOffer = async () => {
+    //Converting the converted carrier code back to its airline code for
+    //search purposes
+    // queryResponseObj[1].message.data[1].itineraries[0].segments[0].carrierCode = 
+    // queryResponseObj[1].message.data[1].itineraries[0].segments[0].operating.carrierCode;
+    // queryResponseObj[1].message.data[1].itineraries[1].segments[0].carrierCode = 
+    // queryResponseObj[1].message.data[1].itineraries[1].segments[0].operating.carrierCode;
+      const pull = await fetch("http://localhost:8000/flightconfirmation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify([queryResponseObj[1].message.data[3], travelersArr])
+      });
+      const x = await pull.json()
+      console.log(pull)
+      console.log(x)
+  }
   const locationSearch = async (input) => {
     let token = "";
     const fetchAuth = await fetch(
@@ -228,7 +277,6 @@ export function TravelerInfoModal({ openModal, btnClick }) {
       );
       const x = await pull.json();
       setAutoCompleteOne(x.data[0].address.countryName);
-      console.log(x);
     } catch (err) {
       console.log(err);
     }
@@ -238,14 +286,17 @@ export function TravelerInfoModal({ openModal, btnClick }) {
     queryResponseObj[0].travelerCounts.children;
   return (
     <form className={openModal === true ? "travelersinfomodal" : "hide"}>
+    
       {travelerCount ? (
         <section className="mainsectionwrap">
           <h1 className="travelerNumWrap">
-            Traveler {travelerId + 1} of {finalTravelerNumber}
+            Traveler {travelersArr.length === 0 ? 1 : travelersArr.length + 1} of {finalTravelerNumber}
+            <br></br>
+            To change the order traveler count, please create a new search.{" "}
           </h1>
           <svg
             fill="#5BC0BE"
-            height='35vh'
+            height="35vh"
             stroke="#05203C"
             stroke-width="1.5"
             viewBox="0 0 24 24"
@@ -264,25 +315,21 @@ export function TravelerInfoModal({ openModal, btnClick }) {
           </button>
         </section>
       ) : null}
-      {emailScreen === true ? (
+      {emailScreen ? (
         <article className="infowrap">
-          <h1>
-            To change the order traveler count, please create a new search.{" "}
-          </h1>
           <label>
-            <button></button>
-            Email For Order
+            Email for Order
             <input
               onChange={(e) => recordOrderEmail(e, "emailAddress")}
               type="email"
             ></input>
           </label>
           <label>
-            Phone # For Order
+            Phone Number for Order
             <input
-              onChange={(e) => recordOrderEmail(e)}
-              max={10}
-              type="number"
+              onChange={(e) => recordOrderNum(e, "number")}
+              type="tel"
+              maxLength="12"
             ></input>
           </label>
           <button
@@ -306,8 +353,8 @@ export function TravelerInfoModal({ openModal, btnClick }) {
         </article>
       ) : null}
       {travelerInfoscren ? (
-        <div>
-          <label>Traveler {travelerId + 1}</label>
+        <div>{console.log(travelersArr)}
+          <label>Traveler {travelersArr.length}</label>
           <article className="infowrappeople">
             <label>
               Title
@@ -381,7 +428,11 @@ export function TravelerInfoModal({ openModal, btnClick }) {
             </label>
             <label onClick={() => setAddressScreen(true)}>
               Street Address
-              <input></input>
+              <input
+                type="text"
+                placeholder={travelerAddressPlaceholder}
+                onFocus={() => setAddressScreen(true)}
+              ></input>
             </label>
             {/* <CSSTransition
               in={addressScreen}
@@ -417,7 +468,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
                     {stateCodes.map((value, index) => {
                       return (
                         <option key={index} value={value}>
-                          {value};
+                          {value}
                         </option>
                       );
                     })}
@@ -440,21 +491,30 @@ export function TravelerInfoModal({ openModal, btnClick }) {
                     }
                   ></input>
                 </label>
-                <button type="button" onClick={(e) => setAddressScreen(false)}>
+                <button
+                className="nextbtn"
+                  type="button"
+                  onClick={(e) => {
+                    setAddressScreen(false);
+                    setTravelerAddressPlaceholder(
+                      travelersArr[travelerId].contact.address.lines +
+                        ", " +
+                        travelersArr[travelerId].contact.address.cityName +
+                        ", " +
+                        travelersArr[travelerId].contact.address.stateCode +
+                        ", " +
+                        travelersArr[travelerId].contact.address.countryCode +
+                        " " +
+                        travelersArr[travelerId].contact.address.postalCode
+                    );
+                  }}
+                >
                   Confirm
                 </button>
               </div>
             ) : null}
             <button
-              className="pplscreenbtn"
-              onClick={(e) => {
-                setTravelerInfoScreen(false);
-                setEmailScreen(true);
-              }}
-            >
-              Back To Contact Info
-            </button>
-            <button
+              type="button"
               className="pplscreenbtn"
               onClick={(e) => {
                 setTravelerInfoScreen(false);
@@ -481,7 +541,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
           </label></form> : null} */}
       {documentsScreen ? (
         <div>
-          <label>Travs</label>{" "}
+          <label>Traveler {travelersArr.length}</label>
           <article className="infowrappeople">
             <label>
               Document Type
@@ -557,20 +617,14 @@ export function TravelerInfoModal({ openModal, btnClick }) {
               </input>
             </label>
             <button
-              className="nextbtn"
-              onClick={(e) => {
-                setDocumentsScreen(false);
-                setTravelerInfoScreen(true);
-              }}
-            >
-              Back To Traveler Info
-            </button>
-            <button
               type="button"
               className="nextbtn"
               onClick={(e) => {
                 setDocumentsScreen(false);
                 setConfirmationScreen(true);
+                passportInfo.push(travelersArr[travelerId].documents[0]);
+                personalInfo.push(travelersArr[travelerId].name);
+                // personalInfo.push(travelersArr[travelerId].name)
               }}
             >
               Next
@@ -579,16 +633,46 @@ export function TravelerInfoModal({ openModal, btnClick }) {
         </div>
       ) : null}
       {confirmationScreen ? (
-        <div>
-          {console.log(travelersArr)}
-          Name{" "}
-          {travelersArr[travelerId].name.firstName +
-            " " +
-            travelersArr[travelerId].name.lastName}
-          {travelersArr.length === finalTravelerNumber ? (
-            <button onClick={btnClick} type="button">
-              DONE
-            </button>
+
+        <section className="travelerinfowrap">  
+          <h1 className="travheader">Traveler: {travelersArr.length} </h1>
+          <section className="infosection">
+            <article>
+                <h1>Traveler Information: </h1>
+                <h2><div>Name: </div>
+                {loopedObject[2][1].firstName} {loopedObject[2][1].middleName}{" "}
+                {loopedObject[2][1].lastName} {loopedObject[2][1].suffix}</h2>
+      
+
+                <h2><div>Date of Birth: </div>           
+              {formatDate(loopedObject[1][1])}</h2>
+              <h2> <div>Gender: </div>
+              {loopedObject[3][1]} </h2>
+            </article>
+            <article>
+            <h1>Documents: </h1>
+              <h2>Document Type: {loopedObject[5][1][0].documentType}</h2>
+              <h2>Document Number: {loopedObject[5][1][0].number}</h2>
+              <h2>Issuing Country: {loopedObject[5][1][0].issuanceCountry}</h2>
+              <h2>Expiration Date: {formatDate(loopedObject[5][1][0].expiryDate)}</h2>
+              <h2>Place of Birth: {loopedObject[5][1][0].birthPlace}</h2>
+            </article>{" "}
+          </section>
+          <h1>Address:</h1>
+          <h2>
+            {" "}
+            {loopedObject[4][1].address.lines},{" "}
+            {loopedObject[4][1].address.cityName},{" "}
+            {loopedObject[4][1].address.stateName}
+            {loopedObject[4][1].address.countryCode}{" "}
+            {loopedObject[4][1].address.postalCode}
+
+          </h2>
+          {/* {Object.entries(travelersArr[travelerId][0])} */}
+          {console.log(finalTravelerNumber)}
+          {/* {setTravelerId(travelerId > 1 ? travelersArr.length - 1 : travelerId + 1)} */}
+          {travelersArr.length === finalTravelerNumber ? (          
+           <button type='button' onClick={confirmFlightOffer}className="selectOfferBtn">Buy Offer</button>
           ) : (
             <button
               type="button"
@@ -596,16 +680,13 @@ export function TravelerInfoModal({ openModal, btnClick }) {
               onClick={(e) => {
                 setConfirmationScreen(false);
                 setTravlerCount(true);
-                setTravelerId(travelersArr.length);
-                // openModal = () => {
-                //   openModal(false)
-                // }
+                setTravelerId(travelersArr.length - 1)
               }}
             >
-              Next
+              Next {console.log(travelerId )}
             </button>
           )}{" "}
-        </div>
+        </section>
       ) : null}
     </form>
   );

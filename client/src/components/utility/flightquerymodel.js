@@ -23,7 +23,7 @@ function FlightSearchModal() {
   const [roundTripSelected, setRoundTrip] = useState(false);
   const [oneWaySelected, setOneWay] = useState(false);
   const [queryRecieved, setQueryStatus] = useState();
-  const [adultCount, setAdultCount] = useState(1);
+  const [adultCount, setAdultCount] = useState(2);
   const [childCount, setChildCount] = useState(0);
 
   const [travelersPopup, setTravelersPopupdults] = useState(false);
@@ -53,7 +53,7 @@ function FlightSearchModal() {
     arrival: arrivalLocation,
     maxPrice: 5000,
     flightClass: "ECONOMY",
-    adults: 1,
+    adults: 2,
     children: 0,
     nonStop: false,
   };
@@ -333,7 +333,7 @@ function FlightSearchModal() {
               ) : (
                 <label className="dateselectionwrap">
                   <input
-                    className="depaturedateinput"
+                    className="depaturedateinput2"
                     required
                     onChange={(e) => updateDatesAndFilters(e, "departureDate")}
                     type="date"

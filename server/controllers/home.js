@@ -12,7 +12,7 @@ const travelerCounts = {
   adults:1,
   children:0
 };
-const carriers = []
+
 module.exports = {
   searchInput: (req, res) => {
     console.log(req.body)
@@ -34,38 +34,38 @@ module.exports = {
       clientSecret: process.env.CLIENT_SECRET
     });
     amadeus.shopping.flightOffersSearch.get({
-        originLocationCode: originLocation,
-        destinationLocationCode: destinationLocation,
-        departureDate: departureDate,
-        returnDate: returnDate,
-        adults: adults,
-        children:children,
-        currencyCode:'USD',
-        max: 10,
-        nonStop: true,
-        travelClass: flightClass,
-        maxPrice: maxPrice
-        // originLocationCode: 'LAX',
-        // destinationLocationCode: 'SFO',
-        // departureDate: '2023-03-31',
-        // returnDate:  '2023-06-15',
-        // adults: 2,
-        // children:0,
+        // originLocationCode: originLocation,
+        // destinationLocationCode: destinationLocation,
+        // departureDate: departureDate,
+        // returnDate: returnDate,
+        // adults: adults,
+        // children:children,
         // currencyCode:'USD',
-        // max:5,
+        // max: 10,
         // nonStop: true,
-        // travelClass: 'ECONOMY',
-        // maxPrice: 5000
+        // travelClass: flightClass,
+        // maxPrice: maxPrice
+        originLocationCode: 'LAX',
+        destinationLocationCode: 'JFK',
+        departureDate: '2023-06-01',
+        // returnDate:  '2023-06-15',
+        adults: adults,
+        children:0,
+        currencyCode:'USD',
+        max:5,
+        nonStop: true,
+        travelClass: 'ECONOMY',
+        maxPrice: 5000
 
     }).then(function(response){
       response.data = response;
       const offers = response.data
       const data = JSON.parse(response.data.body);
-      return res.json({message:data, carriers: data.dictionaries.carriers, travelerCounts})
+      return res.json({message:data, carriers: data.dictionaries.carriers, travelerCounts,})
       } )
 
     .catch(function(responseError){
-      console.log(responseError);
+      console.log(responseError.code + 'HMMMM');
 
     });
 

@@ -39,23 +39,7 @@ export function FlightDetailsModal({
   useEffect(() => {
     setReturnOrigin(returnTripOrigin);
   });
-  const confirmFlightOffer = async () => {
-    console.log(queryResponseObj[1].message.data[1])
-    //Converting the converted carrier code back to its airline code for
-    //search purposes
-    // queryResponseObj[1].message.data[1].itineraries[0].segments[0].carrierCode = 
-    // queryResponseObj[1].message.data[1].itineraries[0].segments[0].operating.carrierCode;
-    // queryResponseObj[1].message.data[1].itineraries[1].segments[0].carrierCode = 
-    // queryResponseObj[1].message.data[1].itineraries[1].segments[0].operating.carrierCode;
-      const pull = await fetch("http://localhost:8000/flightconfirmation", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(queryResponseObj[1].message.data[3])
-      });
-      const x = await pull.json()
-      console.log(pull)
-      console.log(x)
-  }
+ 
     const recordOrderEmail = () => {
       setEmailScreen(false);
       setTravelerInfoScreen(true);
@@ -136,7 +120,7 @@ export function FlightDetailsModal({
         </section>
       ) : null}</div>
       {/* <div>Layovers</div> */}
-      <div  className="offerbtnwrap"><button onClick={() => setTravelerInfoModal(true)}>Get This flight</button><button onClick={confirmFlightOffer} className="selectOfferBtn">Buy Offer</button></div>
+      <div  className="offerbtnwrap"><button className="selectOfferBtn" onClick={() => setTravelerInfoModal(true)}>Get This flight</button></div>
     </article>
   );
 }

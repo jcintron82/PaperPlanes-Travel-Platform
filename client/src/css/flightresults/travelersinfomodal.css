@@ -1,9 +1,8 @@
 .travelersinfomodal{
     border: solid black;
     position: absolute;
-    height: 80vh;
     display: flex;
-    top: 70%;
+    top: 50%;
     left: 55%;
     justify-content: center;
     align-items: center;
@@ -14,12 +13,42 @@
     z-index: 5;
     align-self: center;
     max-width: 42rem;
+    padding: 1rem 0;
+    border-radius: .75rem;
+    color: black;
+    height: 30rem;
+}
+.travheader{
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 2rem;
+    margin-bottom: 0.5rem;
+}
+.infoh1{
+    margin: .25rem;
+    text-align: left;
+    padding: 0.25rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    font-size: .7em;
+}
+.infoh1 > div {
+    font-size: 1.1em;
+    height: 2rem;
 }
 .infowrap{
     display: flex;
+    height: 100%;
     flex-flow: column nowrap;
-    justify-content: space-evenly;
-    gap: 38px;
+    align-items: flex-start;
+    padding-left: 0.5rem;
+    width: 95%;
+    justify-content: center;
+    gap: 48px;
 }
 .infowrappeople{
     display: flex;
@@ -55,6 +84,7 @@ label {
     font-weight: 400;
     font-size: 1.02em;
     text-indent: 5px;
+    font-size: 1.13em;
 }
 input, select {
     width: 100%;
@@ -62,6 +92,9 @@ input, select {
     border: transparent;
     padding: 0.25rem 0;
     text-indent: 10px;
+    padding: 0.25rem 0;
+    padding-left: 0.25rem;
+    font-size: .9em;
 }
 .nextbtn{
     width: 100%;
@@ -91,13 +124,13 @@ input, select {
     position: absolute;
     background: darkgray;
     min-height: 25rem;
-    min-width: 80vw;
+    width: 92%;
     display: flex;
-    flex-flow: row wrap;;
+    flex-flow: row wrap;
     align-items: center;
     justify-content: center;
-    border: solid;
     border-radius: 0.85rem;
+    height: 91%;
 }
 .hide{
     display:none
@@ -114,13 +147,49 @@ input, select {
 .travelerNumWrap{
     position: absolute;
     top: 0;
-    background: #05203C;
+    background: white;
     width: 100%;
     height: 3rem;
     justify-content: center;
     display: flex;
     align-items: center;
+    max-width: 49.2rem;
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
 }
+.travelerinfowrap{
+    display: flex;
+    height: 100%;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    padding-left: 0.5rem;
+    width: 95%;
+}
+.travelerinfowrap > h1 {
+    border-bottom: solid;
+    text-align: left;
+    padding: 0.25rem;
+}
+h2{
+    padding: 0.25rem;
+}
+.infosection{
+    display:flex;
+    width: 100%;
+}
+
+.infosection > article {
+    display: flex;
+    flex-flow: column;
+    width: 50%;
+    justify-content: flex-start;
+    gap: 5px;
+}
+article > h1 {
+    padding: .25rem;
+    font-weight: 600;
+    font-size: 1.1em;
+    height: 2rem;}
 .addressscreen-enter {
     opacity: 1;
   }
@@ -144,6 +213,10 @@ input, select {
     }
     .travelerNumWrap{
         justify-content: flex-start;
-        padding-left: .5rem;
+        padding-left: .8rem;
+        text-align: left;
+    }
+    .infosection > article {
+       justify-content: center;;
     }
   }
