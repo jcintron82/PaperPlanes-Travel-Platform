@@ -7,10 +7,10 @@ html{
     justify-content: space-between;
     position: fixed;
     top: 0;
-    background-color: #05203C;
+    background-color: #1C294A;
     color: white;
     width: 100%;
-    height: 3.2rem;
+    height: 4.25rem;
 }
 .exitbtn{
     align-self: flex-end;
@@ -39,10 +39,10 @@ html{
     align-items: center;
     padding-right: 0.12rem;
     font-size: 1.25em;
-    margin-bottom: .12rem;
+    margin-bottom: 0.12rem;
     font-weight: 500;
     text-decoration: none;
-    color: white;
+    color: #F1F5F9;
 }
 .loginwrap{
     display: flex;
@@ -109,11 +109,11 @@ p{
     border-bottom-left-radius: 0;
 }
 .paperplanesvg{
-    fill: white
+    fill: #F8FAFC
 }
 .accountsvg{
     width: 37px;
-    fill: white;
+    fill: #F8FAFC;
     padding-right: .5rem;
 }
 .signupcalltoaction{

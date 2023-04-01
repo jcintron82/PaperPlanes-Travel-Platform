@@ -29,6 +29,7 @@ export function FlightResultsWrap() {
   return (
     <div className="flightresultspagemainbody">
       <Header />
+      {console.log(queryResponseObj)}
       <article className="flightResultsWrap">
       {infoModal ? (
               <FlightDetailsModal

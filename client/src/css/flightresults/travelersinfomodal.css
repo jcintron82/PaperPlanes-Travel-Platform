@@ -1,12 +1,11 @@
 .travelersinfomodal{
-    border: solid black;
     position: absolute;
     display: flex;
-    top: 50%;
+    top: 60%;
     left: 55%;
     justify-content: center;
     align-items: center;
-    background: darkgray;
+    background: white;
     transform: translate(-50%, -50%);
     width: 100%;
     flex-flow: row wrap;
@@ -14,9 +13,14 @@
     align-self: center;
     max-width: 42rem;
     padding: 1rem 0;
-    border-radius: .75rem;
+    border-radius: 0.75rem;
     color: black;
     height: 30rem;
+    overflow-x: scroll;
+}
+.formheader{
+    position: absolute;
+    top: 0;
 }
 .travheader{
     width: 95%;
@@ -54,11 +58,13 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
-    gap: 58px;
-    width: 100%;
+    gap: 15px;
 }
 .infowrappeople > label {
-    width: 40%;
+    width: 90%;
+    margin: .25rem 0;
+    padding: .4rem 0;
+    font-size: 1em;
 }
 .infowrappeople > button {
     width: 41%;
@@ -88,13 +94,16 @@ label {
 }
 input, select {
     width: 100%;
-    border-radius: 0.7rem;
+    border-radius: 0.2rem;
     border: transparent;
     padding: 0.25rem 0;
     text-indent: 10px;
-    padding: 0.25rem 0;
+    padding: 0.5rem 0;
     padding-left: 0.25rem;
     font-size: .9em;
+    border: solid #C2C2C2 2px;
+    text-align: center;
+
 }
 .nextbtn{
     width: 100%;
@@ -147,9 +156,9 @@ input, select {
 .travelerNumWrap{
     position: absolute;
     top: 0;
-    background: white;
+    background: transparent;
     width: 100%;
-    height: 3rem;
+    height: 6rem;
     justify-content: center;
     display: flex;
     align-items: center;
@@ -190,20 +199,23 @@ article > h1 {
     font-weight: 600;
     font-size: 1.1em;
     height: 2rem;}
-.addressscreen-enter {
-    opacity: 1;
-  }
-  .addressscreen-enter-active {
-    opacity: 0;
-    transition: opacity 1000ms;
-  }
-  .addressscreen-exit {
-    opacity: 1;
-  }
-  .addressscreen-exit-active {
-    opacity: 0;
-    transition: opacity 1000ms;
-  }
+    .travelersinfomodal-enter {
+        opacity: 0;
+      }
+      
+      .travelersinfomodal-enter-active {
+        opacity: 1;
+        transition: opacity 1000ms ease-in-out;
+      }
+      
+      .travelersinfomodal-exit {
+        opacity: 1;
+      }
+      
+      .travelersinfomodal-exit-active {
+        opacity: 0;
+        transition: opacity 1000ms ease-in-out;
+      }
   @media(min-width:760px){
     .travelersinfomodal{
         top: 45vh;
@@ -218,5 +230,9 @@ article > h1 {
     }
     .infosection > article {
        justify-content: center;;
+    }
+    .infowrappeople > label {
+        width: 30%;
+        
     }
   }

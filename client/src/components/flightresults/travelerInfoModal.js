@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { queryResponseObj } from "../utility/flightquerymodel";
+import BounceLoader from "react-spinners/BounceLoader";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "../../css/flightresults/detailsmodal.css";
 import "../../css/flightresults/travelersinfomodal.css";
@@ -12,54 +13,29 @@ export function TravelerInfoModal({ openModal, btnClick }) {
   const [travelerInfoscren, setTravelerInfoScreen] = useState(false);
   const [documentsScreen, setDocumentsScreen] = useState(false);
   const [confirmationScreen, setConfirmationScreen] = useState(false);
+  const [width, setWidth] = useState(window.innerWidth);
+  const [buyOffer, setBuyOffer] = useState(false);
+  const [ccc, setCCc] = useState(true);
   const [confirmationScreenData, setConfirmationScreenData] = useState([]);
   const [travelerAddressPlaceholder, setTravelerAddressPlaceholder] =
     useState("");
   const [travelersArr, setTravelersArr] = useState([]);
   const [travelerId, setTravelerId] = useState(0);
   const [travelersInfo, setTravelerInfo] = useState({
-    id: "1",
-    dateOfBirth: "1990-01-01",
-    name: {
-      firstName: "John",
-      lastName: "Doe",
-      title: "MR",
-      middleName: "Middle",
-      suffix: "Jr",
-    },
-    gender: "MALE",
     contact: {
       emailAddress: "johndoe@example.com",
       phones: [
         { deviceType: "MOBILE", countryCallingCode: "1", number: "5555555555" },
       ],
-      address: {
-        lines: ["123 Main St"],
-        postalCode: "12345",
-        cityName: "Anytown",
-        countryCode: "US",
-        stateCode: "NY",
-      },
     },
-    documents: [
-      {
-        documentType: "PASSPORT",
-        birthPlace: "New York, NY",
-        issuanceCountry: "US",
-        expiryDate: "2025-01-01",
-        number: "123456789",
-        holder: true,
-        nationality: "US",
-      },
-    ],
   });
   const passportInfo = [];
   const personalInfo = [];
   const loopedObject = travelersArr.length < 1 ? null : Object.entries(travelersArr[travelersArr.length - 1]);
-
   const formatDate = (value) => {
-    const date = new Date(value);
-    const options = { month:'long', day:'numeric', year:'numeric'};
+    const parts = value.split('-');
+    const date = new Date(parts[1] +'-'+parts[2]+'-'+parts[0]);
+    const options = { month:'long', day:'numeric', year:'numeric', time:'none'};
     return new Intl.DateTimeFormat("en-US", options).format(date);
   };
   const stateCodes = [
@@ -127,45 +103,45 @@ export function TravelerInfoModal({ openModal, btnClick }) {
     const id = travelersArr.length + 1;
     const newObj = {
       id: id.toString(),
-      dateOfBirth: "1990-01-01",
+      dateOfBirth: "",
       name: {
-        firstName: "John",
-        lastName: "Doe",
+        firstName: "",
+        lastName: "",
         title: "",
         middleName: "",
         suffix: "",
       },
-      gender: "MALE",
+      gender: "",
       contact: {
         emailAddress: travelersArr[0]
           ? travelersArr[0].contact.emailAddress
-          : "johndoe@example.com",
+          : "",
         phones: [
           {
             deviceType: "MOBILE",
             countryCallingCode: "1",
             number: travelersArr[0]
               ? travelersArr[0].contact.phones[0].number
-              : "5555555555",
+              : "",
           },
         ],
         address: {
-          lines: ["123 Main St"],
-          postalCode: "12345",
-          cityName: "Anytown",
-          countryCode: "US",
-          stateCode: "NY",
+          lines: [""],
+          postalCode: "",
+          cityName: "",
+          countryCode: "",
+          stateCode: "",
         },
       },
       documents: [
         {
-          documentType: "PASSPORT",
-          birthPlace: "New York, NY",
-          issuanceCountry: "US",
-          expiryDate: "2025-01-01",
-          number: "123456789",
+          documentType: "",
+          birthPlace: "",
+          issuanceCountry: "",
+          expiryDate: "",
+          number: "",
           holder: true,
-          nationality: "US",
+          nationality: "",
         },
       ],
     };
@@ -191,28 +167,37 @@ export function TravelerInfoModal({ openModal, btnClick }) {
     travelersInfo.contact.phones[0].number = e.target.value;
     travelersArr[travelerId].contact.phones[0].number = e.target.value;
   };
-  const recordTravelerInfo = (e, key, nestedkey, travelerId) => {
+  const recordTravelerInfo = (e, key, nestedkey) => {
+    const index = travelersArr.length - 1;
     const capitalizedWords = capitalizeWords(e.target.value);
     nestedkey === null
-      ? (travelersArr[travelerId][key] = capitalizedWords)
-      : (travelersArr[travelerId][key][nestedkey] = capitalizedWords);
+      ? (travelersArr[index][key] = capitalizedWords)
+      : (travelersArr[index][key][nestedkey] = capitalizedWords);
     // travelersArr[travelerId].firstName = e.target.value
   };
-  const recordTravelerAddress = (e, key, travelerId) => {
+  const recordTravelerAddress = (e, key) => {
+    const index = travelersArr.length - 1;
     const capitalizedWords = capitalizeWords(e.target.value);
-    travelersArr[travelerId].contact.address[key] = capitalizedWords;
+    if(key === 'countryCode'){
+      travelersArr[index].contact.address.countryCode = e.target.value.toUpperCase();
+    }
+    else {
+      key === 'lines' ? travelersArr[index].contact.address.lines[0] = capitalizedWords :
+      travelersArr[travelerId].contact.address[key] = capitalizedWords;
+    }
   };
   const recordDocumentData = (e, key, travelerId) => {
+    const index = travelersArr.length - 1;
     const capitalizedWords = capitalizeWords(e.target.value);
     if (e.target.value === "null") {
       setCountrySearchPopUp(true);
     }
     if (key === "nationality" || key === "issuanceCountry") {
-      travelersArr[travelerId].documents[0][key] = e.target.value.toUpperCase();
+      travelersArr[index].documents[0][key] = e.target.value.toUpperCase();
       console.dir(travelersArr[0]);
       setConfirmationScreenData(travelersArr[travelerId]);
     } else {
-      travelersArr[travelerId].documents[0][key] = capitalizedWords;
+      travelersArr[index].documents[0][key] = capitalizedWords;
       console.dir(travelersArr[0]);
       setConfirmationScreenData(travelersArr[travelerId]);
     }
@@ -230,6 +215,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
       .join(" ");
   };
   const confirmFlightOffer = async () => {
+    setBuyOffer(true)
     //Converting the converted carrier code back to its airline code for
     //search purposes
     // queryResponseObj[1].message.data[1].itineraries[0].segments[0].carrierCode = 
@@ -244,6 +230,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
       const x = await pull.json()
       console.log(pull)
       console.log(x)
+      setBuyOffer(false)
   }
   const locationSearch = async (input) => {
     let token = "";
@@ -284,16 +271,31 @@ export function TravelerInfoModal({ openModal, btnClick }) {
   const finalTravelerNumber =
     queryResponseObj[0].travelerCounts.adults +
     queryResponseObj[0].travelerCounts.children;
+    const breakpoint = 1024;
   return (
+   
     <form className={openModal === true ? "travelersinfomodal" : "hide"}>
-    
+      <h1 className="formheader"><button onClick={() => { setCCc(!ccc)}}>YOOOO</button></h1>
+      { buyOffer ? 
+       <BounceLoader
+          speedMultiplier={0.9}
+          className="gridloader"
+          color="#05203C"
+          cssOverride={{
+            position: "absolute",
+          }}
+          size={width > breakpoint ? 500 : 300}
+        /> : null
+        }
       {travelerCount ? (
         <section className="mainsectionwrap">
           <h1 className="travelerNumWrap">
             Traveler {travelersArr.length === 0 ? 1 : travelersArr.length + 1} of {finalTravelerNumber}
             <br></br>
             To change the order traveler count, please create a new search.{" "}
-          </h1>
+          </h1> <CSSTransition
+      in={travelerCount} timeout={3000} classNames='travelersinfomodal'
+      >
           <svg
             fill="#5BC0BE"
             height="35vh"
@@ -308,7 +310,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
               stroke-linejoin="round"
               d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
             ></path>
-          </svg>
+          </svg></CSSTransition>
           <br></br>
           <button className="nextbtn" type="button" onClick={confirmTravNum}>
             Confirm Traveler{" "}
@@ -332,15 +334,6 @@ export function TravelerInfoModal({ openModal, btnClick }) {
               maxLength="12"
             ></input>
           </label>
-          <button
-            className="nextbtn"
-            onClick={(e) => {
-              setEmailScreen(false);
-              setTravlerCount(true);
-            }}
-          >
-            back
-          </button>
           <button
             className="nextbtn"
             onClick={(e) => {
@@ -372,6 +365,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
             <label>
               First Name
               <input
+              required
                 onChange={(e) =>
                   recordTravelerInfo(e, "name", "firstName", travelerId)
                 }
@@ -380,6 +374,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
             <label>
               Middle Name
               <input
+              
                 onChange={(e) =>
                   recordTravelerInfo(e, "name", "middleName", travelerId)
                 }
@@ -388,23 +383,16 @@ export function TravelerInfoModal({ openModal, btnClick }) {
             <label>
               Last Name
               <input
+              required
                 onChange={(e) =>
                   recordTravelerInfo(e, "name", "lastName", travelerId)
                 }
               ></input>
             </label>
             <label>
-              Date of Birth
-              <input
-                type="date"
-                onChange={(e) =>
-                  recordTravelerInfo(e, "dateOfBirth", null, travelerId)
-                }
-              ></input>
-            </label>
-            <label>
               Suffix
               <select
+              
                 onChange={(e) =>
                   recordTravelerInfo(e, "name", "suffix", travelerId)
                 }
@@ -416,8 +404,19 @@ export function TravelerInfoModal({ openModal, btnClick }) {
               </select>
             </label>
             <label>
+              Date of Birth
+              <input
+              required
+                type="date"
+                onChange={(e) =>
+                  recordTravelerInfo(e, "dateOfBirth", null, travelerId)
+                }
+              ></input>
+            </label>
+            <label>
               Gender
               <select
+              required
                 onChange={(e) =>
                   recordTravelerInfo(e, "gender", null, travelerId)
                 }
@@ -429,6 +428,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
             <label onClick={() => setAddressScreen(true)}>
               Street Address
               <input
+              required
                 type="text"
                 placeholder={travelerAddressPlaceholder}
                 onFocus={() => setAddressScreen(true)}
@@ -444,6 +444,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
                 <label>
                   Street Address
                   <input
+                  required
                     onChange={(e) =>
                       recordTravelerAddress(e, "lines", travelerId)
                     }
@@ -452,6 +453,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
                 <label>
                   City
                   <input
+                  required
                     onChange={(e) =>
                       recordTravelerAddress(e, "cityName", travelerId)
                     }
@@ -460,6 +462,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
                 <label>
                   State
                   <select
+                  required
                     onChange={(e) =>
                       recordTravelerAddress(e, "stateCode", travelerId)
                     }
@@ -478,6 +481,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
                 <label>
                   Country
                   <input
+                  required
                     onChange={(e) =>
                       recordTravelerAddress(e, "countryCode", travelerId)
                     }
@@ -486,6 +490,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
                 <label>
                   Zip Code
                   <input
+                  required
                     onChange={(e) =>
                       recordTravelerAddress(e, "postalCode", travelerId)
                     }
@@ -497,15 +502,15 @@ export function TravelerInfoModal({ openModal, btnClick }) {
                   onClick={(e) => {
                     setAddressScreen(false);
                     setTravelerAddressPlaceholder(
-                      travelersArr[travelerId].contact.address.lines +
+                      travelersArr[travelersArr.length - 1].contact.address.lines +
                         ", " +
-                        travelersArr[travelerId].contact.address.cityName +
+                        travelersArr[travelersArr.length - 1].contact.address.cityName +
                         ", " +
-                        travelersArr[travelerId].contact.address.stateCode +
+                        travelersArr[travelersArr.length - 1].contact.address.stateCode +
                         ", " +
-                        travelersArr[travelerId].contact.address.countryCode +
+                        travelersArr[travelersArr.length - 1].contact.address.countryCode +
                         " " +
-                        travelersArr[travelerId].contact.address.postalCode
+                        travelersArr[travelersArr.length - 1].contact.address.postalCode
                     );
                   }}
                 >
@@ -526,19 +531,6 @@ export function TravelerInfoModal({ openModal, btnClick }) {
           </article>
         </div>
       ) : null}
-      {/* </CSSTransition> */}
-      {/* {addressScreen ?      <form><label>Street Address
-              <input></input>
-          </label>
-          <label>Street Address
-              <input></input>
-          </label>
-          <label>Street Address
-              <input></input>
-          </label>
-          <label>Street Address
-              <input></input>
-          </label></form> : null} */}
       {documentsScreen ? (
         <div>
           <label>Traveler {travelersArr.length}</label>
@@ -546,6 +538,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
             <label>
               Document Type
               <select
+              required
                 onChange={(e) =>
                   recordDocumentData(e, "documentType", travelerId)
                 }
@@ -567,6 +560,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
             <label>
               Issuing Country
               <input
+              required
                 maxLength={2}
                 placeholder="Ex: US"
                 onChange={(e) =>
@@ -586,6 +580,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
             <label>
               Document Number
               <input
+              required
                 type="number"
                 onChange={(e) => recordDocumentData(e, "number", travelerId)}
               ></input>
@@ -605,6 +600,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
             <label>
               Nationality
               <input
+              required
                 maxLength={2}
                 placeholder="Ex: UK"
                 onChange={(e) => {

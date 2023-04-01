@@ -121,6 +121,23 @@
     text-align: left;
     width: 5rem;
 }
+.travelersinfomodal-enter {
+    opacity: 0;
+  }
+
+ .travelersinfomodal-enter-active {
+    opacity: 1;
+    transition: opacity 1s;
+  }
+
+.travelersinfomodal-exit {
+    opacity: 1;
+  }
+
+.travelersinfomodal-exit-active {
+    opacity: 0;
+    transition: opacity 1s;
+  }
 @media(max-width:425px){
     .luggagewrap{
         justify-content: center;
