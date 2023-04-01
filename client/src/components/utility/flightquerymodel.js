@@ -89,7 +89,7 @@ function FlightSearchModal() {
     queryResponseObj[1] = data;
     navigate("/flightquery");
     callCitySearchAPI();
-    return { message: queryResponseObj };
+    // return { message: queryResponseObj };
   };
 
   const callCitySearchAPI = async (input) => {

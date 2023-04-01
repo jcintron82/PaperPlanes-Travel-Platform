@@ -54,36 +54,27 @@ module.exports = {
       clientId: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
     });
-    amadeus.shopping.flightOffers.pricing
-      .post(
-        JSON.stringify({
-          data: {
-            type: "flight-offers-pricing",
-            flightOffers: [req.body[0]],
-          },
-        })
-      )
-      .then((response) => {
+   
         // console.log(response.price.grandTotal)
         //  req.body.price.grandTotal = response.data.flightOffers[0].pr
         // req.body.price.grandTotal = response
-        return amadeus.booking.flightOrders.post(
+      //   return amadeus.booking.flightOrders.post(
           
-          JSON.stringify({
-            data: {
-              type: "flight-order",
-              flightOffers: [response.data.flightOffers[0]],
-              travelers: req.body[1],
-            }
-          }))
-          .then((response) => {
-            res.send(response)
-          }
-        );
-      })
-       .catch(function (error) {
-          console.error(error);
-        });
+      //     JSON.stringify({
+      //       data: {
+      //         type: "flight-order",
+      //         flightOffers: [response.data.flightOffers[0]],
+      //         travelers: req.body[1],
+      //       }
+      //     }))
+      //     .then((response) => {
+      //       res.send(response)
+      //     }
+      //   );
+      // }
+      //  .catch(function (error) {
+      //     console.error(error);
+      //   });
 
      
       //  return amadeus.booking.flightOrders.post(

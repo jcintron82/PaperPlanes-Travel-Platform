@@ -53,14 +53,11 @@ export function FlightDetailsModal({
       { travelerInfoModal ? <TravelerInfoModal btnClick={() => endTravelerInfoModal()(false)}openModal={travelerInfoModal}/> : null}
       <button onClick={infoModalClose} className="closemodalbtn">X</button>
       <section className="metainfowrap">
-        <p className="pricingparagraph"><h1 className="finalpricingwrap">Tickets:<br></br> {perTicketPrice}/ea</h1><h1  className="finalpricingwrap">Total:<br></br> {totalPrice}</h1></p>
-        <div className="modaltravelerswrap">{numAdults} Adults<br></br> {numChildren} Children <div className="cabinwrap">Cabin:<br></br> {cabinClass}</div></div>
-        <div className="luggagewrap">Incl. Checked Luggage: {includedCheckedbags}</div>
-      </section>
-
-
-    <div className="durationdesktopwrap">
-      
+        <p className="pricingparagraph"><h1 className="finalpricingwrap">Tickets: {perTicketPrice}/ea</h1><h1  className="finalpricingwrap">Total: {totalPrice}</h1></p>
+        <div className="cabinwrap">Cabin: {cabinClass}</div>
+        <div className="modaltravelerswrap">Adults: {numAdults} Children:  {numChildren} </div>
+        <div className="luggagewrap"> Incl. Checked Luggage: {includedCheckedbags}</div>
+        <div className="durationdesktopwrap">
       <section className="durationandstopswrap">
         <div className="timeswrap">
           {originLocation}
@@ -119,6 +116,10 @@ export function FlightDetailsModal({
           </div>
         </section>
       ) : null}</div>
+      </section>
+
+
+ 
       {/* <div>Layovers</div> */}
       <div  className="offerbtnwrap"><button className="selectOfferBtn" onClick={() => setTravelerInfoModal(true)}>Get This flight</button></div>
     </article>

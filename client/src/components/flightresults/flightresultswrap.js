@@ -15,7 +15,7 @@ export function FlightResultsWrap() {
   const [infoModal, setInfoModal] = useState();
   const [selectIndex, setSelectIndex] = useState();
 
-  const flightsInfo = queryResponseObj[0].message.data;
+  const flightsInfo = queryResponseObj[0].message.data.flightOffers;
   let imgArr = [londonimg, nycimg, miamiimg, sanfranimg, adoneimg];
 
   //This block is necessary for converting the carrier codes into full names
@@ -30,7 +30,7 @@ export function FlightResultsWrap() {
     <div className="flightresultspagemainbody">
       <Header />
       {console.log(queryResponseObj)}
-      <article className="flightResultsWrap">
+      <article className={infoModal ? "flightResultsWrapOpenModal" : "flightResultsWrap"}>
       {infoModal ? (
               <FlightDetailsModal
                 tripTypeTwoWay={ flightsInfo[selectIndex].itineraries[1] ? true : false}
