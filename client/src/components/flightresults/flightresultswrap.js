@@ -27,7 +27,7 @@ export function FlightResultsWrap() {
   //   }
   // }
   return (
-    <div className="flightresultspagemainbody">
+    <div className={infoModal ? "flightresultspagemainbody hiddenresults" : "flightresultspagemainbody"}>
       <Header />
       {console.log(queryResponseObj)}
       <article className={infoModal ? "flightResultsWrapOpenModal" : "flightResultsWrap"}>
@@ -185,7 +185,7 @@ export function FlightResultsWrap() {
           </li>
         ))}
       </article>
-      <section className="recommendedwrap">
+      <section className={infoModal ? "detailswrapblurred recommendedwrap" : "recommendedwrap"}>
         <h1>Recommended Travels</h1>
         <RecommendedTravelsTabs
           bgImg={imgArr[0]}

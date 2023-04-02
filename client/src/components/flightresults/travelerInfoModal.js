@@ -36,7 +36,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
     const parts = value.split('-');
     const date = new Date(parts[1] +'-'+parts[2]+'-'+parts[0]);
     const options = { month:'long', day:'numeric', year:'numeric', time:'none'};
-    return new Intl.DateTimeFormat("en-US", options).format(date);
+    // return new Intl.DateTimeFormat("en-US", options).format(date);
   };
   const stateCodes = [
     "AK",
@@ -275,7 +275,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
   return (
    
     <form className={openModal === true ? "travelersinfomodal" : "hide"}>
-      <h1 className="formheader"><button onClick={() => { setCCc(!ccc)}}>YOOOO</button></h1>
+      {/* <h1 className="formheader"><h2>{travelerId + 1 }</h2></h1> */}
       { buyOffer ? 
        <BounceLoader
           speedMultiplier={0.9}
@@ -324,6 +324,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
             <input
               onChange={(e) => recordOrderEmail(e, "emailAddress")}
               type="email"
+              placeholder="example@email.com"
             ></input>
           </label>
           <label>
@@ -332,6 +333,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
               onChange={(e) => recordOrderNum(e, "number")}
               type="tel"
               maxLength="12"
+              placeholder="610-555-8282"
             ></input>
           </label>
           <button

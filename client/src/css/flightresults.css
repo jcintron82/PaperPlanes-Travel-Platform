@@ -81,7 +81,12 @@ h3{
     margin-bottom: 0.5rem;
     height: 11rem;
 }
-
+.flightresultspagemainbodyopacity > * {
+    opacity: .3;
+}
+.hiddenresults{
+    overflow: hidden;
+}
 .flightmaindetailswrap > * {
     padding: .25rem;
     font-weight: 500;

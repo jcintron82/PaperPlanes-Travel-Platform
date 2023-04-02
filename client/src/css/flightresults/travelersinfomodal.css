@@ -5,22 +5,31 @@
     left: 55%;
     justify-content: center;
     align-items: center;
-    background: white;
     transform: translate(-50%, -50%);
     width: 100%;
     flex-flow: row wrap;
     z-index: 5;
     align-self: center;
     max-width: 42rem;
-    padding: 1rem 0;
     border-radius: 0.75rem;
-    color: black;
+    color: #0F172A;
     height: 30rem;
     overflow-x: scroll;
+    opacity: 1;
+    background: #b6bac2;
+    box-shadow: -10px 13px 0px 2px rgb(108, 124, 145)
+    /* -webkit-box-shadow: -10px 13px 0px -1px rgba(165,171,196,0.48);
+    -moz-box-shadow: -10px 13px 0px -1px rgba(165,171,196,0.48); */
 }
 .formheader{
     position: absolute;
     top: 0;
+}
+input[type=tel],input[type=email]{
+    max-width: 30rem;
+    text-align: left;
+    padding: .75rem .25rem;
+
 }
 .travheader{
     width: 95%;
@@ -48,7 +57,7 @@
     display: flex;
     height: 100%;
     flex-flow: column nowrap;
-    align-items: flex-start;
+    align-items: center;
     padding-left: 0.5rem;
     width: 95%;
     justify-content: center;
@@ -82,25 +91,27 @@
 }
 label {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-direction: column;
     width: 100%;
+    max-width: 30rem;
+    align-items: flex-start;
     gap: 5px;
-    color: black;
-    font-weight: 400;
-    font-size: 1.02em;
+    color: #1E293B;
+    font-weight: 500;
+    font-size: 1em;
     text-indent: 5px;
-    font-size: 1.13em;
+    text-align: left;
 }
 input, select {
-    width: 100%;
-    border-radius: 0.2rem;
+    width: 90%;
+    border-radius: 0.4rem;
     border: transparent;
-    padding: 0.25rem 0;
+    padding: 0.5rem 0;
     text-indent: 10px;
     padding: 0.5rem 0;
     padding-left: 0.25rem;
-    font-size: .9em;
+    font-size: 1.2em;
     border: solid #C2C2C2 2px;
     text-align: center;
 
@@ -114,8 +125,8 @@ input, select {
     min-height: 2.2rem;
     font-weight: 600;
     font-size: 100%;
-    background-color: #05203C;
-    color: white;
+    background-color: #1C294A;
+    color: #F1F5F9;
     max-width: 10rem;
 }
 .countrypopup{
@@ -131,15 +142,16 @@ input, select {
 }
 .addressscreen{
     position: absolute;
-    background: darkgray;
-    min-height: 25rem;
+    background: #F5F5F5;
+    /* min-height: 28rem; */
+    top: 2%;
     width: 92%;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
     justify-content: center;
     border-radius: 0.85rem;
-    height: 91%;
+    height: 96%;
 }
 .hide{
     display:none
@@ -152,6 +164,7 @@ input, select {
     align-items: center;
     height: 100%;
     gap: 15px;
+    background:#9CA3B1;;
 }
 .travelerNumWrap{
     position: absolute;
@@ -165,6 +178,7 @@ input, select {
     max-width: 49.2rem;
     border-top-left-radius: 0.75rem;
     border-top-right-radius: 0.75rem;
+    color: #0F172A;
 }
 .travelerinfowrap{
     display: flex;
@@ -227,6 +241,7 @@ article > h1 {
         justify-content: flex-start;
         padding-left: .8rem;
         text-align: left;
+        font-size: 1.25em;
     }
     .infosection > article {
        justify-content: center;;

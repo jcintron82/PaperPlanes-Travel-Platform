@@ -49,7 +49,7 @@ export function FlightDetailsModal({
   }
  
   return (
-    <article className="flightdetailmodalwrap">
+    <article className={travelerInfoModal ? "flightdetailmodalwrap detailswrapblurred" :"flightdetailmodalwrap"}>
       { travelerInfoModal ? <TravelerInfoModal btnClick={() => endTravelerInfoModal()(false)}openModal={travelerInfoModal}/> : null}
       <button onClick={infoModalClose} className="closemodalbtn">X</button>
       <section className="metainfowrap">

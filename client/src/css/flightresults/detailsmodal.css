@@ -13,6 +13,9 @@
     padding: 1rem 0 2rem;
     opacity: 1;
 }
+.detailswrapblurred > *{
+    opacity:.2;
+}
 .closemodalbtn{
     border-radius: 50%;
     background: transparent;
