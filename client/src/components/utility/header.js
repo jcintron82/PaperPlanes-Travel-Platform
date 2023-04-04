@@ -2,7 +2,7 @@ import "../../css/utility/header.css";
 import { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 
-export function Header({ renderLogoutState, renderLoginState }) {
+export function Header({ renderLogoutState, renderLoginState, message }) {
   const [loginPopup, setLoginPopup] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -18,6 +18,7 @@ export function Header({ renderLogoutState, renderLoginState }) {
     username: username,
     password: password,
   };
+
   const login = async (e) => {
     try {
       const push = await fetch("http://localhost:8000/login", {
@@ -48,7 +49,8 @@ export function Header({ renderLogoutState, renderLoginState }) {
       const data = await push.json();
       console.log(data);
       await setItem("username", data.message.firstName);
-      // localStorage.setItem('username', data.message.firstName)
+      localStorage.setItem('username', data.message.firstName);
+      message();
     } catch (err) {
       console.log(err);
     }

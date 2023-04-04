@@ -25,7 +25,7 @@ function FlightSearchModal() {
   const [queryRecieved, setQueryStatus] = useState();
   const [adultCount, setAdultCount] = useState(2);
   const [childCount, setChildCount] = useState(0);
-
+  const [userMessage, setUserMessage] = useState(localStorage.getItem('username') ? 'Username' : 'Departing From...');
   const [travelersPopup, setTravelersPopupdults] = useState(false);
   const [refineSearchPopup, setRefineSearchPopup] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -35,7 +35,6 @@ function FlightSearchModal() {
       ? "Where's your next adventure " + localStorage.getItem("username") + "?"
       : "Arriving at..."
   );
-
   const [autocompleteOne, setautocompleteOne] = useState("");
   const [autocompleteTwo, setautocompleteTwo] = useState("");
   const [autocompleteThree, setautocompleteThree] = useState("");
@@ -91,7 +90,9 @@ function FlightSearchModal() {
     callCitySearchAPI();
     // return { message: queryResponseObj };
   };
-
+  const setInputMessage = () => {
+    setUserMessage("Where's your next adventure " + localStorage.getItem('username') + "?")
+  }
   const callCitySearchAPI = async (input) => {
     let token = "";
     const fetchAuth = await fetch(
@@ -173,7 +174,9 @@ function FlightSearchModal() {
     body[valueToUpdate] = e.target.value;
   };
   useEffect(() => {
-    setArrivalMessage(arrivalMessage);
+    setArrivalMessage(localStorage.getItem("username")
+    ? "Where's your next adventure " + localStorage.getItem("username") + "?"
+    : "Arriving at...");
     const handleResizeWindow = () => setWidth(window.innerWidth);
     // subscribe to window resize event "onComponentDidMount"
     window.addEventListener("resize", handleResizeWindow);
@@ -182,15 +185,11 @@ function FlightSearchModal() {
       window.removeEventListener("resize", handleResizeWindow);
     };
   });
-  const x = async () => {
-    setArrivalMessage(
-      "Where's your dddnext adventure " + localStorage.getItem("username") + "?"
-    );
-  };
   const opacityColor = "rgba(255, 0 ,0)";
   return (
     <div>
       <Header
+      message={() => setInputMessage()}
         renderLogoutState={(e) => {
           setArrivalMessage("Arriving at...");
         }}
@@ -407,7 +406,7 @@ function FlightSearchModal() {
         <div>
           <div className={isLoading ? "adwraps pageopacity" : "adwraps"}>
             <div className="adslogans">
-              <p>Find Your Paradise</p>
+              <p className="adone">Find Your <h1 className="paradiseh1">Paradise</h1></p>
               <a href="/register" className="booknowlink">
                 Book Now
               </a>

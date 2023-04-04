@@ -36,7 +36,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
     const parts = value.split('-');
     const date = new Date(parts[1] +'-'+parts[2]+'-'+parts[0]);
     const options = { month:'long', day:'numeric', year:'numeric', time:'none'};
-    // return new Intl.DateTimeFormat("en-US", options).format(date);
+    return new Intl.DateTimeFormat("en-US", options).format(date);
   };
   const stateCodes = [
     "AK",
@@ -183,9 +183,9 @@ export function TravelerInfoModal({ openModal, btnClick }) {
     }
     else {
       key === 'lines' ? travelersArr[index].contact.address.lines[0] = capitalizedWords :
-      travelersArr[travelerId].contact.address[key] = capitalizedWords;
+      travelersArr[index].contact.address[key] = capitalizedWords;
     }
-  };
+  }
   const recordDocumentData = (e, key, travelerId) => {
     const index = travelersArr.length - 1;
     const capitalizedWords = capitalizeWords(e.target.value);
@@ -198,10 +198,8 @@ export function TravelerInfoModal({ openModal, btnClick }) {
       setConfirmationScreenData(travelersArr[travelerId]);
     } else {
       travelersArr[index].documents[0][key] = capitalizedWords;
-      console.dir(travelersArr[0]);
       setConfirmationScreenData(travelersArr[travelerId]);
     }
-    console.dir(travelersArr);
   };
   const updateSearchParams = (e) => {
     locationSearch(e.target.value);
@@ -215,6 +213,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
       .join(" ");
   };
   const confirmFlightOffer = async () => {
+    console.log(queryResponseObj)
     setBuyOffer(true)
     //Converting the converted carrier code back to its airline code for
     //search purposes
@@ -225,7 +224,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
       const pull = await fetch("http://localhost:8000/flightconfirmation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify([queryResponseObj[1].message.data[3], travelersArr])
+        body: JSON.stringify([queryResponseObj[1].message.data.flightOffers[3], travelersArr])
       });
       const x = await pull.json()
       console.log(pull)
@@ -319,6 +318,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
       ) : null}
       {emailScreen ? (
         <article className="infowrap">
+          
           <label>
             Email for Order
             <input
@@ -348,8 +348,8 @@ export function TravelerInfoModal({ openModal, btnClick }) {
         </article>
       ) : null}
       {travelerInfoscren ? (
-        <div>{console.log(travelersArr)}
-          <label>Traveler {travelersArr.length}</label>
+        <div>
+        <h1 className="travheader">Traveler {travelersArr.length} </h1>
           <article className="infowrappeople">
             <label>
               Title
@@ -423,8 +423,9 @@ export function TravelerInfoModal({ openModal, btnClick }) {
                   recordTravelerInfo(e, "gender", null, travelerId)
                 }
               >
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
+                <option value=""></option>
+                <option value="MALE">MALE</option>
+                <option value="FEMALE">FEMALE</option>
               </select>
             </label>
             <label onClick={() => setAddressScreen(true)}>
@@ -498,7 +499,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
                     }
                   ></input>
                 </label>
-                <button
+                <div>  <button
                 className="nextbtn"
                   type="button"
                   onClick={(e) => {
@@ -517,8 +518,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
                   }}
                 >
                   Confirm
-                </button>
-              </div>
+                </button></div> </div>
             ) : null}
             <button
               type="button"
@@ -535,7 +535,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
       ) : null}
       {documentsScreen ? (
         <div>
-          <label>Traveler {travelersArr.length}</label>
+          <h1 className="travheader">Traveler {travelersArr.length} </h1>
           <article className="infowrappeople">
             <label>
               Document Type
@@ -545,6 +545,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
                   recordDocumentData(e, "documentType", travelerId)
                 }
               >
+                <option value=""></option>
                 <option value="PASSPORT">Passport</option>
                 <option value="IDENTITY_CARD">National ID Card</option>
                 <option value="IDENTITY_CARD">Drivers License</option>
@@ -633,30 +634,29 @@ export function TravelerInfoModal({ openModal, btnClick }) {
       {confirmationScreen ? (
 
         <section className="travelerinfowrap">  
-          <h1 className="travheader">Traveler: {travelersArr.length} </h1>
+          <h1 className="travheader">Traveler {travelersArr.length} </h1>
           <section className="infosection">
-            <article>
-                <h1>Traveler Information: </h1>
-                <h2><div>Name: </div>
+            <article className="namewrap">
+                <h2 className="namechild1"><div>Name: </div>
                 {loopedObject[2][1].firstName} {loopedObject[2][1].middleName}{" "}
                 {loopedObject[2][1].lastName} {loopedObject[2][1].suffix}</h2>
       
 
-                <h2><div>Date of Birth: </div>           
-              {formatDate(loopedObject[1][1])}</h2>
-              <h2> <div>Gender: </div>
+                <h2 className="namechild2"><div>Birth Info: </div>           
+              {formatDate(loopedObject[1][1])}, {loopedObject[5][1][0].birthPlace}</h2>
+              <h2 className="namechild3"> <div>Gender: </div>
               {loopedObject[3][1]} </h2>
+              {/* <h2 className="namechild">Place of Birth: {loopedObject[5][1][0].birthPlace}</h2> */}
             </article>
-            <article>
-            <h1>Documents: </h1>
-              <h2>Document Type: {loopedObject[5][1][0].documentType}</h2>
-              <h2>Document Number: {loopedObject[5][1][0].number}</h2>
-              <h2>Issuing Country: {loopedObject[5][1][0].issuanceCountry}</h2>
-              <h2>Expiration Date: {formatDate(loopedObject[5][1][0].expiryDate)}</h2>
-              <h2>Place of Birth: {loopedObject[5][1][0].birthPlace}</h2>
+            <article className="documentswrap">
+              <h2 className="namechild2"><h3>Document:</h3> <h3>{loopedObject[5][1][0].documentType}</h3></h2>
+              <h2 className="namechild1"><h3>Number: </h3><h3>{loopedObject[5][1][0].number}</h3></h2>
+              <h2 className="namechild2"><h3>Issuing Country: </h3> <h3>{loopedObject[5][1][0].issuanceCountry}</h3></h2>
+              <h2 className="namechild3"><h3>Expiration:</h3><h3>{formatDate(loopedObject[5][1][0].expiryDate)}</h3></h2>
+              
             </article>{" "}
-          </section>
-          <h1>Address:</h1>
+            <article  className="namewrap">
+          <h1 >Address:</h1>
           <h2>
             {" "}
             {loopedObject[4][1].address.lines},{" "}
@@ -665,10 +665,9 @@ export function TravelerInfoModal({ openModal, btnClick }) {
             {loopedObject[4][1].address.countryCode}{" "}
             {loopedObject[4][1].address.postalCode}
 
-          </h2>
-          {/* {Object.entries(travelersArr[travelerId][0])} */}
-          {console.log(finalTravelerNumber)}
-          {/* {setTravelerId(travelerId > 1 ? travelersArr.length - 1 : travelerId + 1)} */}
+          </h2></article>
+          </section>
+        
           {travelersArr.length === finalTravelerNumber ? (          
            <button type='button' onClick={confirmFlightOffer}className="selectOfferBtn">Buy Offer</button>
           ) : (

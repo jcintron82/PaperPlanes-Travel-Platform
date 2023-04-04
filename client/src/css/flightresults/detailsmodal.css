@@ -120,7 +120,7 @@
     align-items: center;
 }
 .selectOfferBtn{
-    margin: 1rem 0;
+    margin: 2rem 0;
     height: 2.9rem;
     width: 11rem;
     border-radius: 0.5rem;
@@ -129,7 +129,8 @@
     border: transparent;
     background-color: #0284c7;
     color: #F0F9FF;
-    align-self: center;
+    align-self: flex-end;
+    padding: 1rem 0;
 }
 .durationdesktopwrap{
     display: flex;
@@ -215,7 +216,7 @@
         width: 97.5%;
     }
     .selectOfferBtn{
-        margin: 1rem 1.5rem 2.5rem 0
+        margin: 3rem 1.5rem 2.5rem 0
     
     }
     .finalpricingwrap{

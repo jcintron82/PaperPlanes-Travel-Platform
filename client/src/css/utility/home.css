@@ -3,10 +3,15 @@ h4{
 }
 .mainsearchwrap{
     display: flex;
-    background-color: #05203C;
+    background-color: #1C294A;
+    background-image: url('../../images/home/flights.png');
+    background-position: center;
+    background-size:100% 100%;
+    background-repeat: no-repeat;
     color: white;
     height: 35rem;
     padding-top: 10vh;
+    margin:-2vw;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -35,59 +40,80 @@ h4{
     display: flex;
     flex-flow: row wrap;
     height: 100%;
+    gap: 0;
+    max-width: 50rem;
+    box-shadow: 8px -9px 4px 0px rgba(15,23,42,0.75);
+    -webkit-box-shadow: 8px -9px 4px 0px rgba(15,23,42,0.75);
+    -moz-box-shadow: 8px -9px 4px 0px rgba(15,23,42,0.75);
 
 }
 .locationinputs{
     width: 100%;
     padding: 0.5rem;
     border-radius: 0.45rem;
-    height: 1.5rem;
+    height: 48px;
     border-top-right-radius: 1rem;
     border-top-left-radius: 1rem;
     border-radius: 0;
-    border-color: #05203C;
+    font-weight: 600;
+    letter-spacing: .03rem;
+    color: #374151;
 }
 .locationinputsarrival{
     width: 100%;
     padding: 0.5rem;
     border-radius: 0.45rem;
-    height: 1.5rem;
-    margin-top: .75rem;
+    height: 48px;
     border-radius: 0;
     border-top-right-radius: 0.5rem;
     border-top-left-radius: 0.5rem;
-    border-color: #05203C;
+    border: transparent;
+    font-weight: 600;
+    letter-spacing: .0255rem;
+    color: #374151;
 }
 .dateselectionwrap{
     display: flex;
-    width: 100%;
-    max-width: 29.5rem;
-    justify-content: center;
+    flex-flow: row wrap;
 }
 .depaturedateinput{
     padding: 0.5rem;
     border-radius: 0.2rem;
-    max-height: 2rem;
+     max-height: 2rem;
     width: 100%;
     text-align: center;
     border-radius: 0;
+    font-size: 1.3em;
+    color: #374151;
+    font-weight: 400;
+    height: 48px;
 }
 .depaturedateinput2{
     padding: 0.5rem;
     border-radius: 0.2rem;
     max-height: 2rem;
-    width: 100%;
+    width: 76vw;
+    max-width: 38.8rem;
     text-align: center;
     border-radius: 0;
+    font-size: 1.3em;
+    font-weight: 400;
+    box-shadow: 10px 1px 4px -3px rgba(15,23,42,0.75);
+-webkit-box-shadow: 10px 1px 4px -3px rgba(15,23,42,0.75);
+-moz-box-shadow: 10px 1px 4px -3px rgba(15,23,42,0.75);
 }
 .arrivaldateinput{
     padding: 0.5rem;
     border-radius: 0.2rem;
     max-height: 2rem;
-    width: 100%;
     text-align: center;
     border-radius: 0;
-
+    width: 100%;
+    font-size: 1.3em;
+    font-weight: 400;
+    box-shadow: 10px 1px 4px -3px rgba(15,23,42,0.75);
+-webkit-box-shadow: 10px 1px 4px -3px rgba(15,23,42,0.75);
+-moz-box-shadow: 10px 1px 4px -3px rgba(15,23,42,0.75);
 }
 
 .inputnumber{
@@ -98,7 +124,7 @@ h4{
 }
 .refinesearchwrap{
     display: flex;
-    height: 3.1rem;
+    height: 3.75rem;
 }
 
 .passangerselectwrap{
@@ -144,7 +170,7 @@ select{
     align-items: center;
     border: none;
     font-weight: 600;
-
+    padding: 1.55rem 3rem;
 }
 .triptypebtnone{
     width: 50%;
@@ -159,19 +185,24 @@ select{
     align-items: center;
     border: none;
     font-weight: 600;
+    padding: 1.55rem 3rem;
+    color: #1E293B;
 }
 .triptypebtnselected{
     transition: .5s linear;
-    background-color: #5BC0BE;
+    background-color: #0284c7;
+    color: #F0F9FF;
+    padding: 1.55rem 3rem;
+    
 }
 .flighthotelbtn{
     background-color: transparent;
     border: solid white 2px;
     border-radius: 50px;
-    margin-top: .75rem;
+    margin: 1.8rem 0 1rem;
     padding: .3rem;
-    width: 3rem;
-
+    width: 4rem;
+    color: #1E293B;
 }
 .adwraps{
     display: flex;
@@ -195,8 +226,10 @@ img{
     height: 30rem;
 }
 .flighthotelsvg{
-    width: 24px;
-    fill: white;
+    width: 40px;
+    height: 40px;
+    fill: #F8FAFC;
+    padding: .25rem;
     background: transparent;
 }
 .flightclasswrap{
@@ -208,19 +241,22 @@ img{
     width: 10rem;
 }
 .searchBtn{
-    margin: 1rem 0 2rem;
-    height: 3rem;
+    margin: 2.5rem 0 2rem;
     border-radius: 0.5rem;
     padding: 0.5rem;
     width: 100%;
     align-self: center;
-    background-color: #0770e3;
-    color: white;
+    background-color: #0284c7;
+    color: #F0F9FF;
     font-weight: 600;
-    font-size: 1em;
+    font-size: 1.35em;
     border: transparent;
-    padding: 0.75rem 0;
+    padding: 1rem 0;
     max-width: 40rem;
+    box-shadow: -9px 12px 13px -3px rgb(30, 41, 59);
+    -webkit-box-shadow: -9px 12px 13px -3px rgb(30, 41, 59);
+    -moz-box-shadow: -9px 12px 13px -3px rgb(30, 41, 59);
+    letter-spacing: .04rem;
 }
 .maxpricelabelwrap{
     display: flex;
@@ -244,31 +280,36 @@ img{
     display: flex;
     width: 50%;
     max-width: 20rem;
-    font-size: .9em;
-    padding: 0.5rem;
     text-align: center;
     justify-content: center;
     align-items: center;
-}
-
-.dateselectionwrap > * {
-    border-color: #05203C;
-}
-.refinesearchbtn{
+    border:transparent;
+    font-size: 1.075em;
+    font-weight: 600;
+    height: 100%;
+    background: #E4E4E7;
+    color: #374151 ;
     border-radius: 0;
     border-bottom-left-radius: .5rem;
-    border-color: #05203C;
     height: 100%;
     width: 50%;
+    border-right:solid 2px #c4c2c2;
 }
+
 .travelersbtn{
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 0;
     border-bottom-right-radius: .5rem;
-    border-color: #05203C;
     width: 50%;
+    border:transparent;
+    font-size: 1em;
+    font-weight: 600;
+    background: #E4E4E7;
+    color: #374151 ;
+    border-left:solid 2px #c4c2c2;
+
 }
 .personsvgandinputwrap{
     display: flex;
@@ -287,11 +328,13 @@ img{
 .booknowlink{
     font-size: .75em;
     width: 36vw;
-    max-width: 5.6rem;
+    max-width: 4.5rem;
     padding-left: 5%;
     display: flex;
     text-decoration: underline;
     justify-content: flex-end;
+    animation: opacity-fade 6s forwards;
+    color: #252549c2;
 }
 
 .gridloader{
@@ -302,13 +345,63 @@ img{
 .pageopacity{
     opacity: .15;
 }
+@keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  @keyframes opacity-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+.paradiseh1{
+    font-size: 1.3em;
+    opacity: 0;
+    animation: fade-in 3.5s forwards;
+    padding-left: 1%;
+    text-align: left;
+}
+.adone{
+    color: #F0FDFA;
+    text-shadow: 4px 3px 3px rgb(68, 64, 60, .350)
+}
+@media(min-width:450px){
+    .booknowlink{
+        max-width: 34%;
+    }
 
+
+}
 @media(min-width:768px){
     .adslogans{
         font-size: 1.5em;
     }
     .booknowlink{
-        max-width: 8rem;
+        max-width: 12.4rem
+
+    }
+    .paradiseh1{
+        padding-left: 13%;
+    }
+
+    .depaturedateinput,.arrivaldateinput{
+        width: 50%;
+    }
+    .dateselectionwrap{
+        flex-flow: row nowrap;
+        max-width: 40rem;
+    }
+    .booknowlink{
+        max-width: 96%;
     }
 
 }
@@ -316,5 +409,8 @@ img{
     button:hover{
         cursor: pointer;
         opacity: .9;
+    }
+    .refinesearchbtn, .travelersbtn {
+        font-size: 1.12em;
     }
 }

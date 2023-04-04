@@ -2,11 +2,11 @@
     position: absolute;
     display: flex;
     top: 60%;
-    left: 55%;
+    left: 51%;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     transform: translate(-50%, -50%);
-    width: 100%;
+    width: 95%;
     flex-flow: row wrap;
     z-index: 5;
     align-self: center;
@@ -14,12 +14,39 @@
     border-radius: 0.75rem;
     color: #0F172A;
     height: 30rem;
-    overflow-x: scroll;
     opacity: 1;
     background: #b6bac2;
-    box-shadow: -10px 13px 0px 2px rgb(108, 124, 145)
-    /* -webkit-box-shadow: -10px 13px 0px -1px rgba(165,171,196,0.48);
-    -moz-box-shadow: -10px 13px 0px -1px rgba(165,171,196,0.48); */
+    box-shadow: -10px 13px 0px 2px rgb(108, 124, 145, .75);
+    -webkit-box-shadow: -10px 13px 0px -1px rgb(108, 124, 145, .75);
+    -moz-box-shadow: -10px 13px 0px -1px rgb(108, 124, 145, .75);
+}
+.namewrap{
+    display: flex;
+    width: 100%;
+    background: #CBD5E1;
+    color: #334155;
+}
+.namechild1,.namechild2,.namechild3{
+    text-align:center;
+    background: white;
+    display: flex;
+    gap: 5px;
+    color: #334155;
+}
+.namechild2{
+background:#CBD5E1;
+}
+.namewrap > * {
+    width: 100%;
+    padding: 1rem;
+    text-align: left;
+}
+.namewrap > h1 {
+    width: 25%;
+    text-align: center;
+    font-weight: 600;
+    margin: 0;
+ 
 }
 .formheader{
     position: absolute;
@@ -32,12 +59,13 @@ input[type=tel],input[type=email]{
 
 }
 .travheader{
-    width: 95%;
+    border-bottom: solid 2.5px rgb(75, 85, 99, .5);
+    padding: 1rem 0;
+    margin: 0 11rem;
+    font-size: 1.2em;
+    align-self: center;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    height: 2rem;
-    margin-bottom: 0.5rem;
 }
 .infoh1{
     margin: .25rem;
@@ -67,7 +95,7 @@ input[type=tel],input[type=email]{
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
-    gap: 15px;
+    gap: 4vh 0;
 }
 .infowrappeople > label {
     width: 90%;
@@ -114,6 +142,7 @@ input, select {
     font-size: 1.2em;
     border: solid #C2C2C2 2px;
     text-align: center;
+    min-height: 40px;
 
 }
 .nextbtn{
@@ -121,13 +150,13 @@ input, select {
     align-self: center;
     border-radius: 0.25rem;
     border: transparent;
-    height: 5vh;
+    height: 8vh;
     min-height: 2.2rem;
     font-weight: 600;
     font-size: 100%;
     background-color: #1C294A;
     color: #F1F5F9;
-    max-width: 10rem;
+    max-width: 17rem;
 }
 .countrypopup{
     position: absolute;
@@ -142,16 +171,24 @@ input, select {
 }
 .addressscreen{
     position: absolute;
-    background: #F5F5F5;
-    /* min-height: 28rem; */
+    background: #E5E7EB;
     top: 2%;
     width: 92%;
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column;
     align-items: center;
     justify-content: center;
     border-radius: 0.85rem;
     height: 96%;
+    box-shadow: -11px 13px 0px 1px rgb(100, 116, 139, .85);
+    -webkit-box-shadow: -11px 13px 0px 1px rgb(100, 116, 139, .85);
+    -moz-box-shadow: -11px 13px 0px 1px rgb(100, 116, 139, .85);
+    gap: 21px;
+}
+.addressscreen > div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 .hide{
     display:none
@@ -164,7 +201,6 @@ input, select {
     align-items: center;
     height: 100%;
     gap: 15px;
-    background:#9CA3B1;;
 }
 .travelerNumWrap{
     position: absolute;
@@ -182,37 +218,55 @@ input, select {
 }
 .travelerinfowrap{
     display: flex;
-    height: 100%;
     flex-flow: column nowrap;
-    align-items: flex-start;
+    align-items: center;
     padding-left: 0.5rem;
+    height: 25rem;
+    justify-content: space-between;
     width: 95%;
+    overflow-x: scroll;
 }
 .travelerinfowrap > h1 {
-    border-bottom: solid;
+    border-bottom: solid 2.5px rgb(75, 85, 99, .5);
     text-align: left;
-    padding: 0.25rem;
-}
-h2{
-    padding: 0.25rem;
+    padding: 1rem 0;
+    width: 80%;
+    max-width: 27rem;
+    font-size: 1.2em;
 }
 .infosection{
     display:flex;
+    flex-direction: column;
     width: 100%;
 }
 
+.namechild > div {
+    text-align: center;
+    margin-right: 0.5rem;
+}
 .infosection > article {
     display: flex;
-    flex-flow: column;
-    width: 50%;
     justify-content: flex-start;
-    gap: 5px;
+    flex-flow: row wrap;
+
 }
+.documentswrap{
+    flex-flow: column;
+}
+
+.documentswrap > h2 {
+    text-align: center;
+    width: 100%;
+    text-align: left;
+    padding: 1rem;
+}
+
 article > h1 {
     padding: .25rem;
     font-weight: 600;
     font-size: 1.1em;
-    height: 2rem;}
+
+}
     .travelersinfomodal-enter {
         opacity: 0;
       }
@@ -230,12 +284,18 @@ article > h1 {
         opacity: 0;
         transition: opacity 1000ms ease-in-out;
       }
+      h3{
+        margin: 0;
+        font-size: 1em;
+        font-weight: 700;
+      }
   @media(min-width:760px){
     .travelersinfomodal{
         top: 45vh;
         width: 89%;
         max-width: 50rem;
         left: 50%;
+        padding: 3rem 3rem;
     }
     .travelerNumWrap{
         justify-content: flex-start;
@@ -244,10 +304,51 @@ article > h1 {
         font-size: 1.25em;
     }
     .infosection > article {
-       justify-content: center;;
+       justify-content: flex-start;
     }
     .infowrappeople > label {
         width: 30%;
         
+    }
+  }
+  @media(min-width:1024px){
+    .namechild1,.namechild2,.namechild3{
+        width: 20%;
+        flex-direction: column;
+        background-color: white;
+
+    }
+    .namechild1 > *, .namechild2 > *,.namechild3 > *{
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+    .infosection{
+        box-shadow: -11px 13px 0px 1px rgb(100, 116, 139, .85);
+        -webkit-box-shadow: -11px 13px 0px 1px rgb(100, 116, 139, .85);
+        -moz-box-shadow: -11px 13px 0px 1px rgb(100, 116, 139, .85);
+    }
+    .documentswrap  {
+        flex-flow: row wrap;
+    }
+    .documentswrap > h2 {
+        width: 25%;
+        padding: 1rem 0;
+        background:#CBD5E1;
+    }
+    .namewrap > * {
+        width: 33%;
+        padding: 1rem 0 ;
+        text-align: center;
+    }
+    .namewrap{
+        background-color: white;
+    }
+    .travelerinfowrap{
+        overflow-x: hidden;
+        height: 100%;
+    }
+    .namewrap > h1 {
+        height: 2rem;
     }
   }
