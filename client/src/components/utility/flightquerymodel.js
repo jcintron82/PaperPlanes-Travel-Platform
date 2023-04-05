@@ -411,16 +411,23 @@ function FlightSearchModal() {
                 Book Now
               </a>
             </div>
-            <img src={adPicOne}></img>
+            <img  src={adPicOne}></img>
           </div>
         </div>
       </section>
-      <p>
-        Popular destinations <br></br>
-      </p>
+      <section className="rectravelswrap">
       <article>
+      <p>
+        Popular destinations
+      </p>
         <RecommendedTab />
       </article>
+      <div className="recimgwrap">
+        <img className="rectravimages" src={adPicOne}></img>
+        <img className="rectravimages" src={adPicOne}></img>
+        <img className="rectravimages" src={adPicOne}></img>
+        </div>
+      </section>
       <span className="passangerselectwrap">
         <div className="maxpricewrap"></div>
       </span>
