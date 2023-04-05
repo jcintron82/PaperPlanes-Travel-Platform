@@ -45,12 +45,12 @@ module.exports = {
         // nonStop: true,
         // travelClass: flightClass,
         // maxPrice: maxPrice
-        originLocationCode: 'JFK',
-        destinationLocationCode: 'LAX',
+        originLocationCode: 'LAX',
+        destinationLocationCode: 'JFK',
         departureDate: '2023-06-01',
-        returnDate:  '2023-06-15',
-        adults: 2,
-        children:1,
+        // returnDate:  '2023-06-15',
+        adults: adults,
+        children:0,
         currencyCode:'USD',
         max:5,
         nonStop: true,
@@ -58,17 +58,23 @@ module.exports = {
         maxPrice: 5000
 
     }).then(function(response){
+      response.data.splice(0, response.data - 1);
+
+      return amadeus.shopping.flightOffers.pricing.post(
+        JSON.stringify({
+          'data': {
+            'type': 'flight-offers-pricing',
+            'flightOffers': response.data
+          }
+        })
+      )
+  }).then(function(response){
+      console.log(response.data);
       response.data = response;
       const offers = response.data
       const data = JSON.parse(response.data.body);
-      return res.json({message:data, carriers: data.dictionaries.carriers, travelerCounts,})
-      } )
-
-    .catch(function(responseError){
-      console.log(responseError.code + 'HMMMM');
-
-    });
-
-
- 
+      return res.json({message:data, travelerCounts})
+  }).catch(function(responseError){
+      console.log(responseError);
+  });
 }}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { queryResponseObj } from "../utility/flightquerymodel";
-import TravelerInfoModal, { travelerInfoModal } from './travelerInfoModal'
+import { TravelerInfoModal } from './travelerInfoModal'
 import "../../css/flightresults/detailsmodal.css";
 import "../../css/flightresults/travelersinfomodal.css";
 export function FlightDetailsModal({
@@ -23,7 +23,7 @@ export function FlightDetailsModal({
   flightID
 }){
   const [returnOrigin, setReturnOrigin] = useState();
-  const [travelerInfoModal, setTravelerInfoModal] = useState(true);
+  const [travelerInfoModal, setTravelerInfoModal] = useState(false);
   const [emailScreen, setEmailScreen] = useState(true);
   const [travelerInfoscren, setTravelerInfoScreen] = useState(false);
   const [documentsScreen, setDocumentsScreen] = useState(false);
@@ -39,53 +39,25 @@ export function FlightDetailsModal({
   useEffect(() => {
     setReturnOrigin(returnTripOrigin);
   });
-  const confirmFlightOffer = async () => {
-    console.log(queryResponseObj[1].message.data[1])
-    //Converting the converted carrier code back to its airline code for
-    //search purposes
-    // queryResponseObj[1].message.data[1].itineraries[0].segments[0].carrierCode = 
-    // queryResponseObj[1].message.data[1].itineraries[0].segments[0].operating.carrierCode;
-    // queryResponseObj[1].message.data[1].itineraries[1].segments[0].carrierCode = 
-    // queryResponseObj[1].message.data[1].itineraries[1].segments[0].operating.carrierCode;
-      const pull = await fetch("http://localhost:8000/flightconfirmation", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(queryResponseObj[1].message.data[3])
-      });
-      const x = await pull.json()
-      console.log(pull)
-      console.log(x)
-  }
-const recordTravelerInfo = (input, key) => {
-    // return {
-
-    //   firstName: firstName,
-    //   lastName: lastName,
-    //   getFullName() {
-    //     return firstName + ' ' + lastName;
-    //   },
-    // };
-
+ 
     const recordOrderEmail = () => {
       setEmailScreen(false);
       setTravelerInfoScreen(true);
     };
-  
-};
+  const endTravelerInfoModal = () => {
+    setTravelerInfoModal(false);
+  }
  
   return (
-    <article className="flightdetailmodalwrap">
-      { travelerInfoModal ? <TravelerInfoModal /> : null}
+    <article className={travelerInfoModal ? "flightdetailmodalwrap detailswrapblurred" :"flightdetailmodalwrap"}>
+      { travelerInfoModal ? <TravelerInfoModal btnClick={() => endTravelerInfoModal()(false)}openModal={travelerInfoModal}/> : null}
       <button onClick={infoModalClose} className="closemodalbtn">X</button>
       <section className="metainfowrap">
-        <p className="pricingparagraph"><h1 className="finalpricingwrap">Tickets:<br></br> {perTicketPrice}/ea</h1><h1  className="finalpricingwrap">Total:<br></br> {totalPrice}</h1></p>
-        <div className="modaltravelerswrap">{numAdults} Adults<br></br> {numChildren} Children <div className="cabinwrap">Cabin:<br></br> {cabinClass}</div></div>
-        <div className="luggagewrap">Incl. Checked Luggage: {includedCheckedbags}</div>
-      </section>
-
-
-    <div className="durationdesktopwrap">
-      
+        <p className="pricingparagraph"><h1 className="finalpricingwrap">Tickets: {perTicketPrice}/ea</h1><h1  className="finalpricingwrap">Total: {totalPrice}</h1></p>
+        <div className="cabinwrap">Cabin: {cabinClass}</div>
+        <div className="modaltravelerswrap">Adults: {numAdults} Children:  {numChildren} </div>
+        <div className="luggagewrap"> Incl. Checked Luggage: {includedCheckedbags}</div>
+        <div className="durationdesktopwrap">
       <section className="durationandstopswrap">
         <div className="timeswrap">
           {originLocation}
@@ -144,8 +116,12 @@ const recordTravelerInfo = (input, key) => {
           </div>
         </section>
       ) : null}</div>
+      </section>
+
+
+ 
       {/* <div>Layovers</div> */}
-      <div  className="offerbtnwrap"><button onClick={confirmFlightOffer} className="selectOfferBtn">Buy Offer</button></div>
+      <div  className="offerbtnwrap"><button className="selectOfferBtn" onClick={() => setTravelerInfoModal(true)}>Get This flight</button></div>
     </article>
   );
 }

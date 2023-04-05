@@ -1,35 +1,107 @@
 .travelersinfomodal{
-    border: solid black;
     position: absolute;
-    height: 80vh;
     display: flex;
-    top: 50%;
-    left: 55%;
+    top: 60%;
+    left: 51%;
     justify-content: center;
-    align-items: center;
-    background: darkgray;
+    align-items: flex-start;
     transform: translate(-50%, -50%);
-    width: 100%;
+    width: 95%;
     flex-flow: row wrap;
     z-index: 5;
     align-self: center;
     max-width: 42rem;
+    border-radius: 0.75rem;
+    color: #0F172A;
+    height: 30rem;
+    opacity: 1;
+    background: #b6bac2;
+    box-shadow: -10px 13px 0px 2px rgb(108, 124, 145, .75);
+    -webkit-box-shadow: -10px 13px 0px -1px rgb(108, 124, 145, .75);
+    -moz-box-shadow: -10px 13px 0px -1px rgb(108, 124, 145, .75);
+}
+.namewrap{
+    display: flex;
+    width: 100%;
+    background: #CBD5E1;
+    color: #334155;
+}
+.namechild1,.namechild2,.namechild3{
+    text-align:center;
+    background: white;
+    display: flex;
+    gap: 5px;
+    color: #334155;
+}
+.namechild2{
+background:#CBD5E1;
+}
+.namewrap > * {
+    width: 100%;
+    padding: 1rem;
+    text-align: left;
+}
+.namewrap > h1 {
+    width: 25%;
+    text-align: center;
+    font-weight: 600;
+    margin: 0;
+ 
+}
+.formheader{
+    position: absolute;
+    top: 0;
+}
+input[type=tel],input[type=email]{
+    max-width: 30rem;
+    text-align: left;
+    padding: .75rem .25rem;
+
+}
+.travheader{
+    border-bottom: solid 2.5px rgb(75, 85, 99, .5);
+    padding: 1rem 0;
+    margin: 0 11rem;
+    font-size: 1.2em;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+}
+.infoh1{
+    margin: .25rem;
+    text-align: left;
+    padding: 0.25rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    font-size: .7em;
+}
+.infoh1 > div {
+    font-size: 1.1em;
+    height: 2rem;
 }
 .infowrap{
     display: flex;
+    height: 100%;
     flex-flow: column nowrap;
-    justify-content: space-evenly;
-    gap: 38px;
+    align-items: center;
+    padding-left: 0.5rem;
+    width: 95%;
+    justify-content: center;
+    gap: 48px;
 }
 .infowrappeople{
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
-    gap: 58px;
-    width: 100%;
+    gap: 4vh 0;
 }
 .infowrappeople > label {
-    width: 40%;
+    width: 90%;
+    margin: .25rem 0;
+    padding: .4rem 0;
+    font-size: 1em;
 }
 .infowrappeople > button {
     width: 41%;
@@ -47,30 +119,236 @@
 }
 label {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-direction: column;
     width: 100%;
+    max-width: 30rem;
+    align-items: flex-start;
     gap: 5px;
-    color: black;
-    font-weight: 400;
-    font-size: 1.02em;
+    color: #1E293B;
+    font-weight: 500;
+    font-size: 1em;
     text-indent: 5px;
+    text-align: left;
 }
-input {
-    width: 100%;
-    border-radius: 0.7rem;
+input, select {
+    width: 90%;
+    border-radius: 0.4rem;
     border: transparent;
-    padding: 0.25rem 0;
+    padding: 0.5rem 0;
     text-indent: 10px;
+    padding: 0.5rem 0;
+    padding-left: 0.25rem;
+    font-size: 1.2em;
+    border: solid #C2C2C2 2px;
+    text-align: center;
+    min-height: 40px;
+
 }
 .nextbtn{
     width: 100%;
     align-self: center;
     border-radius: 0.25rem;
     border: transparent;
-    height: 1.85rem;
+    height: 8vh;
+    min-height: 2.2rem;
     font-weight: 600;
     font-size: 100%;
-    background-color: #05203C;
-    color: white;
+    background-color: #1C294A;
+    color: #F1F5F9;
+    max-width: 17rem;
 }
+.countrypopup{
+    position: absolute;
+    background: darkgray;
+    min-height: 20rem;
+    min-width: 80vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid;
+    border-radius: 0.85rem;
+}
+.addressscreen{
+    position: absolute;
+    background: #E5E7EB;
+    top: 2%;
+    width: 92%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.85rem;
+    height: 96%;
+    box-shadow: -11px 13px 0px 1px rgb(100, 116, 139, .85);
+    -webkit-box-shadow: -11px 13px 0px 1px rgb(100, 116, 139, .85);
+    -moz-box-shadow: -11px 13px 0px 1px rgb(100, 116, 139, .85);
+    gap: 21px;
+}
+.addressscreen > div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.hide{
+    display:none
+}
+.mainsectionwrap{
+    width: 100%;
+    flex-flow: column nowrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    gap: 15px;
+}
+.travelerNumWrap{
+    position: absolute;
+    top: 0;
+    background: transparent;
+    width: 100%;
+    height: 6rem;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    max-width: 49.2rem;
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+    color: #0F172A;
+}
+.travelerinfowrap{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    padding-left: 0.5rem;
+    height: 25rem;
+    justify-content: space-between;
+    width: 95%;
+    overflow-x: scroll;
+}
+.travelerinfowrap > h1 {
+    border-bottom: solid 2.5px rgb(75, 85, 99, .5);
+    text-align: left;
+    padding: 1rem 0;
+    width: 80%;
+    max-width: 27rem;
+    font-size: 1.2em;
+}
+.infosection{
+    display:flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.namechild > div {
+    text-align: center;
+    margin-right: 0.5rem;
+}
+.infosection > article {
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: row wrap;
+
+}
+.documentswrap{
+    flex-flow: column;
+}
+
+.documentswrap > h2 {
+    text-align: center;
+    width: 100%;
+    text-align: left;
+    padding: 1rem;
+}
+
+article > h1 {
+    padding: .25rem;
+    font-weight: 600;
+    font-size: 1.1em;
+
+}
+    .travelersinfomodal-enter {
+        opacity: 0;
+      }
+      
+      .travelersinfomodal-enter-active {
+        opacity: 1;
+        transition: opacity 1000ms ease-in-out;
+      }
+      
+      .travelersinfomodal-exit {
+        opacity: 1;
+      }
+      
+      .travelersinfomodal-exit-active {
+        opacity: 0;
+        transition: opacity 1000ms ease-in-out;
+      }
+      h3{
+        margin: 0;
+        font-size: 1em;
+        font-weight: 700;
+      }
+  @media(min-width:760px){
+    .travelersinfomodal{
+        top: 45vh;
+        width: 89%;
+        max-width: 50rem;
+        left: 50%;
+        padding: 3rem 3rem;
+    }
+    .travelerNumWrap{
+        justify-content: flex-start;
+        padding-left: .8rem;
+        text-align: left;
+        font-size: 1.25em;
+    }
+    .infosection > article {
+       justify-content: flex-start;
+    }
+    .infowrappeople > label {
+        width: 30%;
+        
+    }
+  }
+  @media(min-width:1024px){
+    .namechild1,.namechild2,.namechild3{
+        width: 20%;
+        flex-direction: column;
+        background-color: white;
+
+    }
+    .namechild1 > *, .namechild2 > *,.namechild3 > *{
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+    .infosection{
+        box-shadow: -11px 13px 0px 1px rgb(100, 116, 139, .85);
+        -webkit-box-shadow: -11px 13px 0px 1px rgb(100, 116, 139, .85);
+        -moz-box-shadow: -11px 13px 0px 1px rgb(100, 116, 139, .85);
+    }
+    .documentswrap  {
+        flex-flow: row wrap;
+    }
+    .documentswrap > h2 {
+        width: 25%;
+        padding: 1rem 0;
+        background:#CBD5E1;
+    }
+    .namewrap > * {
+        width: 33%;
+        padding: 1rem 0 ;
+        text-align: center;
+    }
+    .namewrap{
+        background-color: white;
+    }
+    .travelerinfowrap{
+        overflow-x: hidden;
+        height: 100%;
+    }
+    .namewrap > h1 {
+        height: 2rem;
+    }
+  }
