@@ -3,6 +3,7 @@ import "../../css/utility/home.css";
 import "../../css/utility/travelersmodal.css";
 import adPicOne from "../../images/home/adone.avif";
 import { useState, useEffect } from "react";
+import { InView, useInView } from "react-intersection-observer";
 import BounceLoader from "react-spinners/BounceLoader";
 import { CSSTransition } from "react-transition-group";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +13,12 @@ import { RefineSearchPopup } from "./refinsesearchmodal";
 import { RecommendedTab } from "./recommendedtraveltabs";
 import { travelerCounts } from "./numoftravalersmodal";
 import { searchParams } from "./refinsesearchmodal";
+import { Footer } from './footer'
+import nycphoto from "../../images/home/nyc.avif";
+import londonphoto from "../../images/home/london.avif";
+import miamiphoto from "../../images/home/miami.avif";
+import sanfran from "../../images/home/sanfran.avif";
+//--------------End of photo imports---------------//
 export { FlightSearchModal, queryResponseObj };
 const queryResponseObj = [];
 const autocompleteAPIValuesHold = {};
@@ -25,7 +32,13 @@ function FlightSearchModal() {
   const [queryRecieved, setQueryStatus] = useState();
   const [adultCount, setAdultCount] = useState(2);
   const [childCount, setChildCount] = useState(0);
-  const [userMessage, setUserMessage] = useState(localStorage.getItem('username') ? 'Username' : 'Departing From...');
+  const [userMessage, setUserMessage] = useState(
+    localStorage.getItem("username") ? "Username" : "Departing From..."
+  );
+  const { ref, inView, entry } = useInView({
+    threshold: 1,
+    // rootMargin:
+ });
   const [travelersPopup, setTravelersPopupdults] = useState(false);
   const [refineSearchPopup, setRefineSearchPopup] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -44,6 +57,7 @@ function FlightSearchModal() {
   const [autocompleteThreeArrival, setautocompleteThreeArrival] = useState("");
   const navigate = useNavigate();
   const breakpoint = 1024;
+  const RecommendedTabsBreakpoint = 835;
   //The listings in this body aren't technically needed but they are there
   //for reference to easily know all the parameters being/which can be used
   const body = {
@@ -81,7 +95,7 @@ function FlightSearchModal() {
     }
     const pull = await fetch("http://localhost:8000/query");
     const data = await pull.json();
-    console.log(data)
+    console.log(data);
     // setDepartureLocation(data.message.data);
     setQueryStatus(!queryRecieved);
     queryResponseObj[0] = data;
@@ -91,8 +105,10 @@ function FlightSearchModal() {
     // return { message: queryResponseObj };
   };
   const setInputMessage = () => {
-    setUserMessage("Where's your next adventure " + localStorage.getItem('username') + "?")
-  }
+    setUserMessage(
+      "Where's your next adventure " + localStorage.getItem("username") + "?"
+    );
+  };
   const callCitySearchAPI = async (input) => {
     let token = "";
     const fetchAuth = await fetch(
@@ -174,9 +190,13 @@ function FlightSearchModal() {
     body[valueToUpdate] = e.target.value;
   };
   useEffect(() => {
-    setArrivalMessage(localStorage.getItem("username")
-    ? "Where's your next adventure " + localStorage.getItem("username") + "?"
-    : "Arriving at...");
+    setArrivalMessage(
+      localStorage.getItem("username")
+        ? "Where's your next adventure " +
+            localStorage.getItem("username") +
+            "?"
+        : "Arriving at..."
+    );
     const handleResizeWindow = () => setWidth(window.innerWidth);
     // subscribe to window resize event "onComponentDidMount"
     window.addEventListener("resize", handleResizeWindow);
@@ -187,9 +207,9 @@ function FlightSearchModal() {
   });
   const opacityColor = "rgba(255, 0 ,0)";
   return (
-    <div>
+    <div className="maindiv">
       <Header
-      message={() => setInputMessage()}
+        message={() => setInputMessage()}
         renderLogoutState={(e) => {
           setArrivalMessage("Arriving at...");
         }}
@@ -255,22 +275,23 @@ function FlightSearchModal() {
             >
               {hotelOrFlight ? (
                 <svg
-                  className="flighthotelsvg"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                >
-                  <title>bed</title>
-                  <path d="M19,7H11V14H3V5H1V20H3V17H21V20H23V11A4,4 0 0,0 19,7M7,13A3,3 0 0,0 10,10A3,3 0 0,0 7,7A3,3 0 0,0 4,10A3,3 0 0,0 7,13Z" />
-                </svg>
+                className="flighthotelsvg"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <title>airplane</title>
+                <path d="M20.56 3.91C21.15 4.5 21.15 5.45 20.56 6.03L16.67 9.92L18.79 19.11L17.38 20.53L13.5 13.1L9.6 17L9.96 19.47L8.89 20.53L7.13 17.35L3.94 15.58L5 14.5L7.5 14.87L11.37 11L3.94 7.09L5.36 5.68L14.55 7.8L18.44 3.91C19 3.33 20 3.33 20.56 3.91Z" />
+              </svg>
               ) : (
-                <svg
-                  className="flighthotelsvg"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                >
-                  <title>airplane</title>
-                  <path d="M20.56 3.91C21.15 4.5 21.15 5.45 20.56 6.03L16.67 9.92L18.79 19.11L17.38 20.53L13.5 13.1L9.6 17L9.96 19.47L8.89 20.53L7.13 17.35L3.94 15.58L5 14.5L7.5 14.87L11.37 11L3.94 7.09L5.36 5.68L14.55 7.8L18.44 3.91C19 3.33 20 3.33 20.56 3.91Z" />
-                </svg>
+              <svg
+                className="flighthotelsvg"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <title>bed</title>
+                <path d="M19,7H11V14H3V5H1V20H3V17H21V20H23V11A4,4 0 0,0 19,7M7,13A3,3 0 0,0 10,10A3,3 0 0,0 7,7A3,3 0 0,0 4,10A3,3 0 0,0 7,13Z" />
+              </svg>
+                
               )}
             </button>
           </section>
@@ -287,9 +308,7 @@ function FlightSearchModal() {
             ></input>
 
             <datalist id="locationslist">
-              <option
-                value={autocompleteOne}
-              ></option>
+              <option value={autocompleteOne}></option>
               <option value={autocompleteTwo}></option>
               <option value={autocompleteThree}></option>
             </datalist>
@@ -403,34 +422,58 @@ function FlightSearchModal() {
         </form>
       </div>
       <section className="otheritemswrap">
-        <div>
           <div className={isLoading ? "adwraps pageopacity" : "adwraps"}>
             <div className="adslogans">
-              <p className="adone">Find Your <h1 className="paradiseh1">Paradise</h1></p>
+              <p className="adone">
+                Find Your <h1 className="paradiseh1">Paradise</h1>
+              </p>
               <a href="/register" className="booknowlink">
                 Book Now
               </a>
             </div>
-            <img  src={adPicOne}></img>
+            <img src={adPicOne}></img>
           </div>
-        </div>
       </section>
       <section className="rectravelswrap">
-      <article>
-      <p>
-        Popular destinations
-      </p>
-        <RecommendedTab />
-      </article>
-      <div className="recimgwrap">
-        <img className="rectravimages" src={adPicOne}></img>
-        <img className="rectravimages" src={adPicOne}></img>
-        <img className="rectravimages" src={adPicOne}></img>
+        <article>
+          <p>Popular destinations</p>
+          {width > RecommendedTabsBreakpoint ?<ul className="recommendedtabswrap">
+            <RecommendedTab img={nycphoto} />
+            <RecommendedTab img={londonphoto} />
+            <RecommendedTab img={miamiphoto} />
+            <RecommendedTab img={sanfran} />
+            <RecommendedTab img={nycphoto} />
+            <RecommendedTab img={nycphoto} /> 
+            <RecommendedTab img={nycphoto} />
+            <RecommendedTab img={nycphoto} /> 
+          </ul>: <ul className="recommendedtabswrap">
+            <RecommendedTab img={nycphoto} />
+            <RecommendedTab img={londonphoto} />
+            <RecommendedTab img={miamiphoto} /> 
+            <RecommendedTab img={sanfran} /> 
+          </ul> }
+        </article>
+        <div className="recimgwrap">
+          <img className="rectravimages" src={adPicOne}></img>
+          {width > RecommendedTabsBreakpoint ? <img className="rectravimages" src={adPicOne}></img> :
+          <ul className="recommendedtabswrap">
+          <RecommendedTab img={nycphoto} />
+          <RecommendedTab img={londonphoto} />
+          <RecommendedTab img={miamiphoto} /> 
+          <RecommendedTab img={sanfran} /> 
+        </ul> }
+          <h1 className="recfadetext" ref={ref}>{InView ? <div className={inView ? "herotext" : null}>FLY AWAY</div> : null}</h1> 
+          <img className="rectravimages" src={adPicOne}></img>
         </div>
       </section>
       <span className="passangerselectwrap">
         <div className="maxpricewrap"></div>
       </span>
+      <section className="prefootercta">
+        <h1>Explore the world of possibilties</h1>
+        <a>Discover new places and experiences</a>
+      </section>
+      <Footer> </Footer>
     </div>
   );
 }

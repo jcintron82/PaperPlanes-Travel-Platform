@@ -9,7 +9,7 @@ html{
     top: 0;
     background-color: transparent;
     color: white;
-    width: 100%;
+    width: 100vw;
     height: 4.25rem;
     z-index: 5;
 }
@@ -88,13 +88,14 @@ html{
     padding: 1rem 0;
 }
 p{
-    align-items: center;
     padding-right: 0.12rem;
     font-size: 1.5em;
     margin-top: 1rem;
     font-weight: 500;
     margin-bottom: 0;
-
+    padding-left: .7rem;
+    text-align: center;
+    text-indent: 3%;;
 }
 .notmemberwrap{
     font-size: .75em;

@@ -1,10 +1,40 @@
 .recommendedtabs{
-    border: solid grey 1px;
+    border: transparent;
     display: flex;
     border-radius: 0.75rem;
     height: 5rem;
-    width: 90vw;
-    max-width: 20rem;
+    width: 80%;
+    animation: fadeout 1.2s ease forwards;
+}
+@keyframes fadeout { 
+    0% {opacity:1}
+    100% {opacity:0}
+}
+@keyframes fade { 
+    0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+
+}
+.textwraps > ul {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.recommendedtabsanimation{
+    display: flex;
+    border-radius: 0.75rem;
+    border: solid 1px #D4D4D4;
+    height: 5rem;
+    width: 80%;
+    max-width: 18rem;
+    animation: fade 1s ease forwards;
+}
+.hide{
+    display: none;
 }
 button:active{
     border-style: none;
@@ -18,11 +48,14 @@ html, body {
     width: 50%;
 }
 .recommendedtabsimg{
-    height: 100%;
-    margin: 0;
+    display: flex;
     border-radius: 0;
-    border-top-left-radius: 0.75rem;
-    border-top-right-radius: 0.75rem;
+    height: 100%;
+    width: 100%;
+    border-top-left-radius: 0.5rem;
+    max-width: 14rem;
+    margin-top: 0;
+    border-bottom-left-radius: 0.5rem;
 }
 .optionswrap{
     display: flex;
@@ -31,14 +64,42 @@ html, body {
 }
 
 .textwraps{
+    padding-top: 4%;
     display: flex;
     margin: 0;
+    justify-content: center;
     font-size: .8em;
 }
 .recommendedtabswrap{
-    padding-left: 0;
-    gap: 50px;
+    gap: 2rem 0.5rem;
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
+    width: 100%;
+    height: 71vh;
+    max-width: 40rem;
+    padding-left: 1%;
+}
+.rectravelswrap > article {
+    flex-direction: column;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@media(min-width:825px){
+    .recommendedtabs {
+        max-width: 15rem;
+    }
+    .recommendedtabswrap{
+        min-height: 59vh;
+    }
+}
+@media(min-width:1024px){
+    .rectravelswrap > article {
+        max-width: 39rem;
+        margin-left: -2rem;
+
+    }
+
 }

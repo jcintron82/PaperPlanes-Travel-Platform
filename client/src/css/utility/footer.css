@@ -1,0 +1,17 @@
+.footer{
+    background: grey;
+    display: flex;
+    justify-content: flex-end;
+}
+.footer > ul { 
+    display: flex;
+    flex-flow: row wrap;
+    gap: 31px;
+    width: 100%;
+    padding: 0;
+    padding: 2rem 0 3rem;
+    justify-content: center;
+}
+.footer > ul > li{ 
+    width: 5rem;
+}
