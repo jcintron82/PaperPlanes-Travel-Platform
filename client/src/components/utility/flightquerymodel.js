@@ -8,7 +8,8 @@ import { InView, useInView } from "react-intersection-observer";
 import BounceLoader from "react-spinners/BounceLoader";
 import { CSSTransition } from "react-transition-group";
 import { useNavigate } from "react-router-dom";
-import { Header, name } from "./header";
+import { Header } from "./header";
+import { WeatherModal } from './weathermodal'
 import { TravelersPopup } from "./numoftravalersmodal";
 import { RefineSearchPopup } from "./refinsesearchmodal";
 import { RecommendedTab } from "./recommendedtraveltabs";
@@ -450,6 +451,7 @@ function FlightSearchModal() {
       </section>
       <section className="rectravelswrap">
         <article>
+          <WeatherModal />
           {width > RecommendedTabsBreakpoint ? (
             <ul className="recommendedtabswrap">
                <p>Popular destinations</p>
