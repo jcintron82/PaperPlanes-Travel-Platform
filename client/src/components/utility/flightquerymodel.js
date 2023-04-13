@@ -1,7 +1,8 @@
 import "../../css/flightresults.css";
 import "../../css/utility/home.css";
+import "../../css/utility/header.css";
 import "../../css/utility/travelersmodal.css";
-import adPicOne from "../../images/home/adone.avif";
+import adPicOne from "../../images/home/adone.jpg";
 import { useState, useEffect } from "react";
 import { InView, useInView } from "react-intersection-observer";
 import BounceLoader from "react-spinners/BounceLoader";
@@ -13,11 +14,18 @@ import { RefineSearchPopup } from "./refinsesearchmodal";
 import { RecommendedTab } from "./recommendedtraveltabs";
 import { travelerCounts } from "./numoftravalersmodal";
 import { searchParams } from "./refinsesearchmodal";
-import { Footer } from './footer'
+import { Footer } from "./footer";
 import nycphoto from "../../images/home/nyc.avif";
 import londonphoto from "../../images/home/london.avif";
 import miamiphoto from "../../images/home/miami.avif";
 import sanfran from "../../images/home/sanfran.avif";
+import tokyophoto from "../../images/home/tokyo.avif";
+import parisphoto from "../../images/home/paris.avif";
+import denverphoto from "../../images/home/denver.avif";
+import hawaiiphoto from "../../images/home/hawaii.avif";
+import kayakphoto from "../../images/home/kayak.avif";
+import oceanphoto from "../../images/home/hiking.avif";
+import backpackingphoto from "../../images/home/hammock.avif";
 //--------------End of photo imports---------------//
 export { FlightSearchModal, queryResponseObj };
 const queryResponseObj = [];
@@ -35,10 +43,14 @@ function FlightSearchModal() {
   const [userMessage, setUserMessage] = useState(
     localStorage.getItem("username") ? "Username" : "Departing From..."
   );
-  const { ref, inView, entry } = useInView({
+  const { headerRef, headerInView } = useInView({
     threshold: 1,
     // rootMargin:
- });
+  });
+  const { ref, inView } = useInView({
+    threshold: 1,
+    // rootMargin:
+  });
   const [travelersPopup, setTravelersPopupdults] = useState(false);
   const [refineSearchPopup, setRefineSearchPopup] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -209,6 +221,8 @@ function FlightSearchModal() {
   return (
     <div className="maindiv">
       <Header
+        headerClass={headerInView ? "headermainwrap" : "headermainwrap"}
+        // isColored={headerInView}
         message={() => setInputMessage()}
         renderLogoutState={(e) => {
           setArrivalMessage("Arriving at...");
@@ -275,23 +289,22 @@ function FlightSearchModal() {
             >
               {hotelOrFlight ? (
                 <svg
-                className="flighthotelsvg"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <title>airplane</title>
-                <path d="M20.56 3.91C21.15 4.5 21.15 5.45 20.56 6.03L16.67 9.92L18.79 19.11L17.38 20.53L13.5 13.1L9.6 17L9.96 19.47L8.89 20.53L7.13 17.35L3.94 15.58L5 14.5L7.5 14.87L11.37 11L3.94 7.09L5.36 5.68L14.55 7.8L18.44 3.91C19 3.33 20 3.33 20.56 3.91Z" />
-              </svg>
+                  className="flighthotelsvg"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <title>airplane</title>
+                  <path d="M20.56 3.91C21.15 4.5 21.15 5.45 20.56 6.03L16.67 9.92L18.79 19.11L17.38 20.53L13.5 13.1L9.6 17L9.96 19.47L8.89 20.53L7.13 17.35L3.94 15.58L5 14.5L7.5 14.87L11.37 11L3.94 7.09L5.36 5.68L14.55 7.8L18.44 3.91C19 3.33 20 3.33 20.56 3.91Z" />
+                </svg>
               ) : (
-              <svg
-                className="flighthotelsvg"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <title>bed</title>
-                <path d="M19,7H11V14H3V5H1V20H3V17H21V20H23V11A4,4 0 0,0 19,7M7,13A3,3 0 0,0 10,10A3,3 0 0,0 7,7A3,3 0 0,0 4,10A3,3 0 0,0 7,13Z" />
-              </svg>
-                
+                <svg
+                  className="flighthotelsvg"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <title>bed</title>
+                  <path d="M19,7H11V14H3V5H1V20H3V17H21V20H23V11A4,4 0 0,0 19,7M7,13A3,3 0 0,0 10,10A3,3 0 0,0 7,7A3,3 0 0,0 4,10A3,3 0 0,0 7,13Z" />
+                </svg>
               )}
             </button>
           </section>
@@ -422,48 +435,63 @@ function FlightSearchModal() {
         </form>
       </div>
       <section className="otheritemswrap">
-          <div className={isLoading ? "adwraps pageopacity" : "adwraps"}>
-            <div className="adslogans">
-              <p className="adone">
-                Find Your <h1 className="paradiseh1">Paradise</h1>
-              </p>
+        <div className={isLoading ? "adwraps pageopacity" : "adwraps"}>
+          <div className="adslogans">
+            <p className="adone" ref={headerRef}>
+              Find Your <h1 className="paradiseh1">Paradise</h1>
               <a href="/register" className="booknowlink">
-                Book Now
-              </a>
-            </div>
-            <img src={adPicOne}></img>
+              Book Now
+            </a>
+            </p>
+           
           </div>
+          <img src={adPicOne}></img>
+        </div>
       </section>
       <section className="rectravelswrap">
         <article>
-          <p>Popular destinations</p>
-          {width > RecommendedTabsBreakpoint ?<ul className="recommendedtabswrap">
-            <RecommendedTab img={nycphoto} />
-            <RecommendedTab img={londonphoto} />
-            <RecommendedTab img={miamiphoto} />
-            <RecommendedTab img={sanfran} />
-            <RecommendedTab img={nycphoto} />
-            <RecommendedTab img={nycphoto} /> 
-            <RecommendedTab img={nycphoto} />
-            <RecommendedTab img={nycphoto} /> 
-          </ul>: <ul className="recommendedtabswrap">
-            <RecommendedTab img={nycphoto} />
-            <RecommendedTab img={londonphoto} />
-            <RecommendedTab img={miamiphoto} /> 
-            <RecommendedTab img={sanfran} /> 
-          </ul> }
+          {width > RecommendedTabsBreakpoint ? (
+            <ul className="recommendedtabswrap">
+               <p>Popular destinations</p>
+              <RecommendedTab img={nycphoto} cityName='New York'/>
+              <RecommendedTab img={londonphoto} cityName='London'/>
+              <RecommendedTab img={miamiphoto} cityName='Miami'/>
+              <RecommendedTab img={sanfran} cityName='San Francisco'/>
+              <RecommendedTab img={parisphoto} cityName='Paris'/>
+              <RecommendedTab img={tokyophoto} cityName='Tokyo'/>
+              <RecommendedTab img={hawaiiphoto} cityName='Honolulu'/>
+              <RecommendedTab img={denverphoto} cityName='Denver'/>
+            </ul>
+          ) : (
+            <ul className="recommendedtabswrap">
+               <p>Popular destinations</p>
+              <RecommendedTab img={nycphoto} cityName='New York' />
+              <RecommendedTab img={londonphoto} cityName='London'/>
+              <RecommendedTab img={miamiphoto} cityName={'Miami'}/>
+              <RecommendedTab img={sanfran} cityName={'San Francisco'}/>
+            </ul>
+          )}
         </article>
         <div className="recimgwrap">
-          <img className="rectravimages" src={adPicOne}></img>
-          {width > RecommendedTabsBreakpoint ? <img className="rectravimages" src={adPicOne}></img> :
-          <ul className="recommendedtabswrap">
-          <RecommendedTab img={nycphoto} />
-          <RecommendedTab img={londonphoto} />
-          <RecommendedTab img={miamiphoto} /> 
-          <RecommendedTab img={sanfran} /> 
-        </ul> }
-          <h1 className="recfadetext" ref={ref}>{InView ? <div className={inView ? "herotext" : null}>FLY AWAY</div> : null}</h1> 
-          <img className="rectravimages" src={adPicOne}></img>
+          <span className="imgspans"><img className="rectravimages" src={kayakphoto}></img><h1>Fun for everyone</h1><a>Find fun adventures for the whole family - furry and not</a></span>
+          {width > RecommendedTabsBreakpoint ? (
+            <span className="imgspans"><img className="rectravimages" src={backpackingphoto}></img><h1>Rest and Recoup</h1><a>Take a vacation and recharge those batteries - you deserve it</a></span>
+          ) : (
+            <ul className="recommendedtabswrap">
+              <RecommendedTab img={parisphoto} cityName={'Paris'} />
+              <RecommendedTab img={tokyophoto} cityName={'Tokyo'}/>
+              <RecommendedTab img={hawaiiphoto} cityName={'Honolulu'}/>
+              <RecommendedTab img={denverphoto} cityName={'Denver'}/>
+            </ul>
+          )}
+          {/* <h1 className="recfadetext" ref={ref}>
+            {InView ? (
+              <div className={inView ? "herotext" : "herotext"}>
+              </div>
+            ) : null}
+          </h1> */}
+          
+         <span className="imgspans"><img className="rectravimageslast" src={oceanphoto}></img><h1>Find your Adeventure</h1><a>Book your travel adventures now</a></span>
         </div>
       </section>
       <span className="passangerselectwrap">

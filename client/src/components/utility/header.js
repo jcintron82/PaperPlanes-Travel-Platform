@@ -1,14 +1,18 @@
 import "../../css/utility/header.css";
 import { useState } from "react";
+import { InView, useInView } from "react-intersection-observer";
 import { CSSTransition } from "react-transition-group";
 
-export function Header({ renderLogoutState, renderLoginState, message }) {
+export function Header({ renderLogoutState, renderLoginState, message, headerClass }) {
   const [loginPopup, setLoginPopup] = useState(false);
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const { ref, inView, entry } = useInView({
+    threshold: 1,
+    // rootMargin:
+ });
   const [incorrectCredentials, setIncorrectCredentials] = useState(false);
   const setItem = async (key, value) => {
-    await null;
     return localStorage.setItem(key, value);
   };
   const loginModalPopup = () => {
@@ -80,7 +84,7 @@ export function Header({ renderLogoutState, renderLoginState, message }) {
     setPassword(e.target.value);
   };
   return (
-    <header className="headermainwrap">
+    <header className={headerClass}>
       <div className="logowrap">
         <a className="logolink" href="/">
           Paperplanes

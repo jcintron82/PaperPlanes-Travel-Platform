@@ -4,11 +4,12 @@ h4{
 }
 body {
     margin: 0px;
+    overflow-x: hidden;
 }
 .maindiv{
     display: flex;
     flex-direction: column;
-    max-width: 146rem;
+    background-color: rgb(250, 250, 249)
 }
 html, body{
     padding: 0;
@@ -27,7 +28,7 @@ html, body{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-width: 100vw;
+width: 102vw;
 margin: 0 -1% 0 -1%;
 
 }
@@ -245,6 +246,7 @@ img{
     width: 90vw;
     border-radius: 0.7rem;
     margin-top: 1rem;
+    max-width: 117rem;
     height: 30rem;
 }
 .flighthotelsvg{
@@ -291,11 +293,28 @@ img{
     font-size: .9em;
 }
 .otheritemswrap{
-    background-color: white;
-    background-color: white;
+    background-color: rgb(250, 250, 249);
     width: 100%;
     height: 100%;
     color: black;
+}
+.imgspans  {
+width: 92%;
+}
+.imgspans > h1 {
+    color: #44403C;
+    width: 100%;
+    text-align: left;
+    font-weight: 300;
+    font-size: 1em;
+}
+.imgspans > a {
+    color: rgb(74 68 64 / 90%);
+    width: 100%;
+    text-align: left;
+    padding-left: 0;
+    font-weight: 600;
+    font-size: 1.05em;
 }
 .refinesearchbtn{
     align-self: flex-end;
@@ -350,11 +369,10 @@ img{
 .booknowlink{
     font-size: .75em;
     width: 36vw;
-    max-width: 4.5rem;
-    padding-left: 5%;
+    max-width: 3.5rem;
     display: flex;
     text-decoration: underline;
-    justify-content: flex-end;
+    justify-content: center;
     animation: opacity-fade 6s forwards;
     color: #252549c2;
 }
@@ -394,7 +412,21 @@ img{
 }
 .adone{
     color: #F0FDFA;
-    text-shadow: 4px 3px 3px rgb(68, 64, 60, .350)
+    width: 80vw;
+    margin-left: 1%;
+    text-shadow: 4px 3px 3px rgb(68, 64, 60, .150);
+    background: rgb(15, 23, 42, .2);
+    height: 42vh;
+    max-height: 11.5rem;
+    padding: 1rem 0 0 0.9rem;
+    position: relative;
+    display: flex;
+    top: 2.5rem;
+    margin-top: 0;
+    max-width: 16rem;
+    border-radius: 0.5rem;
+    flex-direction: column;
+    align-items: flex-start;
 }
 .rectravelswrap{
     display: flex;
@@ -405,31 +437,68 @@ img{
 }
 
 .recimgwrap{
-    width: 97%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    margin: 0 2.5%;
- 
+    align-items: center;
 }
 @keyframes fade { 
     0% {
         opacity: 0;
-        top: -50px;
       }
       100% {
         opacity: 1;
-        top: 0;
       }
     }
-.herotext{
-    animation: fade 1s ease forwards;
-}
+    .herotext {
+        height: 26rem;
+        position: relative;
+        width: 15rem;
+        display: flex;
+
+      }
+      .herotext > * {
+        width: 50%;
+      }
+      .herotext > article > div:nth-child(1) {
+        animation: fade .5s linear;
+      }
+      .herotext  > article > div:nth-child(2) {
+        animation: fade 1s linear;
+        color: red;
+      }
+      .herotext  > article > div:nth-child(3) {
+        animation: fade 1.5s linear;
+      }
+      .herotext  > article > div:nth-child(4) {
+        animation: fade 2s linear;
+      }
+      .herotext  > article > div:nth-child(5) {
+        animation: fade 2.5s linear;
+      }
+      .herotext  > article > div:nth-child(6) {
+        animation: fade 3s linear;
+      }
+      .herotext  > article > div:nth-child(7) {
+        animation: fade 3s linear;
+      }
 .recimgwrap > img:last-child{
     width: 100%;
 }
 .rectravimages{
   width: 100%;
   animation: adfades .8s forwards;
+}
+.rectravimageslast{
+    width: 100%;
+    animation: adfades .8s forwards;
+}
+body,html{
+    width: 100%;
+
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
 }
 
 @keyframes adfades {
@@ -448,16 +517,26 @@ display: none;
 }
 
 .prefootercta{
-    min-height: 14rem;
+    padding-top: 3rem;
     display: flex;
     align-items: center;
+    min-height: 6rem;
     flex-direction: column;
-    justify-content: center;
-    width: 80%;
-    
-    margin: 0 8vw;
-
+    justify-content: flex-end;
+    margin: 5rem 15%;
+    border-top: solid 1px;
 }
+.prefootercta > h1 { 
+    text-align: center;
+    width: 100vw;
+    color: rgb(41, 37, 36, 100%);
+}
+.prefootercta > a { 
+    text-align: center;
+    width: 100vw;
+    color: rgb(41, 37, 36,  85%);
+}
+
 @media(min-width:450px){
     .booknowlink{
         max-width: 34%;
@@ -489,23 +568,36 @@ display: none;
     }
     .rectravimages{
         max-width: 43.5vw;
-        height: 10rem;
 }
-      
+.rectravimageslast{
+    max-width: 100vw;
+}
+      .imgspans{
+        max-width: 43vw;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
       .recimgwrap > img:last-child{
         height: 17%;
         max-width: 90vw;
         max-height: 19rem;
     }
       .recimgwrap{
-        width: 90vw;
-        gap: 2.76%;
+        width: 100vw;
+        gap: 52px;
+        justify-content: center;
         display: flex;
         flex-flow: row wrap;
     }
 
 }
+@media(min-width:1024px){
 
+
+}
 @media(min-width:1024px){
     button:hover{
         cursor: pointer;
@@ -517,7 +609,7 @@ display: none;
     .rectravelswrap {
         flex-direction: row;
         gap: 44px;
-        width: 92vw;
+        width: 100vw;
     }
     .recimgwrap{
         width: 45vw;
@@ -526,7 +618,7 @@ display: none;
         flex-flow: row wrap;
         gap: 11px 3%;
         margin: 0 2.75rem 0 0;
-        justify-content: flex-start;
+        justify-content: flex-end;
     }
         
     .recimgwrap > img:last-child{
@@ -536,21 +628,27 @@ display: none;
     }
     .rectravimages{
         width: 50%;
-        max-width: 26.9vw;    
+        max-height: 45vh;  
     }
+    .rectravimageslast{
+        max-height: 40vh;
+    }
+    .imgspans{
+
+        align-items: flex-start;
+      }
 }
 @media(min-width:1550px){
     .recfadetext{
-        writing-mode: vertical-rl;
+        /* writing-mode: vertical-rl; */
         text-orientation: upright;
         position: relative;
         height: 0;
-        FONT-SIZE: 4.5em;
+        FONT-SIZE: 2.5em;
         display: flex;
         flex-direction: row-reverse;
-        transform: translate(176%, 6%);
-        /* right: -1vw; */
-        top:0
+        top: -24rem;
+        left: 19rem;
     }
 }
 @media(min-width:1690px){
@@ -561,9 +659,8 @@ display: none;
     
     }
 }
-/* @media(min-width:1024px) and (max-width:1205px){
-    .rectravimages{
-        max-width: 19.4vw;
-        transform: translate(-50%, -50%);
+@media(min-width:2600px){
+    .adone{
+        left: 5vw;
     }
-} */
+}
