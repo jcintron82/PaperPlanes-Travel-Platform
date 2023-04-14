@@ -1,0 +1,41 @@
+.mainsearchwraphotel{
+    display: flex;
+    background-color: #0c0c0c;
+    background-image: url('../../images/home/hotelbg.avif');
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    color: white;
+    height: 35rem;
+    padding-top: 10vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 102vw;
+    margin: 0 -1% 0 -1%;
+}
+.hotelsearchform{
+    display: flex;
+    width: 80vw;
+    padding: 0.5rem;
+    max-width: 40rem;
+    flex-flow: column nowrap;
+    height: 649px
+}
+.fade-enter {
+    opacity: 0;
+  }
+  
+  .fade-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease-in;
+  }
+  
+  .fade-exit {
+    opacity: 1;
+  }
+  
+  .fade-exit-active {
+    opacity: 0;
+    transition: opacity 300ms ease-in;
+  }

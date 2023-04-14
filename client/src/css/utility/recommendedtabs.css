@@ -129,6 +129,7 @@ html, body {
     .rectravelswrap > article {
         max-width: 39rem;
         margin-left: -2rem;
+        justify-content: space-evenly;
 
     }
 

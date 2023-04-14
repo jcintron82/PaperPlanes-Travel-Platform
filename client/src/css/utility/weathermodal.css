@@ -1,0 +1,11 @@
+.mainweatherwrap{
+    display: flex;
+    height: 30vh;
+    width: 81%;
+    align-self: flex-end;
+    /* gap: 50px; */
+    border: solid;
+}
+.mainweatherwrap > section {
+    width: 50%;
+}
