@@ -15,18 +15,56 @@ export function FlightResultsWrap() {
   const [infoModal, setInfoModal] = useState();
   const [selectIndex, setSelectIndex] = useState();
   const [width, setWidth] = useState(window.innerWidth);
-
-  const flightsInfo = queryResponseObj[0].message.data.flightOffers;
+  const [flightsInfo, setFlightsInfo] = useState(queryResponseObj[0].message.data.flightOffers);
   let imgArr = [londonimg, nycimg, miamiimg, sanfranimg, adoneimg];
 
   //This block is necessary for converting the carrier codes into full names
   //The other option is use the carrier code API but this was the DRYest solution
+  // for (let i = 0; i < flightsInfo.length; i++) {
+  //   for (const [key, value] of Object.entries(
+  //     queryResponseObj[1].carriers[0].carriers
+  //   )) {
+  //     if (flightsInfo[i].itineraries[0].segments[0].carrierCode === key)
+  //       flightsInfo[i].itineraries[0].segments[0].carrierCode = value;
+  //   }
+  // }
+const convertAirlineCodes = (obj) => {
   for (let i = 0; i < flightsInfo.length; i++) {
-    for (const [key, value] of Object.entries(queryResponseObj[0].carriers)) {
-      if (flightsInfo[i].itineraries[0].segments[0].carrierCode === key)
-        flightsInfo[i].itineraries[0].segments[0].carrierCode = value;
+    for (const [key, value] of Object.entries(
+      queryResponseObj[1].carriers[0].carriers
+    )) {
+      if (flightsInfo[i].itineraries[0].segments[0].carrierCode === value)
+        flightsInfo[i].itineraries[0].segments[0].carrierCode = key;
     }
   }
+}
+  const filterFlights = (type, carrier) => {
+    console.log(carrier)
+    const filtered =  queryResponseObj[0].message.data.flightOffers.filter(flight => flight.validatingAirlineCodes[0] === carrier)
+    console.log(filtered)
+    setFlightsInfo(filtered)
+    // for(let i = 0; i < flightsInfo.length; i++){
+    //   if(flightsInfo[i].validatingAirlineCodes[0] != carrier){
+    //     flightsInfo.slice(i,1)
+    //   }
+    //   console.log(flightsInfo)
+    // }
+    // let selectedCarrier = '';
+    // for (const [key, value] of Object.entries(queryResponseObj[1].carriers[0].carriers))
+    // {
+    //   console.log(key)
+    //   console.log(queryResponseObj[1].carriers[0].carriers)
+    //   selectedCarrier = key;
+
+    // }
+  //   for (let i = 0; i < flightsInfo.length; i++){
+  // console.log(carrier)
+  //   console.log(flightsInfo)
+
+
+  //   }
+  };
+
   useEffect(() => {
     const handleResizeWindow = () => setWidth(window.innerWidth);
     // subscribe to window resize event "onComponentDidMount"
@@ -45,13 +83,32 @@ export function FlightResultsWrap() {
       }
     >
       <Header headerClass="headermainwrap" />
-      {console.log(queryResponseObj)}
       <article
         className={
           infoModal ? "flightResultsWrapOpenModal" : "flightResultsWrap"
         }
       >
-        {width > 1100 ? <article>YO</article> : null}
+        {width > 1100 ? (
+          <article>
+            <h1>Airlines</h1>
+            {Object.entries(queryResponseObj[1].carriers[0].carriers).map(
+              ([key,value], index) => {
+                console.log(queryResponseObj[1].carriers[0].carriers)
+                return (
+                  <label key={key}>
+                    {value}
+                    <input
+                    onClick={ () => {
+                      filterFlights("airlines", key);
+                    }}
+                      type="checkbox"
+                    ></input>
+                  </label>
+                );
+              }
+            )}
+          </article>
+        ) : null}
         {infoModal ? (
           <FlightDetailsModal
             tripTypeTwoWay={
@@ -154,7 +211,6 @@ export function FlightResultsWrap() {
             flightID={selectIndex}
           />
         ) : null}{" "}
-        {console.log(width)}
         <article className="flightmetainfowrap">
           San Francisco to Los Angeles<br></br> Apr 29 - Apr 30
         </article>
