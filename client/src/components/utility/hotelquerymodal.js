@@ -60,6 +60,11 @@ export const HotelQueryModal = () => {
     children: 0,
     nonStop: false,
   };
+  const fetchHotels = async () => {
+    const pull = await fetch('http://localhost:8000/hotels');
+    const data = await pull.json();
+    console.log(data)
+  }
   const setInputMessage = () => {
     setUserMessage(
       "Where's your next adventure " + localStorage.getItem("username") + "?"
@@ -227,7 +232,7 @@ export const HotelQueryModal = () => {
                 </button>
               </section>
 
-              <label className="locationinputswrap">
+              <label className="locationinputswraphotel">
                 <input
                   autoComplete="off"
                   list="locationslist"
@@ -258,7 +263,7 @@ export const HotelQueryModal = () => {
               <option value={autocompleteThreeArrival}></option>
             </datalist> */}
               </label>
-              <section className="addOnsWrap">
+              <section className="addOnsWraphotel">
                 <CSSTransition
                   in={oneWaySelected}
                   timeout={400}
@@ -338,7 +343,7 @@ export const HotelQueryModal = () => {
                   ) : null}
                 </div>
               </section>
-              <button className="searchBtn">Submit</button>
+              <button type="button" className="searchBtn" onClick={fetchHotels}>Submit</button>
             </form>
           </div>
         </CSSTransition>

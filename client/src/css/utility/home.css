@@ -9,7 +9,7 @@ body {
 .maindiv{
     display: flex;
     flex-direction: column;
-    background-color: rgb(250, 250, 249)
+    background-color: #F8F5F4;
 }
 html, body{
     padding: 0;
@@ -488,10 +488,12 @@ width: 92%;
 .rectravimages{
   width: 100%;
   animation: adfades .8s forwards;
+  margin-bottom: .5rem;
 }
 .rectravimageslast{
     width: 100%;
     animation: adfades .8s forwards;
+    margin-bottom: .5rem;
 }
 body,html{
     width: 100%;

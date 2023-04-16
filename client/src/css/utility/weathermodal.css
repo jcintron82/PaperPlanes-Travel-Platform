@@ -1,8 +1,8 @@
 .mainweatherwrap{
     display: flex;
     height: 30vh;
-    width: 81%;
-    align-self: flex-end;
+    width: 87%;
+    align-self: center;
     /* gap: 50px; */
     border: solid;
 }

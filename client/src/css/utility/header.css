@@ -7,11 +7,11 @@ html{
     justify-content: space-between;
     position: fixed;
     top: 0;
-    background-color: transparent;
-    color: white;
+    background-color: white;
+    color: rgb(17, 24, 39);
     width: 100vw;
     height: 4.25rem;
-    z-index: 5;
+    border-bottom: solid 1px rgb(115, 115, 115, 43%);
 }
 .headermainwraptranspo{
     display: flex;
@@ -54,17 +54,15 @@ html{
     margin-bottom: 0.12rem;
     font-weight: 500;
     text-decoration: none;
-    color: #F1F5F9;
 
 }
 .loginwrap{
     display: flex;
     height: 100%;
     justify-content: flex-end;
-    align-items: center;
+    align-items: flex-start;
     position: absolute;
     right: 0;
-
     background: transparent;
     border: transparent;
 }
@@ -125,12 +123,12 @@ p{
     border-bottom-left-radius: 0;
 }
 .paperplanesvg{
-    fill: #F8FAFC
+    fill: rgb(17, 24, 39);
 }
 .accountsvg{
     width: 50px;
-    fill: #F8FAFC;
     padding-right: .5rem;
+    fill: rgb(17, 24, 39);
 }
 .signupcalltoaction{
     font-size: .76em;

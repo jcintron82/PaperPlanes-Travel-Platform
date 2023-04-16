@@ -15,3 +15,7 @@
 .footer > ul > li{ 
     width: 5rem;
 }
+.footer > ul > li > a{ 
+    padding: 0;
+    font-weight: 500;
+}

@@ -1,6 +1,15 @@
 .flightresultspagemainbody{
     display: flex;
     justify-content: center;
+    flex-direction: row;
+}
+.ticketbtns{
+    width: 91%;
+    max-width: 53rem;
+    align-self: center;
+    background-color: white;
+    border-radius: 0.5rem;
+    border: transparent;
 }
 .flightResultsWrap{
     display: flex;
@@ -10,8 +19,37 @@
     height: 100%;
     max-height: 45vh;
     padding: 0 0 1.5rem 0;
-    margin-top: 5rem;
+    margin-top: 4rem;
+    width: 100%;
+    gap: 20px;
+    justify-content: space-between;
+}
+.mobiledisclamier{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.mobiledisclamier > p {
+    color: rgb(38, 38, 38, 87%);
+    font-size: 0.73em;
+    width: 94%;
+    align-self: center;
 
+}
+.mobiledisclamier > hr, .desktopdisclaimerwrap > hr {
+    height: 0.05rem;
+    background: rgb(38, 38, 38, 35%);
+    margin-top: 1.6rem;
+}
+.desktopdisclaimerwrap{
+    max-width: 55vw;
+    align-self: flex-end;
+    margin-right: 15vw;
+    font-size: .5em;
+}
+.desktopdisclaimerwrap, .mobiledisclamier > * {
+    padding:0
 }
 .flightResultsWrapOpenModal{
     display: flex;
@@ -45,14 +83,11 @@ li::marker{
 .flightResultsTabs{
     display: flex;
     flex-flow: row wrap;
-    width: 86vw;
-    max-width: 50rem;
     justify-content: space-between;
     border: solid;
     font-size: 1.4em;
     border-radius: 0.75rem;
-    padding: 2.5rem 1rem;
-    background: #1C294A;
+    background: white;
     border: transparent;
   }
 h3{
@@ -67,19 +102,34 @@ h3{
 }
 .flighttimesmainwrap{
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
     background-color: white;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+
+}
+.flighttimesmainwrap  > hr {
+    width: 7%;
+    height: 2.14px;
+    margin: 0.5rem 0;
+    background-color: black;
+}
+.flighttimesmainwrap > h6{
+    margin: 0.4rem 0 .65rem;
+    font-size: .875em;
+    text-align: left;
+    width: 74%;
+    height: 14%;
 }
 .flightmaindetailswrap{
     display: flex;
     font-size: .5em;
-    flex-flow: column nowrap;
-    justify-content: space-around;
+    flex-flow: row-reverse;
     width: 100%;
+    justify-content: space-between;
     background-color: white;
     border-radius: 0.65rem;
     margin-bottom: 0.5rem;
-    height: 11rem;
 }
 .flightresultspagemainbodyopacity > * {
     opacity: .3;
@@ -88,9 +138,15 @@ h3{
     overflow: hidden;
 }
 .flightmaindetailswrap > * {
-    padding: .25rem;
+    padding: .65rem;
     font-weight: 500;
     margin: 0;
+    text-align: left;
+}
+
+.pricemain{
+    display: flex;
+    flex-direction: column;
 }
 .durationwrap{
     display: flex;
@@ -116,6 +172,7 @@ hr{
     width: 77%;
     height: 3px;
     background-color: black;
+    max-width: 40rem;
 }
 h2{ 
     margin: 0;
@@ -131,6 +188,7 @@ h2{
 .flightTimesWrap{
     display: flex;
     margin: 0;
+    text-align: left;
     font-size: 1.5em;
 }
 .planesvgwrap{
@@ -187,6 +245,39 @@ h2{
     display: flex;
     width: 15rem;
 }
+.flightmetainfowrap{
+    background: white;
+    padding: 0.75rem .5rem;
+    color: rgb(30, 64, 175, 88%);
+    font-weight: 500;
+}
+.flightResultsWrap > h1 {
+    color: rgb(38, 38, 38, 87%);
+    font-size: 0.73em;
+    width: 90%;
+    align-self: center;
+} 
+.filterbtn{
+    background: white;
+    display: flex;
+    margin-top: 1rem;
+    align-items: center;
+    color: rgb(30, 64, 175, 88%);
+    width: 80%;
+    justify-content: center;
+    align-self: center;
+    min-height: 48px;
+    border-radius: 0.5rem;
+    gap: 2.5px;
+    border: solid 1px rgb(115, 115, 115, 43%);
+    font-size: 1em;
+    font-weight: 600;
+}
+.filterbtn >  svg {
+    height: 23px;
+    fill:  rgb(30, 64, 175, 88%);;
+
+}
 @media(min-width:768px){
     .pricewrap{  
     display: flex;
@@ -195,14 +286,29 @@ h2{
     }
     
 }
-@media(min-width:1024px){
-    .flightResultsTabs{
-        width: 50vw;
+@media(min-width:1100px){
+    .ticketbtns{
+        max-width: 55vw;
+        align-self: flex-end;
+        margin-right: 15vw;
+
     }
-    .flightResultsWrap{
-        width: 50%;
+    .flightResultsWrap > article:nth-child(1){
+        position: absolute;
+        bottom: 16%;
+        border: solid;
+        width: 18%;
+        height: 57vh;
+        padding: 0.75rem;
+        max-width: 15rem;
     }
 }
+/* @media(min-width:1540px){
+    .ticketbtns{
+        margin-right: 0;
+        align-self: center;
+    }
+} */
 @media(max-width:1024px){
     .recommendedwrap{  
         display: none;

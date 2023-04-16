@@ -3,11 +3,11 @@ export const Footer = () => {
     return (
         <footer className="footer">
             <ul>
-                <li>Home</li>
-                <li>About Us</li>
-                <li>Contact</li>
-                <li>Terms of Service</li>
-                <li>Cookie Policy</li>
+                <li><a href="#">Home</a></li>
+                <li><a href="/register">About Us</a></li>
+                <li><a href="/register">Contact</a></li>
+                <li><a>Terms of Service</a></li>
+                <li><a>Cookie Policy</a></li>
                 <li></li>
             </ul>
         </footer>

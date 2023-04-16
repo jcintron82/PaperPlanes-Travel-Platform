@@ -13,7 +13,6 @@ import { WeatherModal } from './weathermodal'
 import { TravelersPopup } from "./numoftravalersmodal";
 import { RefineSearchPopup } from "./refinsesearchmodal";
 import { RecommendedTab } from "./recommendedtraveltabs";
-import { HotelQueryModal } from './hotelquerymodal'
 import { travelerCounts } from "./numoftravalersmodal";
 import { searchParams } from "./refinsesearchmodal";
 import { Footer } from "./footer";
@@ -37,13 +36,14 @@ function FlightSearchModal() {
   const [departureLocation, setDepartureLocation] = useState("");
   const [arrivalLocation, setArrivalLocation] = useState("");
   const [hotelOrFlight, sethotelOrFlight] = useState(true);
-  const [hotelSelected, sethotelSelected] = useState(false);
   const [roundTripSelected, setRoundTrip] = useState(false);
   const [oneWaySelected, setOneWay] = useState(false);
   const [queryRecieved, setQueryStatus] = useState();
   const [adultCount, setAdultCount] = useState(2);
   const [childCount, setChildCount] = useState(0);
-
+  const [userMessage, setUserMessage] = useState(
+    localStorage.getItem("username") ? "Username" : "Departing From..."
+  );
   const { headerRef, headerInView } = useInView({
     threshold: 1,
     // rootMargin:
@@ -64,11 +64,64 @@ function FlightSearchModal() {
   const [autocompleteOne, setautocompleteOne] = useState("");
   const [autocompleteTwo, setautocompleteTwo] = useState("");
   const [autocompleteThree, setautocompleteThree] = useState("");
+
+  const [autocompleteOneArrival, setautocompleteOneArrival] = useState("");
+  const [autocompleteTwoArrival, setautocompleteTwoArrival] = useState("");
+  const [autocompleteThreeArrival, setautocompleteThreeArrival] = useState("");
   const navigate = useNavigate();
   const breakpoint = 1024;
   const RecommendedTabsBreakpoint = 835;
   //The listings in this body aren't technically needed but they are there
   //for reference to easily know all the parameters being/which can be used
+  const body = {
+    departure: departureLocation,
+    departureDate: "",
+    arrival: arrivalLocation,
+    maxPrice: 5000,
+    flightClass: "ECONOMY",
+    adults: 2,
+    children: 0,
+    nonStop: false,
+  };
+  const flightQuery = async (e) => {
+    setIsLoading(!isLoading);
+    body.adults = travelerCounts.adults;
+    body.children = travelerCounts.children;
+    body.maxPrice = searchParams.maxPrice;
+    body.nonStop = searchParams.nonstop;
+    body.flightClass = searchParams.cabinClass;
+    e.preventDefault();
+    body.departure = body.departure.slice(-3);
+    body.arrival = body.arrival.slice(-3);
+    console.log(body);
+
+    try {
+      const pull = await fetch("http://localhost:8000/query", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const data = await pull.json();
+      console.log(body);
+    } catch (err) {
+      console.log(err);
+    }
+    const pull = await fetch("http://localhost:8000/query");
+    const data = await pull.json();
+    console.log(data);
+    // setDepartureLocation(data.message.data);
+    setQueryStatus(!queryRecieved);
+    queryResponseObj[0] = data;
+    queryResponseObj[1] = data;
+    navigate("/flightquery");
+    callCitySearchAPI();
+    // return { message: queryResponseObj };
+  };
+  const setInputMessage = () => {
+    setUserMessage(
+      "Where's your next adventure " + localStorage.getItem("username") + "?"
+    );
+  };
   const callCitySearchAPI = async (input) => {
     let token = "";
     const fetchAuth = await fetch(
@@ -115,11 +168,20 @@ function FlightSearchModal() {
       setautocompleteThree(
         data.data[2].address.cityName + ", " + data.data[2].iataCode
       );
+
+      setautocompleteOneArrival(
+        data.data[0].address.cityName + ", " + data.data[0].iataCode
+      );
+      setautocompleteTwoArrival(
+        data.data[1].address.cityName + ", " + data.data[1].iataCode
+      );
+      setautocompleteThreeArrival(
+        data.data[2].address.cityName + ", " + data.data[2].iataCode
+      );
     } catch (err) {}
   };
   const hotelFlightSwitch = () => {
     sethotelOrFlight(!hotelOrFlight);
-    sethotelSelected(!hotelSelected);
   };
   const selectTripType = () => {
     setRoundTrip(true);
@@ -137,9 +199,9 @@ function FlightSearchModal() {
     callCitySearchAPI(e.target.value);
     setArrivalLocation(e.target.value);
   };
-  // const updateDatesAndFilters = (e, valueToUpdate) => {
-  //   body[valueToUpdate] = e.target.value;
-  // };
+  const updateDatesAndFilters = (e, valueToUpdate) => {
+    body[valueToUpdate] = e.target.value;
+  };
   useEffect(() => {
     setArrivalMessage(
       localStorage.getItem("username")
@@ -162,6 +224,10 @@ function FlightSearchModal() {
       <Header
         headerClass={headerInView ? "headermainwrap" : "headermainwrap"}
         // isColored={headerInView}
+        message={() => setInputMessage()}
+        renderLogoutState={(e) => {
+          setArrivalMessage("Arriving at...");
+        }}
       />{" "}
       {isLoading ? (
         <BounceLoader
@@ -174,11 +240,7 @@ function FlightSearchModal() {
           size={width > breakpoint ? 500 : 300}
         />
       ) : null}
-       <CSSTransition
-       in={hotelOrFlight}
-       timeout={300}
-       classNames="fade">
-        {hotelOrFlight ? <div
+      <div
         className={isLoading ? "mainsearchwrap pageopacity" : "mainsearchwrap"}
       >
         <form className="flightsearchform">
@@ -221,7 +283,7 @@ function FlightSearchModal() {
                 <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
               </svg>
             </button>
-            <button
+            {/* <button
               type="button"
               onClick={hotelFlightSwitch}
               className="flighthotelbtn"
@@ -245,7 +307,7 @@ function FlightSearchModal() {
                   <path d="M19,7H11V14H3V5H1V20H3V17H21V20H23V11A4,4 0 0,0 19,7M7,13A3,3 0 0,0 10,10A3,3 0 0,0 7,7A3,3 0 0,0 4,10A3,3 0 0,0 7,13Z" />
                 </svg>
               )}
-            </button>
+            </button> */}
           </section>
 
           <label className="locationinputswrap">
@@ -274,9 +336,9 @@ function FlightSearchModal() {
               placeholder={arrivalMessage}
             ></input>
             <datalist id="arrivallist">
-              <option value={autocompleteOne}></option>
-              <option value={autocompleteTwo}></option>
-              <option value={autocompleteThree}></option>
+              <option value={autocompleteOneArrival}></option>
+              <option value={autocompleteTwoArrival}></option>
+              <option value={autocompleteThreeArrival}></option>
             </datalist>
           </label>
           <section className="addOnsWrap">
@@ -290,13 +352,13 @@ function FlightSearchModal() {
                   <input
                     className="depaturedateinput"
                     required
-                    // onChange={(e) => updateDatesAndFilters(e, "departureDate")}
+                    onChange={(e) => updateDatesAndFilters(e, "departureDate")}
                     type="date"
                   ></input>
                   <input
                     className="arrivaldateinput"
                     required
-                    // onChange={(e) => updateDatesAndFilters(e, "returnDate")}
+                    onChange={(e) => updateDatesAndFilters(e, "returnDate")}
                     type="date"
                   ></input>
                 </div>
@@ -305,7 +367,7 @@ function FlightSearchModal() {
                   <input
                     className="depaturedateinput2"
                     required
-                    // onChange={(e) => updateDatesAndFilters(e, "departureDate")}
+                    onChange={(e) => updateDatesAndFilters(e, "departureDate")}
                     type="date"
                   ></input>
                 </label>
@@ -368,11 +430,11 @@ function FlightSearchModal() {
               ) : null}
             </div>
           </section>
-          <button className="searchBtn" >
+          <button className="searchBtn" onClick={flightQuery}>
             Submit
           </button>
         </form>
-      </div> :<HotelQueryModal />}</CSSTransition>
+      </div>
       <section className="otheritemswrap">
         <div className={isLoading ? "adwraps pageopacity" : "adwraps"}>
           <div className="adslogans">
@@ -389,7 +451,7 @@ function FlightSearchModal() {
       </section>
       <section className="rectravelswrap">
         <article>
-          {width >= 1024 ? <WeatherModal /> : null}
+          <WeatherModal />
           {width > RecommendedTabsBreakpoint ? (
             <ul className="recommendedtabswrap">
                <p>Popular destinations</p>
@@ -424,6 +486,13 @@ function FlightSearchModal() {
               <RecommendedTab img={denverphoto} cityName={'Denver'}/>
             </ul>
           )}
+          {/* <h1 className="recfadetext" ref={ref}>
+            {InView ? (
+              <div className={inView ? "herotext" : "herotext"}>
+              </div>
+            ) : null}
+          </h1> */}
+          
          <span className="imgspans"><img className="rectravimageslast" src={oceanphoto}></img><h1>Find your Adeventure</h1><a>Book your travel adventures now</a></span>
         </div>
       </section>

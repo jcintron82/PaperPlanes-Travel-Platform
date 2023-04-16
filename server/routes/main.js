@@ -4,12 +4,13 @@ const passport = require("passport");
 const { ensureAuth } = require("../middleware/auth");
 const authController = require("../controllers/auth");
 const homeController = require("../controllers/home");
+const hotelsController = require("../controllers/hotels");
 const flightPriceconfirmationController = require("../controllers/flightconfirmation");
 const registerController = require("../controllers/register");
 
 router.get("/query", homeController.getIndex);
 router.post("/query", homeController.searchInput);
-
+router.get("/hotels", hotelsController.getHotels);
 router.post("/login", (req, res, next) => {
   passport.authenticate(
     "local",
