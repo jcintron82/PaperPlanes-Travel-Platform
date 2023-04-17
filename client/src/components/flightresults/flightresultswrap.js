@@ -15,54 +15,57 @@ export function FlightResultsWrap() {
   const [infoModal, setInfoModal] = useState();
   const [selectIndex, setSelectIndex] = useState();
   const [width, setWidth] = useState(window.innerWidth);
-  const [flightsInfo, setFlightsInfo] = useState(queryResponseObj[0].message.data.flightOffers);
-  let imgArr = [londonimg, nycimg, miamiimg, sanfranimg, adoneimg];
-
+  const [flightsInfo, setFlightsInfo] = useState(
+    queryResponseObj[0].message.data.flightOffers
+  );
+  const [checkedItems, setCheckedItems] = useState({});
+  const [selectedCarriers, setSelectedCarriers] = useState([]);
+  const filteredCarriers = [];
+  const convertedIataLocations = Object.values(
+    queryResponseObj[1].carriers[0].locations
+  );
   //This block is necessary for converting the carrier codes into full names
   //The other option is use the carrier code API but this was the DRYest solution
-  // for (let i = 0; i < flightsInfo.length; i++) {
-  //   for (const [key, value] of Object.entries(
-  //     queryResponseObj[1].carriers[0].carriers
-  //   )) {
-  //     if (flightsInfo[i].itineraries[0].segments[0].carrierCode === key)
-  //       flightsInfo[i].itineraries[0].segments[0].carrierCode = value;
-  //   }
-  // }
-const convertAirlineCodes = (obj) => {
   for (let i = 0; i < flightsInfo.length; i++) {
     for (const [key, value] of Object.entries(
       queryResponseObj[1].carriers[0].carriers
     )) {
-      if (flightsInfo[i].itineraries[0].segments[0].carrierCode === value)
-        flightsInfo[i].itineraries[0].segments[0].carrierCode = key;
+      if (flightsInfo[i].itineraries[0].segments[0].carrierCode === key)
+        flightsInfo[i].itineraries[0].segments[0].carrierCode = value;
     }
   }
-}
-  const filterFlights = (type, carrier) => {
-    console.log(carrier)
-    const filtered =  queryResponseObj[0].message.data.flightOffers.filter(flight => flight.validatingAirlineCodes[0] === carrier)
-    console.log(filtered)
-    setFlightsInfo(filtered)
-    // for(let i = 0; i < flightsInfo.length; i++){
-    //   if(flightsInfo[i].validatingAirlineCodes[0] != carrier){
-    //     flightsInfo.slice(i,1)
-    //   }
-    //   console.log(flightsInfo)
-    // }
-    // let selectedCarrier = '';
-    // for (const [key, value] of Object.entries(queryResponseObj[1].carriers[0].carriers))
-    // {
-    //   console.log(key)
-    //   console.log(queryResponseObj[1].carriers[0].carriers)
-    //   selectedCarrier = key;
+  const convertAirlineCodes = (obj) => {
+    for (let i = 0; i < flightsInfo.length; i++) {
+      for (const [key, value] of Object.entries(
+        queryResponseObj[1].carriers[0].carriers
+      )) {
+        if (flightsInfo[i].itineraries[0].segments[0].carrierCode === value)
+          flightsInfo[i].itineraries[0].segments[0].carrierCode = key;
+      }
+    }
+  };
+  useEffect(() => {
+    const selectedArr = [];
+    Object.entries(checkedItems).forEach((element) => {
+      if (element[1] === true) {
+        selectedArr.push(element[0]);
+        const filtered = queryResponseObj[0].message.data.flightOffers.filter(
+          (flight) => selectedArr.includes(flight.validatingAirlineCodes[0])
+        );
+        setFlightsInfo(filtered);
+      }
+      if (selectedArr.length === 0) {
+        setFlightsInfo(queryResponseObj[0].message.data.flightOffers);
+      }
+    });
+  }, [checkedItems]);
 
-    // }
-  //   for (let i = 0; i < flightsInfo.length; i++){
-  // console.log(carrier)
-  //   console.log(flightsInfo)
-
-
-  //   }
+  const filterFlights = (e, type, carrier) => {
+    const key = e.target.value;
+    const isChecked = e.target.checked;
+    setCheckedItems({ ...checkedItems, [key]: isChecked });
+    if (e.target.checked === true) {
+    }
   };
 
   useEffect(() => {
@@ -92,15 +95,16 @@ const convertAirlineCodes = (obj) => {
           <article>
             <h1>Airlines</h1>
             {Object.entries(queryResponseObj[1].carriers[0].carriers).map(
-              ([key,value], index) => {
-                console.log(queryResponseObj[1].carriers[0].carriers)
+              ([key, value], index) => {
                 return (
                   <label key={key}>
                     {value}
                     <input
-                    onClick={ () => {
-                      filterFlights("airlines", key);
-                    }}
+                      value={key}
+                      onChange={(e) => {
+                        filterFlights(e, "airlines", key);
+                        filteredCarriers.push(key);
+                      }}
                       type="checkbox"
                     ></input>
                   </label>
@@ -212,7 +216,26 @@ const convertAirlineCodes = (obj) => {
           />
         ) : null}{" "}
         <article className="flightmetainfowrap">
-          San Francisco to Los Angeles<br></br> Apr 29 - Apr 30
+          <p>
+            {convertedIataLocations[0].cityCode} to{" "}
+            {convertedIataLocations[1].cityCode}
+            <br></br> Apr 29 - Apr 30
+          </p>
+          <form className="metainfoform">
+            <label>
+              <input placeholder="Flying From"></input>
+            </label>
+            <label>
+              <input placeholder="Flying To"></input>
+            </label>
+            <label>
+              <input type="date"></input>
+            </label>
+            <label>
+              <input type="date"></input>
+            </label>
+            <button>Search</button>
+          </form>
         </article>
         {width < 1100 ? (
           <section className="mobiledisclamier">
