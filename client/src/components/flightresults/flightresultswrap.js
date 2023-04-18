@@ -3,12 +3,14 @@ import { Header } from "../utility/header";
 import { queryResponseObj } from "../utility/flightquerymodel";
 import { RecommendedTravelsTabs } from "./flightpagerectraveltabs";
 import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
 import { FlightDetailsModal } from "./flightdetailsmodal";
 import londonimg from "../../images/home/london.avif";
 import nycimg from "../../images/home/nyc.avif";
 import miamiimg from "../../images/home/miami.avif";
 import sanfranimg from "../../images/home/sanfran.avif";
 import adoneimg from "../../images/home/adone.avif";
+import { isNullOrUndefined } from "util";
 
 //-------------End of img imports for rec travel tabs-------------//
 export function FlightResultsWrap() {
@@ -16,9 +18,13 @@ export function FlightResultsWrap() {
   const [selectIndex, setSelectIndex] = useState();
   const [width, setWidth] = useState(window.innerWidth);
   const [flightsInfo, setFlightsInfo] = useState(
-    queryResponseObj[0].message.data.flightOffers
+    queryResponseObj[0].message.data
   );
   const [checkedItems, setCheckedItems] = useState({});
+  const [metaInfoRef, refInView] =  useInView({
+    threshold: 1,
+    // rootMargin:
+  });
   const [selectedCarriers, setSelectedCarriers] = useState([]);
   const filteredCarriers = [];
   const convertedIataLocations = Object.values(
@@ -49,13 +55,13 @@ export function FlightResultsWrap() {
     Object.entries(checkedItems).forEach((element) => {
       if (element[1] === true) {
         selectedArr.push(element[0]);
-        const filtered = queryResponseObj[0].message.data.flightOffers.filter(
+        const filtered = queryResponseObj[0].message.data.filter(
           (flight) => selectedArr.includes(flight.validatingAirlineCodes[0])
         );
         setFlightsInfo(filtered);
       }
       if (selectedArr.length === 0) {
-        setFlightsInfo(queryResponseObj[0].message.data.flightOffers);
+        setFlightsInfo(queryResponseObj[0].message.data);
       }
     });
   }, [checkedItems]);
@@ -92,7 +98,19 @@ export function FlightResultsWrap() {
         }
       >
         {width > 1100 ? (
-          <article>
+          <article className={refInView ? "refinewraptop" : "refinewrapscrolled"}>
+            <section>
+              <h1>Stops</h1>
+              <label>Nonstop
+                <input type="checkbox">
+                </input>
+              </label>
+              <label>Incl. Stops
+                <input type="checkbox">
+                </input>
+              </label>
+            </section>
+            
             <h1>Airlines</h1>
             {Object.entries(queryResponseObj[1].carriers[0].carriers).map(
               ([key, value], index) => {
@@ -111,6 +129,33 @@ export function FlightResultsWrap() {
                 );
               }
             )}
+           <section>
+              <h1>Price</h1>
+              <label>
+                <input type="range">
+                </input>
+              </label>
+              </section>
+            <section className="timebtnswrap">
+            <label>
+              <button>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>sun-angle</title><path d="M13.8 5.2C13 5 12.2 5 11.4 5L14.6 2.3L16 6.3C15.3 5.8 14.6 5.5 13.8 5.2M7 7.1C7.6 6.5 8.3 6 9 5.7L4.9 4.9L5.6 9C6 8.3 6.4 7.6 7 7.1M5.2 13.8C5 13 5 12.2 5 11.4L2.3 14.6L6.3 16C5.8 15.4 5.4 14.6 5.2 13.8M22 19V21H3L8.4 15.5C6.5 13.5 6.5 10.4 8.4 8.4C10.3 6.5 13.5 6.5 15.4 8.4L18.4 5.4L19.8 6.8L7.7 19H22Z" /></svg>
+            Morning
+              </button>
+            </label>
+            <label>
+              <button>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>sun-clock</title><path d="M18.1 9.3L19.6 6L15.5 5.6C16.1 6.1 16.6 6.7 17 7.5C17.3 8.1 17.5 8.6 17.7 9.2C17.2 9.1 16.6 9 16 9H15.6C14.8 7.2 13.1 6 11 6C8.2 6 6 8.2 6 11C6 13.1 7.2 14.8 9 15.6V16C9 19.9 12.1 23 16 23S23 19.9 23 16C23 12.9 20.9 10.2 18.1 9.3M16 21C13.2 21 11 18.8 11 16S13.2 11 16 11 21 13.2 21 16 18.8 21 16 21M16.5 16.2L19.4 17.9L18.6 19.1L15 17V12H16.5V16.2M11 4C10.2 4 9.4 4.2 8.6 4.4L11 1L13.4 4.4C12.6 4.2 11.8 4 11 4M4.9 14.5C5.3 15.2 5.9 15.9 6.5 16.4L2.4 16L4.2 12.2C4.3 13 4.5 13.8 4.9 14.5M4.1 9.8L2.3 6L6.5 5.7C5.9 6.2 5.4 6.8 4.9 7.5C4.5 8.2 4.2 9 4.1 9.8Z" /></svg>
+              Afternoon
+              </button>
+            </label>
+            <label>
+              <button>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>moon-waning-crescent</title><path d="M2 12A10 10 0 0 0 15 21.54A10 10 0 0 1 15 2.46A10 10 0 0 0 2 12Z" /></svg>
+              Night
+              </button>
+            </label>
+            </section>
           </article>
         ) : null}
         {infoModal ? (
@@ -215,7 +260,7 @@ export function FlightResultsWrap() {
             flightID={selectIndex}
           />
         ) : null}{" "}
-        <article className="flightmetainfowrap">
+        <article ref={metaInfoRef} className="flightmetainfowrap">
           <p>
             {convertedIataLocations[0].cityCode} to{" "}
             {convertedIataLocations[1].cityCode}
@@ -285,7 +330,7 @@ export function FlightResultsWrap() {
                     <h1 className="pricemain">
                       {"$" + item.travelerPricings[0].price.total}{" "}
                       <span className="perticketdisclaimer">
-                        {queryResponseObj[0].message.data.flightOffers[0]
+                        {queryResponseObj[0].message.data[0]
                           .itineraries[0].segments[1]
                           ? "Round-trip "
                           : "One-way "}

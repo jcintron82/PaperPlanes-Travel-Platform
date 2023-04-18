@@ -52,7 +52,7 @@ module.exports = {
         adults: adults,
         children:0,
         currencyCode:'USD',
-        max:5,
+        max:50,
         nonStop: true,
         travelClass: 'ECONOMY',
         maxPrice: 5000
@@ -60,19 +60,20 @@ module.exports = {
     }).then(function(response){
       response.data.splice(0, response.data - 1);
       carriers.push(response.result.dictionaries);
-      return amadeus.shopping.flightOffers.pricing.post(
-        JSON.stringify({
-          'data': {
-            'type': 'flight-offers-pricing',
-            'flightOffers': response.data
-          }
-        })
-      )
-  }).then(function(response){
       console.log(response.data);
       response.data = response;
       const data = JSON.parse(response.data.body);
       return res.json({message:data, travelerCounts, carriers})
+      // return amadeus.shopping.flightOffers.pricing.post(
+      //   JSON.stringify({
+      //     'data': {
+      //       'type': 'flight-offers-pricing',
+      //       'flightOffers': response.data
+      //     }
+      //   })
+      // )
+  // }).then(function(response){
+     
   }).catch(function(responseError){
       console.log(responseError);
   });
