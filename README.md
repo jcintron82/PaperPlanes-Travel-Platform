@@ -6,9 +6,6 @@ Currently in development.
   </a>
 </p>
 
-<p align="center">
-  Find Your Happiness.
-</p>
 
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -17,20 +14,22 @@ Currently in development.
 
 - [Introduction](#introduction)
 - [Features](#features)
-- [Feedback](#feedback)
 - [Build Process](#build-process)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Introduction
-PaperPlanes is your one stop shop for your travel expedition needs. ...
+Welcome to Paperplanes, a flight booking application that allows you to search and book flights to and from cities worldwide! With an intuitive user interface and seamless integration with multiple flight booking APIs, Paperplanes makes it easy for travelers to find and book flights from over 110+ airlines globally..
 
 
 ## Features
-Featuring a flight and hotel search and booking tool, users can search, compare and reserve flights and accomodations worldwide. Featured offers include offers from 110+ airliens and over 150k hotels worldwide. PaperPlanes also features a destination activity finder and planner! Search for your flights, buy your tickets, plan your itinerary, find your happiness.
+Search and book flights from hundreds of airlines worldwide.
+Filter flights by various criteria such as departure/arrival city, date, airline, and more.
+View detailed flight information including fares, layovers, and travel duration.
+Securely manage bookings and payments with built-in authentication and payment processing.
+Get real-time updates on flight statuses and itinerary changes.
+User-friendly interface with responsive design for seamless experience on different devices.
 
-## Feedback
-Have feedback for us here at PaperPlanes? We want to hear from you! Send us an email at paperplanescustomerservice@gmail.com
 
 ## Technical Build Process
 ...
