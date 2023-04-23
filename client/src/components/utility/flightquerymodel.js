@@ -4,12 +4,12 @@ import "../../css/utility/header.css";
 import "../../css/utility/travelersmodal.css";
 import adPicOne from "../../images/home/adone.jpg";
 import { useState, useEffect } from "react";
-import { InView, useInView } from "react-intersection-observer";
+import { useInView } from "react-intersection-observer";
 import BounceLoader from "react-spinners/BounceLoader";
 import { CSSTransition } from "react-transition-group";
 import { useNavigate } from "react-router-dom";
 import { Header } from "./header";
-import { WeatherModal } from './weathermodal'
+import { SafetyModal } from './safetymodal'
 import { TravelersPopup } from "./numoftravalersmodal";
 import { RefineSearchPopup } from "./refinsesearchmodal";
 import { RecommendedTab } from "./recommendedtraveltabs";
@@ -39,16 +39,12 @@ function FlightSearchModal() {
   const [roundTripSelected, setRoundTrip] = useState(false);
   const [oneWaySelected, setOneWay] = useState(false);
   const [queryRecieved, setQueryStatus] = useState();
-  const [adultCount, setAdultCount] = useState(2);
+  const [adultCount, setAdultCount] = useState(1);
   const [childCount, setChildCount] = useState(0);
   const [userMessage, setUserMessage] = useState(
     localStorage.getItem("username") ? "Username" : "Departing From..."
   );
   const { headerRef, headerInView } = useInView({
-    threshold: 1,
-    // rootMargin:
-  });
-  const { ref, inView } = useInView({
     threshold: 1,
     // rootMargin:
   });
@@ -79,7 +75,7 @@ function FlightSearchModal() {
     arrival: arrivalLocation,
     maxPrice: 5000,
     flightClass: "ECONOMY",
-    adults: 2,
+    adults: 1,
     children: 0,
     nonStop: false,
   };
@@ -93,7 +89,8 @@ function FlightSearchModal() {
     e.preventDefault();
     body.departure = body.departure.slice(-3);
     body.arrival = body.arrival.slice(-3);
-    console.log(body);
+    queryResponseObj.departure = departureLocation;
+    queryResponseObj.arrival = arrivalLocation;
 
     try {
       const pull = await fetch("http://localhost:8000/query", {
@@ -203,6 +200,11 @@ function FlightSearchModal() {
     body[valueToUpdate] = e.target.value;
   };
   useEffect(() => {
+    if (headerInView) {
+      console.log("Element is in view");
+    } else {
+      console.log("Element is not in view");
+    }
     setArrivalMessage(
       localStorage.getItem("username")
         ? "Where's your next adventure " +
@@ -217,12 +219,18 @@ function FlightSearchModal() {
       // unsubscribe "onComponentDestroy"
       window.removeEventListener("resize", handleResizeWindow);
     };
-  });
+  }, [headerInView]);
+  
   const opacityColor = "rgba(255, 0 ,0)";
   return (
     <div className="maindiv">
+     
       <Header
-        headerClass={headerInView ? "headermainwrap" : "headermainwrap"}
+       ref={headerRef}
+        headerClass={headerInView ? "headercolored" : "headermainwrap"}
+        link={"logolink"}
+        planeSVG={"paperplanesvg"}
+        profileSVG={"accountsvg"}
         // isColored={headerInView}
         message={() => setInputMessage()}
         renderLogoutState={(e) => {
@@ -435,10 +443,10 @@ function FlightSearchModal() {
           </button>
         </form>
       </div>
-      <section className="otheritemswrap">
+      <section className="otheritemswrap" >
         <div className={isLoading ? "adwraps pageopacity" : "adwraps"}>
           <div className="adslogans">
-            <p className="adone" ref={headerRef}>
+            <p className="adone" >
               Find Your <h1 className="paradiseh1">Paradise</h1>
               <a href="/register" className="booknowlink">
               Book Now
@@ -451,7 +459,7 @@ function FlightSearchModal() {
       </section>
       <section className="rectravelswrap">
         <article>
-          <WeatherModal />
+         {/* {width >= 1024 ? <SafetyModal /> : null} */}
           {width > RecommendedTabsBreakpoint ? (
             <ul className="recommendedtabswrap">
                <p>Popular destinations</p>

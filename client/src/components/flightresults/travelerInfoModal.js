@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
+import { FinalBookingModal } from './finalbookingmodal.js'
 import { queryResponseObj } from "../utility/flightquerymodel";
 import BounceLoader from "react-spinners/BounceLoader";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "../../css/flightresults/detailsmodal.css";
 import "../../css/flightresults/travelersinfomodal.css";
-export function TravelerInfoModal({ openModal, btnClick }) {
+
+
+export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
   const [autocompleteOne, setAutoCompleteOne] = useState("test");
   const [countrySearchPopUp, setCountrySearchPopUp] = useState(false);
   const [emailScreen, setEmailScreen] = useState(false);
@@ -15,7 +18,7 @@ export function TravelerInfoModal({ openModal, btnClick }) {
   const [confirmationScreen, setConfirmationScreen] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
   const [buyOffer, setBuyOffer] = useState(false);
-  const [ccc, setCCc] = useState(true);
+  const [openFinalBookingModal, setBookingModal] = useState(completeBooking ? false : true);
   const [confirmationScreenData, setConfirmationScreenData] = useState([]);
   const [travelerAddressPlaceholder, setTravelerAddressPlaceholder] =
     useState("");
@@ -212,24 +215,27 @@ export function TravelerInfoModal({ openModal, btnClick }) {
       })
       .join(" ");
   };
+  
   const confirmFlightOffer = async () => {
-    console.log(queryResponseObj)
-    setBuyOffer(true)
     //Converting the converted carrier code back to its airline code for
     //search purposes
-    // queryResponseObj[1].message.data[1].itineraries[0].segments[0].carrierCode = 
-    // queryResponseObj[1].message.data[1].itineraries[0].segments[0].operating.carrierCode;
-    // queryResponseObj[1].message.data[1].itineraries[1].segments[0].carrierCode = 
-    // queryResponseObj[1].message.data[1].itineraries[1].segments[0].operating.carrierCode;
+    queryResponseObj[1].message.data[selectIndex].itineraries[0].segments[0].carrierCode = 
+    queryResponseObj[1].message.data[selectIndex].itineraries[0].segments[0].operating.carrierCode;
+    if(queryResponseObj[1].message.data[0].itineraries[1]){
+      queryResponseObj[1].message.data[selectIndex].itineraries[1].segments[0].carrierCode = 
+    queryResponseObj[1].message.data[selectIndex].itineraries[1].segments[0].operating.carrierCode;
+    }
+    setBuyOffer(true);
       const pull = await fetch("http://localhost:8000/flightconfirmation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify([queryResponseObj[1].message.data.flightOffers[3], travelersArr])
+        body: JSON.stringify([queryResponseObj[1].message.data[selectIndex], travelersInfo])
       });
       const x = await pull.json()
-      console.log(pull)
-      console.log(x)
-      setBuyOffer(false)
+      queryResponseObj.finalBookingInfo = x;
+      setBuyOffer(false);
+      // completeBooking();
+      setBookingModal(() => {setBookingModal(true)});
   }
   const locationSearch = async (input) => {
     let token = "";
@@ -272,9 +278,8 @@ export function TravelerInfoModal({ openModal, btnClick }) {
     queryResponseObj[0].travelerCounts.children;
     const breakpoint = 1024;
   return (
-   
     <form className={openModal === true ? "travelersinfomodal" : "hide"}>
-      {/* <h1 className="formheader"><h2>{travelerId + 1 }</h2></h1> */}
+      {openFinalBookingModal ? <FinalBookingModal /> : null}
       { buyOffer ? 
        <BounceLoader
           speedMultiplier={0.9}

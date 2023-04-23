@@ -45,26 +45,30 @@ const recordConfirmPassword = (e) => {
 }
   return (
     <body>
-    <Header />
+    <Header 
+    headerClass={"headermainwrap"}
+    link={"logolink"}
+    planeSVG={"paperplanesvg"}
+    profileSVG={"accountsvgcolored"} />
     <div className="mainregisterpagewrap">
     <section className="registerimgwrap">
         <img className="registerpageimg" src={registerpagepic}></img>
     </section>
  <form className="registerform">
      <label className="registerlabels">First Name
-        <input className="registerinputs" onChange={(e) => recordFirstName(e)}>
+        <input placeholder="John" className="registerinputs" onChange={(e) => recordFirstName(e)}>
         </input>
     </label>
     <label className="registerlabels">Last Name
-        <input className="registerinputs" onChange={(e) => recordLastName(e)}>
+        <input placeholder="Smith" className="registerinputs" onChange={(e) => recordLastName(e)}>
         </input>
     </label>
     <label className="registerlabels">Email
-        <input className="registerinputs" onChange={(e) => recordUsername(e)}>
+        <input placeholder="email@gmail.com" className="registerinputs" onChange={(e) => recordUsername(e)}>
         </input>
     </label>
     <label className="registerlabels">Password
-        <input type='password' className="registerinputs" onChange={(e) => recordPassword(e)}>
+        <input  type='password' className="registerinputs" onChange={(e) => recordPassword(e)}>
         </input>
     </label>
     <label className="registerlabels">Confirm Password

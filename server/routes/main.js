@@ -7,7 +7,10 @@ const homeController = require("../controllers/home");
 const hotelsController = require("../controllers/hotels");
 const flightPriceconfirmationController = require("../controllers/flightconfirmation");
 const registerController = require("../controllers/register");
+const locationsRatings = require("../controllers/locationratings");
 
+router.get("/locationratings", locationsRatings.getResults);
+router.post("/locationratings", locationsRatings.postToAPI);
 router.get("/query", homeController.getIndex);
 router.post("/query", homeController.searchInput);
 router.get("/hotels", hotelsController.getHotels);

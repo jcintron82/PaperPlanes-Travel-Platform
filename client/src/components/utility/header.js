@@ -1,9 +1,10 @@
+import { paperClasses } from "@mui/material";
 import "../../css/utility/header.css";
 import { useState } from "react";
 import { InView, useInView } from "react-intersection-observer";
 import { CSSTransition } from "react-transition-group";
 
-export function Header({ renderLogoutState, renderLoginState, message, headerClass }) {
+export function Header({ renderLogoutState, renderLoginState, message, headerClass,link,planeSVG,profileSVG }) {
   const [loginPopup, setLoginPopup] = useState(false);
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -86,11 +87,11 @@ export function Header({ renderLogoutState, renderLoginState, message, headerCla
   return (
     <header className={headerClass}>
       <div className="logowrap">
-        <a className="logolink" href="/">
+        <a className={link}href="/">
           Paperplanes
         </a>
         <svg
-          className="paperplanesvg"
+          className={planeSVG}
           xmlns="http://www.w3.org/2000/svg"
           width="24"
           height="24"
@@ -101,7 +102,7 @@ export function Header({ renderLogoutState, renderLoginState, message, headerCla
       </div>
       <button onClick={loginModalPopup} className="loginwrap">
         <svg
-          className="accountsvg"
+          className={profileSVG}
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >

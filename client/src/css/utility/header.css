@@ -5,10 +5,10 @@ html{
 .headermainwrap{
     display: flex;
     justify-content: space-between;
-    position: fixed;
+    position: absolute;
     top: 0;
     background-color: transparent;
-    width: 100vw;
+    width: 99%;
     height: 4.25rem;
     z-index: 999;
 }
@@ -64,15 +64,20 @@ html{
     margin-bottom: 0.12rem;
     font-weight: 500;
     text-decoration: none;
-    color: #343B53;
-
+    color: rgb(241, 245, 249);
 }
-/* .logolinkhome, .accountsvghome, .paperplanesvghome {
-    color: white;
-} */
+.logolinkcolor{
+    align-items: center;
+    padding-right: 0.12rem;
+    font-size: 1.35em;
+    margin-bottom: 0.12rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: #343B53;
+}
 .loginwrap{
     display: flex;
-    height: 100%;
+    height: 90%;
     justify-content: flex-end;
     align-items: flex-start;
     position: absolute;
@@ -137,9 +142,18 @@ p{
     border-bottom-left-radius: 0;
 }
 .paperplanesvg{
+    fill:rgb(241, 245, 249);
+}
+.paperplanesvgcolor{
     fill:#343B53;
 }
 .accountsvg{
+    width: 50px;
+    padding-right: .5rem;
+    align-self: center;
+    fill: rgb(241, 245, 249);
+}
+.accountsvgcolored{
     width: 50px;
     padding-right: .5rem;
     align-self: center;

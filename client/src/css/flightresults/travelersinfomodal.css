@@ -295,7 +295,7 @@ article > h1 {
         width: 89%;
         max-width: 50rem;
         left: 50%;
-        padding: 3rem 3rem;
+        height: 83vh;
     }
     .travelerNumWrap{
         justify-content: flex-start;

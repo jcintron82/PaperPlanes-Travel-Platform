@@ -15,7 +15,6 @@ const travelerCounts = {
 const carriers = [];
 module.exports = {
   searchInput: (req, res) => {
-    console.log(req.body)
     originLocation = req.body.departure;
     destinationLocation = req.body.arrival;
     departureDate = req.body.departureDate;
@@ -34,28 +33,28 @@ module.exports = {
       clientSecret: process.env.CLIENT_SECRET
     });
     amadeus.shopping.flightOffersSearch.get({
-        // originLocationCode: originLocation,
-        // destinationLocationCode: destinationLocation,
-        // departureDate: departureDate,
-        // returnDate: returnDate,
-        // adults: adults,
-        // children:children,
-        // currencyCode:'USD',
-        // max: 10,
-        // nonStop: true,
-        // travelClass: flightClass,
-        // maxPrice: maxPrice
-        originLocationCode: 'LAX',
-        destinationLocationCode: 'JFK',
-        departureDate: '2023-06-01',
-        // returnDate:  '2023-06-15',
+        originLocationCode: originLocation,
+        destinationLocationCode: destinationLocation,
+        departureDate: departureDate,
+        returnDate: returnDate,
         adults: adults,
-        children:0,
+        children:children,
         currencyCode:'USD',
-        max:50,
+        max: 10,
         nonStop: true,
-        travelClass: 'ECONOMY',
-        maxPrice: 5000
+        travelClass: flightClass,
+        maxPrice: maxPrice
+        // originLocationCode: 'LAX',
+        // destinationLocationCode: 'JFK',
+        // departureDate: '2023-06-01',
+        // // returnDate:  '2023-06-15',
+        // adults: 1,
+        // children:0,
+        // currencyCode:'USD',
+        // max:50,
+        // nonStop: true,
+        // travelClass: 'ECONOMY',
+        // maxPrice: 2000
 
     }).then(function(response){
       response.data.splice(0, response.data - 1);
