@@ -7,11 +7,21 @@ html{
     justify-content: space-between;
     position: fixed;
     top: 0;
-    background-color: white;
-    color: rgb(17, 24, 39);
+    background-color: transparent;
     width: 100vw;
     height: 4.25rem;
-    border-bottom: solid 1px rgb(115, 115, 115, 43%);
+    z-index: 999;
+}
+.headercolored{
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    background-color: white;
+    color: #F0FAFF;
+    width: 100vw;
+    height: 4.25rem;
+    z-index: 999;
 }
 .headermainwraptranspo{
     display: flex;
@@ -54,8 +64,12 @@ html{
     margin-bottom: 0.12rem;
     font-weight: 500;
     text-decoration: none;
+    color: #343B53;
 
 }
+/* .logolinkhome, .accountsvghome, .paperplanesvghome {
+    color: white;
+} */
 .loginwrap{
     display: flex;
     height: 100%;
@@ -123,12 +137,13 @@ p{
     border-bottom-left-radius: 0;
 }
 .paperplanesvg{
-    fill: rgb(17, 24, 39);
+    fill:#343B53;
 }
 .accountsvg{
     width: 50px;
     padding-right: .5rem;
-    fill: rgb(17, 24, 39);
+    align-self: center;
+    fill: #343B53;
 }
 .signupcalltoaction{
     font-size: .76em;
@@ -138,7 +153,7 @@ p{
     color: #05203C;
 }
 a{
-    color: #05203C;
+    color: white;
     padding-left: .25rem;
 }
 .loginbtn{
@@ -155,7 +170,7 @@ a{
     width: 30px;
     border-radius: 50%;
     stroke-width: 4px;
-    stroke: lightslategray;
+    stroke:  #F3F4F6;
 }
 .hide{
     display: none;
