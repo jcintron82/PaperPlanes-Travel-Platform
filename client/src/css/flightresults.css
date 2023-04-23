@@ -9,7 +9,9 @@
     align-self: center;
     background-color: white;
     border-radius: 0.5rem;
-    border: transparent;
+    border: 1px solid rgba(133, 150, 163, 50%);
+    box-shadow: 0px 0px 11px 0px rgba(133, 150, 163, 75%);
+    color: #1F2937;
 }
 .flightResultsWrap{
     display: flex;
@@ -19,11 +21,75 @@
     height: 100%;
     max-height: 45vh;
     padding: 0 0 1.5rem 0;
-    margin-top: 4rem;
+    margin-top: 3rem;
     width: 100%;
     gap: 20px;
     justify-content: space-between;
 }
+.mainarticle{
+    position: fixed;
+    transform: translate(0%, 16%);
+    background-color: hsl(214 13% 84% / 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 70vh;
+    align-items: center;
+    z-index: 998;
+    border-radius: .5rem;
+}
+.mainarticle > svg {
+    width: 00px;
+}
+.mainarticle > div {
+    width: 80%;
+    align-self: center;
+    padding-top: 1rem;
+    text-align: center;
+    font-size: 1.125em;
+}
+.mainarticle > ul {
+    width: 50%;
+    align-self: center;
+}
+.mainarticle > ul > li:nth-child(1) {
+    border-top-right-radius: .5rem;
+    border-top-left-radius: .5rem;
+}
+.mainarticle > ul > li:nth-child(5) {
+    border-bottom-right-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+}
+.mainarticle > ul > li:nth-child(1),.mainarticle > ul > li:nth-child(3),
+.mainarticle > ul > li:nth-child(5) {
+    background:white;
+}
+.mainarticle > ul > li:nth-child(2),.mainarticle > ul > li:nth-child(4) {
+    background: #E5E5E5;
+}
+.mainarticle > ul > li {
+    display: flex;
+    justify-content: flex-start;
+    gap: 38px;
+    height: 1.9rem;
+    align-items: center;
+    padding: 0.25rem;
+    width: 100%;
+    text-indent: 10px;
+    padding: .5rem;
+    max-width: 28rem;
+    text-align: center;
+    box-shadow: 0px 10px 17px -2px #1F2937;
+    -webkit-box-shadow: 0px 10px 17px -2px #1F2937;
+    -moz-box-shadow: 0px 10px 17px -2px #1F2937;
+}
+.mainarticle > p{
+    width: 80%;
+    align-self: center;
+    font-size: 1.125em;
+    font-weight: 400;
+}
+
 .mobiledisclamier{
     display: flex;
     flex-direction: column;
@@ -34,19 +100,19 @@
     color: rgb(38, 38, 38, 87%);
     font-size: 0.73em;
     width: 94%;
+    margin: 1rem;
     align-self: center;
 
 }
 .mobiledisclamier > hr, .desktopdisclaimerwrap > hr {
     height: 0.05rem;
     background: rgb(38, 38, 38, 35%);
-    margin-top: 1.6rem;
 }
 .desktopdisclaimerwrap{
-    max-width: 55vw;
-    align-self: flex-end;
-    margin-right: 15vw;
+    width: 50%;
     font-size: .5em;
+    align-self: center;
+    transform: translate(88px, 0px);
 }
 .desktopdisclaimerwrap, .mobiledisclamier > * {
     padding:0
@@ -87,6 +153,7 @@ li::marker{
     border: solid;
     font-size: 1.4em;
     border-radius: 0.75rem;
+    padding: 0.6rem 0 0;
     background: white;
     border: transparent;
   }
@@ -138,10 +205,11 @@ h3{
     overflow: hidden;
 }
 .flightmaindetailswrap > * {
-    padding: .65rem;
+    padding: 0.25rem;
     font-weight: 500;
     margin: 0;
     text-align: left;
+    color: #1F2937;
 }
 
 .pricemain{
@@ -180,11 +248,28 @@ h2{
 }
 .carrierwrap{
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
 }
 .carrierwrap > * {
-    font-size: 1.5em;
+    font-size: 1.75em;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+.carrierwrap > button {
+    background-color: rgb(30, 64, 175, 88%);
+    color: #F9FAFB;
+    height: 8vh;
+    letter-spacing: .03rem;
+    font-weight: 600;
+    font-size: 1.3em;
+    border: transparent;
+    border-radius: 0.5rem;
+    width: 7rem;
+}
+
 .flightTimesWrap{
     display: flex;
     margin: 0;
@@ -216,8 +301,8 @@ h2{
     width: 51vw;
     height: 3rem;
     max-width: 10rem;
-    background-color: #0284c7;
-    color: #F0F9FF;
+    background-color: #286DA4;
+    color: #F0FAFF;
     font-weight: 600;
     font-size: .8em;
     border-radius: 0.75rem;
@@ -251,6 +336,29 @@ h2{
     color: rgb(30, 64, 175, 88%);
     font-weight: 500;
     display: flex;
+    box-shadow: 0px 2px 15px -1px rgba(17,51,51,0.38);
+-webkit-box-shadow: 0px 2px 15px -1px rgba(17,51,51,0.38);
+-moz-box-shadow: 0px 2px 15px -1px rgba(17,51,51,0.38);
+}
+.metainfoform > label {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 100%;
+    max-width: 30rem;
+    align-items: f;
+    gap: 5px;
+    height: 3.5rem;
+    color: #1E293B;
+    font-weight: 500;
+    font-size: 1em;
+    text-indent: 5px;
+    text-align: left;
+}
+.metainfoform > label > svg {
+    fill: #1F2937;
+    position: relative;
+    transform: translate(10px, -48px);
 }
 .flightmetainfowrap > p {
     width: 20%;
@@ -266,7 +374,43 @@ h2{
     background: rgb(30, 64, 175, 88%);
     color: white;
     font-weight: 500;
-    font-size: 1em;
+    height: 63px;
+    font-size: 1.3em;
+}
+.flightparent{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.loadingdiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+@keyframes airplaneAnimation {
+    0%, 100% {
+        transform: translateY(0%) rotate(0deg); /* Start and end with no transformation */
+      }
+      25% {
+        transform: translateY(-1%) rotate(-2deg); /* Move the SVG up by 5% of its height and rotate it -10 degrees */
+      }
+      50% {
+        transform: translateY(1%) rotate(2deg); /* Move the SVG down by 5% of its height and rotate it 10 degrees */
+      }
+      75% {
+        transform: translateY(-.5%) rotate(-1deg); /* Move the SVG back to its original position */
+      }
+    }
+.planeSVG{
+    width: 40vw;
+    position: relative;
+    z-index: 999;
+    /* top: 31vh; */
+    transform: translateY(110%); /* Start with the SVG translated 110% down along the y-axis */
+    animation: airplaneAnimation 5s infinite;
+    /* transform-origin: center center; */
+    transform: translate(0%, 110%);
 }
 .flightResultsWrap > h1 {
     color: rgb(38, 38, 38, 87%);
@@ -284,6 +428,7 @@ h2{
     justify-content: center;
     align-self: center;
     min-height: 48px;
+    margin: 2.5rem;
     border-radius: 0.5rem;
     gap: 2.5px;
     border: solid 1px rgb(115, 115, 115, 43%);
@@ -297,7 +442,12 @@ h2{
 }
 .metainfoform{
     display: flex;
-    ;
+    width: 100%;
+    margin-right: 2vw;
+}
+.metainfoform > input {
+    background: rgba(133, 150, 163, 10%);
+    font-size: .8em;
 }
 @media(min-width:768px){
     .pricewrap{  
@@ -309,9 +459,9 @@ h2{
 }
 @media(min-width:1100px){
     .ticketbtns{
-        max-width: 55vw;
-        align-self: flex-end;
-        margin-right: 15vw;
+        max-width: 35rem;
+        align-self: center;
+        margin-right: -11rem;
 
     }
     .timebtnswrap{
@@ -321,43 +471,121 @@ h2{
         justify-content: space-evenly;
     }
     @keyframes fade{
-        0%{opacity:0}
-        100%{opacity:1}
+        0%{opacity:0;
+        height: 0%;
+        transform: translate(74vw, -102%);}
+        100%{opacity:1;
+        height: 100%;
+        transform: translate(74vw, -102%);}
     }
+    @keyframes fade-out {
+        0% {opacity: 1;
+            height: 100%;
+            transform: translate(74vw, -102%);}
+        100% {opacity: 0;
+            height: 0%;
+            transform: translate(74vw, -102%);}
+      }
     .refinewraptop{
-        position: absolute;
+        position: static;
         top: 10rem;
-        border: solid;
-        width: 26%;
-        min-height: 57vh;
-        padding: 0.75rem;
+        transform: translate(10px, 24vh);
+        width: 24%;
+        max-height: 0;
+        padding: 0.5rem 1.5rem;
         max-width: 19rem;
+        margin-top: -1rem;
+        opacity: 1;
+
+    }
+    input[type=range]{
+        min-width: 90%;
+    }
+    .adbanner{
+        background-image: url('../images/resultspage/adbanner.jpg');
+        height: 36rem;
+        width: 21rem;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 50% 67%;
+        animation: fade .5s ease-in-out;
+        position: fixed;
+        transform: translate(73vw, -102%);
+    }
+    .adbannerfadeout{
+        background-image: url('../images/resultspage/adbanner.jpg');
+        height: 100%;
+        position: fixed;
+        right: -4.5rem;
+        width: 21rem;
+        top: -13px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 50% 67%;
         opacity: 0;
-        transition: opacity 1s ease-in-out;
-
-
+        animation: fade-out .25s ease-in-out;
     }
-    .refinewrapscrolled{
-        position: absolute;
-        top: 10%;
-        border: solid;
-        width: 26%;
-        min-height: 57vh;
-        padding: 0.75rem;
-        opacity:1;
-        max-width: 19rem;
-        transition: opacity 1s ease-in-out;
+    .refinewraptop > section  {
+        display: flex;
+        flex-flow: row wrap;
+        gap: 5px 23px;
+        justify-content: center;
+        margin: 1rem 0;
     }
-    .timebtnswrap > label > button  {
-        width: 100%;
-        height: 3rem;
-        border-radius: 0.5rem;
-        border: transparent;
-        background: grey;
+   
+    .refinewraptop > section > label {
+        width: 90%;
+        display: flex;
+        height: 2.65rem;
+        align-items: center;
+        justify-content: center;
+        flex-flow: row-reverse nowrap;
+    }
+    .refinewraptop > section > label >  input[type='checkbox']{
+        width: 20%;
         display: flex;
         align-items: center;
-        justify-content: space-evenly;
+        justify-content: center;
+        flex-flow: row-reverse nowrap;
+        background: rgba(133, 150, 163, 10%);
     }
+    .refinewraptop > section > h1  {
+        margin: 0;
+        text-align: left;
+        font-weight: 600;
+        width: 100%;
+        font-size: 17px;
+        text-indent: 7%;
+    }
+    .refinewraptop > section > label > h2 {
+        font-size: 16px;
+        width: 100%;
+        text-align: left;
+        font-weight: 400;
+    }
+    .refinewraptop > section > button {
+        font-size: .85em;
+        width: 100%;
+        max-width: 6rem;
+        height: 3.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0.25rem;
+        align-items: center;
+        border-radius: 0.5rem;
+        border: transparent;
+        background: white;
+        font-weight: 600;
+        letter-spacing: .025rem;
+        color: #1F2937;
+       box-shadow: 0px 0px 11px 0px rgba(133, 150, 163, 75%);
+    }
+    .timebtnswrap > button > svg {
+        width:30px;
+        margin-bottom: .15rem;
+        fill: #1F2937;
+     }
     .timebtnswrap > label:nth-child(1) > button  {
         width: 100%;
         height: 3rem;
@@ -368,9 +596,7 @@ h2{
         align-items: center;
         justify-content: space-evenly;
     }
-    .timebtnswrap > label  > button > svg {
-       width:30px;
-    }
+
 
     .timebtnswrap > label {
         width:45%;
@@ -386,7 +612,20 @@ h2{
     .recommendedwrap{  
         display: none;
     }
-    
+    .flightparent{
+        display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    justify-content: center;
+    align-self: flex-end;
+    }
+}
+@media(min-width:1700px){
+    .adbanner{
+        transform: translate(65vw, -102%);
+    }
 }
 
 /******For the inidividual flight tab results*******/
