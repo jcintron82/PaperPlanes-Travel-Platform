@@ -56,26 +56,26 @@ const recordConfirmPassword = (e) => {
     </section>
  <form className="registerform">
      <label className="registerlabels">First Name
-        <input placeholder="John" className="registerinputs" onChange={(e) => recordFirstName(e)}>
+        <input required placeholder="John" className="registerinputs" onChange={(e) => recordFirstName(e)}>
         </input>
     </label>
     <label className="registerlabels">Last Name
-        <input placeholder="Smith" className="registerinputs" onChange={(e) => recordLastName(e)}>
+        <input required placeholder="Smith" className="registerinputs" onChange={(e) => recordLastName(e)}>
         </input>
     </label>
     <label className="registerlabels">Email
-        <input placeholder="email@gmail.com" className="registerinputs" onChange={(e) => recordUsername(e)}>
+        <input required placeholder="email@gmail.com" className="registerinputs" onChange={(e) => recordUsername(e)}>
         </input>
     </label>
     <label className="registerlabels">Password
-        <input  type='password' className="registerinputs" onChange={(e) => recordPassword(e)}>
+        <input required  type='password' className="registerinputs" onChange={(e) => recordPassword(e)}>
         </input>
     </label>
     <label className="registerlabels">Confirm Password
-        <input type='password' className="registerinputs" onChange={(e) => recordConfirmPassword(e)}>
+        <input required type='password' className="registerinputs" onChange={(e) => recordConfirmPassword(e)}>
         </input>
     </label>
-    <button type='button' className="registerbtn" onClick={registerUser}>Register</button>
+    <button className="registerbtn" onClick={registerUser}>Register</button>
  </form>
  </div>
  </body>

@@ -6,17 +6,13 @@ import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { CSSTransition } from "react-transition-group";
 import { FlightDetailsModal } from "./flightdetailsmodal";
-import londonimg from "../../images/home/london.avif";
-import nycimg from "../../images/home/nyc.avif";
-import miamiimg from "../../images/home/miami.avif";
-import sanfranimg from "../../images/home/sanfran.avif";
-import adoneimg from "../../images/home/adone.avif";
-
 
 //-------------End of img imports for rec travel tabs-------------//
 export function FlightResultsWrap() {
   const [infoModal, setInfoModal] = useState();
   const [maxPrice, setMaxPrice] = useState(2000);
+  const [carrierIndex, setCarrierIndex] = useState(queryResponseObj[0].carriers.length -1);
+  const [carrierRefineObject, setCarrierRefineObject] = useState(queryResponseObj[0].carriers[carrierIndex].carriers);
   const [selectIndex, setSelectIndex] = useState();
   const [width, setWidth] = useState(window.innerWidth);
   const [flightsInfo, setFlightsInfo] = useState(
@@ -50,28 +46,30 @@ export function FlightResultsWrap() {
     }
   };
   useEffect(() => {
-    console.log(queryResponseObj)
     const selectedArr = [];
     Object.entries(checkedItems).forEach((element) => {
       if (element[1] === true) {
         selectedArr.push(element[0]);
-        const filtered = queryResponseObj[0].message.data.filter((flight) => {
-          selectedArr.includes(flight.validatingAirlineCodes[0]);
-        });
-        setFlightsInfo(filtered);
       }
-      if (selectedArr.length === 0) {
-        setFlightsInfo(queryResponseObj[0].message.data);
-      }
-    },[flightsInfo]);
-    const handleResizeWindow = () => setWidth(window.innerWidth);
+    });
+    if (selectedArr.length > 0) {
+      const filtered = queryResponseObj[0].message.data.filter((flight) => {
+        return selectedArr.includes(flight.validatingAirlineCodes[0]);
+      });
+      setFlightsInfo(filtered);
+    } else {
+      setFlightsInfo(queryResponseObj[0].message.data);
+    }
+       const handleResizeWindow = () => setWidth(window.innerWidth);
     // subscribe to window resize event "onComponentDidMount"
     window.addEventListener("resize", handleResizeWindow);
     return () => {
       // unsubscribe "onComponentDestroy"
       window.removeEventListener("resize", handleResizeWindow);
     };
-  }, [checkedItems]);
+  }, [checkedItems, queryResponseObj]);
+ 
+  // }, [checkedItems, flightsInfo]);
 
   const filterFlights = (e, type, carrier) => {
     const key = e.target.value;
@@ -80,6 +78,14 @@ export function FlightResultsWrap() {
     if (e.target.checked === true) {
     }
   };
+  const reRenderPostFilter = () => {
+    console.log("ITS WORKING")
+    setFlightsInfo(queryResponseObj[0].message.data);
+    // setCarrierIndex(() => {
+    //   return carrierIndex + 1
+    // })
+  }
+  // console.log(carrierRefineObject)
   const filterByPrice = () => {
     console.log(queryResponseObj);
     const filtered = flightsInfo.filter((flight) => {
@@ -130,7 +136,7 @@ export function FlightResultsWrap() {
             </section>
             <section>
               <h1>Airlines</h1>
-              {Object.entries(queryResponseObj[1].carriers[0].carriers).map(
+              {Object.entries(carrierRefineObject).map(
                 ([key, value], index) => {
                   return (
                     <label key={key} aria-label="Airlines">
@@ -305,7 +311,7 @@ export function FlightResultsWrap() {
           />
         ) : null}{" "}
         {width >= 1024 ? (
-         <FlightsSearchBar updateState={() => setFlightsInfo(queryResponseObj[0].message.data)}/>
+         <FlightsSearchBar updateState={() => reRenderPostFilter()}/>
         ) : null}
         {width < 1100 ? (
           <section className="mobiledisclamier">
@@ -325,7 +331,7 @@ export function FlightResultsWrap() {
           </section>
         ) : (
           <section className="desktopdisclaimerwrap">
-            <h1>Your PlaceHolder</h1>
+            <h1>IMg Wrap</h1>
             <hr></hr>
             <p>
               Prices displayed include taxes and may change based on
@@ -410,7 +416,7 @@ export function FlightResultsWrap() {
                         item.itineraries[0].segments[0].arrival.iataCode +
                         ")"}{" "}
                     </h1>
-                    <h6>San Francisco TO Los Angeles</h6>
+                    <h6>{queryResponseObj.departure} to {queryResponseObj.arrival}</h6>
                     <span>{item.itineraries[0].segments[0].carrierCode}</span>
                   </section>
                 </div>

@@ -5,7 +5,7 @@
     top: 5rem;
     height: 50%;
     margin: 1rem 0;
-    background-color: darkgrey;
+    background-color: hsl(214 13% 84% / 1);
     border-radius: 0;
     z-index: 5;
     border-bottom-right-radius: 0.85rem;
@@ -31,6 +31,9 @@
     direction: ltr;
     border: transparent;
     text-align:center;
+    box-shadow: 3px 2px 13px 0px rgba(133, 150, 163, 75%);
+-webkit-box-shadow: 3px 2px 13px 0px rgba(133, 150, 163, 75%);
+-moz-box-shadow: 3px 2px 13px 0px rgba(133, 150, 163, 75%);
 }
 .travelersselectinput > option {
     font-weight: 600;
@@ -43,15 +46,24 @@
     height: 4rem;
     align-items: center;
 }
+html{
+    scroll-behavior: smooth;
+}
+h6{
+    margin: 0;
+}
 .travelersconfirmbtn{
     width: 50%;
-    height: 2rem;
+    height: 2.25rem;
     border-radius: 0.5rem;
     border: none;
     font-size: 1em;
     font-weight: 600;
-    background-color: #0770e3;
-    color: white;
+    background-color: #286DA4;
+    color: #F0F9FF;
+    box-shadow: 3px 2px 13px 0px rgba(133, 150, 163, 75%);
+    -webkit-box-shadow: 3px 2px 13px 0px rgba(133, 150, 163, 75%);
+    -moz-box-shadow: 3px 2px 13px 0px rgba(133, 150, 163, 75%);
     letter-spacing: .015rem;
 }
 .travelertypeh1{

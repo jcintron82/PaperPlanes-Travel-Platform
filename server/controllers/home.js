@@ -40,7 +40,7 @@ module.exports = {
         adults: adults,
         children:children,
         currencyCode:'USD',
-        max: 10,
+        max: 5,
         nonStop: true,
         travelClass: flightClass,
         maxPrice: maxPrice

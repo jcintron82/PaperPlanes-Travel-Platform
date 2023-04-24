@@ -43,9 +43,10 @@ html{
     align-items: center;
     justify-content: center;
     border: none;
-    background: lightgray;
-    position: relative;
-    bottom: 5%;
+    background: #9CA3AF;
+    position: absolute;
+    bottom: 102%;
+    right: -20px;
 }
 .loginsvgandmodalwrap{
     width: 17vw;
@@ -98,13 +99,15 @@ html{
     transform: translate(-50%, -50%);
     width: 95vw;
     min-height: 15rem;
-    max-width: 28rem;
-    max-height: 25rem;
-    background-color: darkgray;
+    max-width: 39rem;
+    max-height: 29rem;
+    background-color: #9CA3AF;
     border-radius: 0.85rem;
-    gap: 24px;
     z-index: 1;
-    padding: 1rem 0;
+    padding: 0 0 4rem;
+    box-shadow: 3px 2px 13px 0px rgba(133, 150, 163, 75%);
+    -webkit-box-shadow: 0px 0px 24px 4px rgba(133, 150, 163, 75%);
+    -moz-box-shadow: 3px 2px 13px 0px rgba(133, 150, 163, 75%);
 }
 p{
     padding-right: 0.12rem;
@@ -122,6 +125,7 @@ p{
     font-size: .75em;
     font-weight: 400;
     color: #05203C;
+    width: 47%;
     padding: 0.25rem;
     margin: .2rem 0;
 }
@@ -131,17 +135,32 @@ p{
     height: 6vh;
     padding: 0.45rem;
     padding-left: .8rem;
-    font-size: 1em;
+    font-size: 1.2em;
     border: transparent;
+    background: #F8FAFC;
+    font-weight: 500;
     border-radius: .5rem;
+    box-shadow: 0px 0px 40px -8px rgb(44 55 64);
+    -webkit-box-shadow: 0px 0px 40px -8px rgb(44 55 64);
+    -moz-box-shadow: 0px 0px 40px -8px rgb(44 55 64);
 }
 .loginInputs:nth-child(3){
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
+    border-radius: .5rem;
+    align-self: center;
+    max-width: 80%;
+    height: 48px;
+    padding: 0;
+    text-align: left;
+    font-size: 1em;
 }
 .loginInputs:nth-child(2) {
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
+    align-self: center;
+    border-radius: 0.5rem;
+    padding: 0;
+    max-width: 80%;
+    height: 48px;
+    margin-bottom: 1.25rem;
+    font-size: 1em;
 }
 .paperplanesvg{
     fill:rgb(241, 245, 249);
@@ -164,23 +183,31 @@ p{
 .signupcalltoaction{
     font-size: .76em;
     margin: 0 0 .8rem;
-    width: 100%;
-    text-align: left;
+    width: 40%;
     color: #05203C;
+    padding: 0;
 }
 a{
     color: white;
     padding-left: .25rem;
 }
+.loginpic{
+    width: 100%;
+    border-radius: 0;
+    max-height: 17rem;
+    border-top-right-radius: .5rem;
+    border-top-left-radius: .5rem;
+}
 .loginbtn{
-    width: 86%;
+    width: 50%;
     height: 3rem;
-    border-radius: 0.85rem;
+    border-radius: 0.5rem;
     border: none;
     font-size: 1.2em;
     font-weight: 600;
-    color: white;
-    background-color: #0770e3
+    color: #F0F9FF;
+    background-color: #286DA4;
+    letter-spacing: .05rem;
 }
 .exitsvg{
     width: 30px;
@@ -194,6 +221,7 @@ a{
 .inputswrap{
     display: flex;
     flex-direction: column;
+    padding: 1.5rem 0 0;
 }
 .loggedoutwrap{
     display: flex;
@@ -223,19 +251,12 @@ a{
   }
 
 
-@media(min-width:710px){
-    .loginbtn{
-        background-color: #05203C;
-    }
-   
-}
 @media(min-width:1024px){
     .loginbtn:hover {
         background-color: #0770e3;
     }
     .exitbtn:hover{
-        background-color: maroon;
-        opacity: .8;
+        background-color: #B91C1C;
     }
  
 

@@ -37,11 +37,11 @@ const searchParams = {
             <option value="BUSINESS">Business</option>
             <option value="FIRST">First</option>
             </select></label>
-        <label className="travelerlabelwraps">
+        {/* <label className="travelerlabelwraps">
             <h1 className="travelertypeh1" >Max Price</h1>
         <input type='number' placeholder='500.00' onChange={(e) => {recordMaxPrice(e)}} className="travelersselectinput">
             </input>
-            </label>
+            </label> */}
             <label className="travelerlabelwraps">
             <h1 className="travelertypeh1" >Direct Flight?</h1>
         <select onChange={(e) => {recordNonStop(e)}} className="travelersselectinput">

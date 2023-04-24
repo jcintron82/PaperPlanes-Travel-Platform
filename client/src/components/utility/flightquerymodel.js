@@ -448,7 +448,7 @@ function FlightSearchModal() {
           <div className="adslogans">
             <p className="adone" >
               Find Your <h1 className="paradiseh1">Paradise</h1>
-              <a href="/register" className="booknowlink">
+              <a href="#" className="booknowlink">
               Book Now
             </a>
             </p>

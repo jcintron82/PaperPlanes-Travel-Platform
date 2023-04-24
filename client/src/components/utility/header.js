@@ -1,6 +1,7 @@
 import { paperClasses } from "@mui/material";
 import "../../css/utility/header.css";
 import { useState } from "react";
+import wingPic  from "../../images/register/registerpagepic.avif"
 import { InView, useInView } from "react-intersection-observer";
 import { CSSTransition } from "react-transition-group";
 
@@ -88,7 +89,7 @@ export function Header({ renderLogoutState, renderLoginState, message, headerCla
     <header className={headerClass}>
       <div className="logowrap">
         <a className={link}href="/">
-          Paperplanes
+          PaperPlanes
         </a>
         <svg
           className={planeSVG}
@@ -114,7 +115,7 @@ export function Header({ renderLogoutState, renderLoginState, message, headerCla
       in={loginPopup} timeout={1000} classNames='loginpopup'
       >
       <div className={loginPopup ? "loginpopup" : "loginpopup-exit-active"}>
- 
+        <img className="loginpic" src={wingPic}></img>
         <button className="exitbtn"
         onClick={() => setLoginPopup(!loginPopup)}>
           <svg
