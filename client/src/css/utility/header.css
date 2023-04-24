@@ -65,6 +65,8 @@ html{
     font-weight: 500;
     text-decoration: none;
     color: rgb(241, 245, 249);
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 500;
 }
 .logolinkcolor{
     align-items: center;

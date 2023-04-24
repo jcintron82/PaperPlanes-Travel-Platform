@@ -183,7 +183,14 @@ h3{
 }
 .flighttimesmainwrap > h6{
     margin: 0.4rem 0 .65rem;
-    font-size: .875em;
+    font-size: 1.15em;
+    text-align: left;
+    width: 74%;
+    height: 14%;
+}
+.flighttimesmainwrap > span{
+    margin: 0.25rem 0 0;
+    font-size: 1.35em;
     text-align: left;
     width: 74%;
     height: 14%;
@@ -252,8 +259,7 @@ h2{
     justify-content: space-between;
 }
 .carrierwrap > * {
-    font-size: 1.75em;
-    height: 100%;
+    font-size: 2.1em;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -261,10 +267,10 @@ h2{
 .carrierwrap > button {
     background-color: rgb(30, 64, 175, 88%);
     color: #F9FAFB;
-    height: 8vh;
-    letter-spacing: .03rem;
+    height: 2.5rem;
+    letter-spacing: .055rem;
     font-weight: 600;
-    font-size: 1.3em;
+    font-size: 1.55em;
     border: transparent;
     border-radius: 0.5rem;
     width: 7rem;
@@ -330,9 +336,12 @@ h2{
     display: flex;
     width: 15rem;
 }
+*{
+    font-family: 'Source Sans Pro', sans-serif;
+}
 .flightmetainfowrap{
     background: white;
-    padding: 0.75rem 0.5rem;
+    padding: 1.5rem 0.5rem .75rem;
     color: rgb(30, 64, 175, 88%);
     font-weight: 500;
     display: flex;
@@ -373,6 +382,7 @@ h2{
     border: transparent;
     background: rgb(30, 64, 175, 88%);
     color: white;
+    letter-spacing: .05rem;
     font-weight: 500;
     height: 63px;
     font-size: 1.3em;

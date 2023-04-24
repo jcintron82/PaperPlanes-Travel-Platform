@@ -80,13 +80,13 @@ function FlightSearchModal() {
     nonStop: false,
   };
   const flightQuery = async (e) => {
+    navigate('/loading');
     setIsLoading(!isLoading);
     body.adults = travelerCounts.adults;
     body.children = travelerCounts.children;
     body.maxPrice = searchParams.maxPrice;
     body.nonStop = searchParams.nonstop;
     body.flightClass = searchParams.cabinClass;
-    e.preventDefault();
     body.departure = body.departure.slice(-3);
     body.arrival = body.arrival.slice(-3);
     queryResponseObj.departure = departureLocation;

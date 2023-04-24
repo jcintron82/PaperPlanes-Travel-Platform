@@ -261,6 +261,9 @@ img{
 .flightclassdropdown{
     width: 10rem;
 }
+* {
+    font-family: 'Source Sans Pro', sans-serif;
+}
 .searchBtn{
     margin: 2.5rem 0 2rem;
     border-radius: 0.5rem;

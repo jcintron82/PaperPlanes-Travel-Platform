@@ -4,12 +4,16 @@ import { searchParams } from "./refinsesearchmodal";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 export const FlightsSearchBar = ({ updateState }) => {
-    const departureRef = useRef(null);
-    const arrivalRef = useRef(null);
+    const departureRef = useRef('');
+    const arrivalRef = useRef('');
+    const [arrival, setArrival] = useState('');
+    const [departureDate, setDepartureDate] = useState('');
+    const [returnDate, setReturnDate] = useState('');
+    const [departure, setDeparture] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [queryRecieved, setQueryStatus] = useState();
     const body = {
-        departure: departureRef.current.value,
+        departure: departureRef.current,
         departureDate: "",
         arrival: arrivalRef.current.value,
         maxPrice: 5000,
@@ -18,17 +22,22 @@ export const FlightsSearchBar = ({ updateState }) => {
         children: 0,
         nonStop: false,
       };
-
+      const updateDatesAndFilters = (e, valueToUpdate) => {
+        body[valueToUpdate] = e.target.value;
+      };
     const flightQuery = async (e) => {
-        navigate('/loading')
+      console.log(departureRef.current.value)
+      console.log(arrivalRef.current.value)
+        navigate('/loading');
         setIsLoading(!isLoading);
         body.adults = travelerCounts.adults;
         body.children = travelerCounts.children;
         body.maxPrice = searchParams.maxPrice;
         body.nonStop = searchParams.nonstop;
         body.flightClass = searchParams.cabinClass;
-        body.departure = body.departure.slice(-3);
-        body.arrival = body.arrival.slice(-3);
+        body.departure = departure;
+        body.departureDate = departureDate
+        body.arrival = arrival;
         console.log(body);
     
         try {
@@ -60,13 +69,14 @@ export const FlightsSearchBar = ({ updateState }) => {
 return (
     <article className="flightmetainfowrap">
     <p>
-      {/* {convertedIataLocations[2].cityCode} to{" "}
-      {convertedIataLocations[0].cityCode} */}
+      {queryResponseObj.departure.slice(0,-5)} to{" "}
+      {queryResponseObj.arrival.slice(0,-5)}
       <br></br> Apr 29 - Apr 30
     </p>
     <form className="metainfoform">
       <label>
         <input
+         onChange={(e) => setDeparture(e.target.value)}
           ref={departureRef}
           type="text"
           placeholder="Flying From"
@@ -84,7 +94,7 @@ return (
       </label>
       <label>
         <input
-          ref={arrivalRef}
+          onChange={(e) => setArrival(e.target.value)}
           type="text"
           placeholder="Flying To"
           aria-label="Flying To"
@@ -100,10 +110,14 @@ return (
         </svg>
       </label>
       <label>
-        <input type="date"></input>
+        <input
+        onChange={(e) => setDepartureDate(e.target.value)}
+        type="date"></input>
       </label>
       <label>
-        <input type="date"></input>
+        <input
+          onChange={(e) => updateDatesAndFilters(e, "returnDate")}
+        type="date"></input>
       </label>
       <button onClick={() => {
         flightQuery();
