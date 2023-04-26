@@ -92,24 +92,6 @@ require("./config/passport")(passport);
 app.use("/", mainRoutes);
 
 app.use(flash());
-// app.post("/profile", (req, res, next) => {
-//   console.log(req.body)
-//   passport.authenticate("local"),
-//     (err, user, info) => {
-//       if (err) throw err;
-//       if (!user) {
-//         res.send("No user exists");
-//       } else {
-//         req.logIn(user, (err) => {
-//           if (err) throw err;
-//           req.send("Successsuly Authenticated!!");
-//           console.log(req.user);
-//         });
-//       }
-//       req, res, next;
-//     };
-// });
-app.use("/profile", profileRoutes);
 
 //Server Running
 app.listen(8000, () => {
