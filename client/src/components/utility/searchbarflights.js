@@ -52,7 +52,7 @@ export const FlightsSearchBar = ({ updateState }) => {
         body.arrival = arrival.slice(-3);
     
         try {
-          const pull = await fetch("http://localhost:8000/query", {
+          const pull = await fetch("https://paperplanes-server.vercel.app/query", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
@@ -61,7 +61,7 @@ export const FlightsSearchBar = ({ updateState }) => {
         } catch (err) {
           console.log(err);
         }
-        const pull = await fetch("http://localhost:8000/query");
+        const pull = await fetch("https://paperplanes-server.vercel.app/query");
         const data = await pull.json();
         console.log(data);
         // setDepartureLocation(data.message.data);

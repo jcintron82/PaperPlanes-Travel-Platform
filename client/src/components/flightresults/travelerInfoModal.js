@@ -226,7 +226,7 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
     queryResponseObj[1].message.data[selectIndex].itineraries[1].segments[0].operating.carrierCode;
     }
     setBuyOffer(true);
-      const pull = await fetch("http://localhost:8000/flightconfirmation", {
+      const pull = await fetch("https://paperplanes-server.vercel.app/flightconfirmation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify([queryResponseObj[1].message.data[selectIndex], travelersInfo])

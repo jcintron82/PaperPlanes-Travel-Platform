@@ -2,13 +2,14 @@ import "../../css/flightresults.css";
 import { Header } from "../utility/header";
 import { queryResponseObj } from "../utility/flightquerymodel";
 import { FlightsSearchBar } from "../utility/searchbarflights";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { CSSTransition } from "react-transition-group";
 import { FlightDetailsModal } from "./flightdetailsmodal";
 
 //-------------End of img imports for rec travel tabs-------------//
 export function FlightResultsWrap() {
+  const [lowValueRef, setLowValueRef] = useState(0);
   const [infoModal, setInfoModal] = useState();
   const [maxPrice, setMaxPrice] = useState(2000);
   const [carrierIndex, setCarrierIndex] = useState(queryResponseObj[0].carriers.length -1);
@@ -23,6 +24,7 @@ export function FlightResultsWrap() {
     threshold: 1,
     // rootMargin:
   });
+  console.log(queryResponseObj)
   const [selectedCarriers, setSelectedCarriers] = useState([]);
   const filteredCarriers = [];
   //This block is necessary for converting the carrier codes into full names
@@ -46,20 +48,31 @@ export function FlightResultsWrap() {
     }
   };
   useEffect(() => {
+    // setLowValueRef(parseFloat(queryResponseObj[0].message.data[0].price.grandTotal) + 1)
     const selectedArr = [];
+    //For the airline refinements
     Object.entries(checkedItems).forEach((element) => {
       if (element[1] === true) {
         selectedArr.push(element[0]);
       }
     });
     if (selectedArr.length > 0) {
-      const filtered = queryResponseObj[0].message.data.filter((flight) => {
+      const filtered = flightsInfo.filter((flight) => {
         return selectedArr.includes(flight.validatingAirlineCodes[0]);
-      });
-      setFlightsInfo(filtered);
+      });    
+      setFlightsInfo(filtered)
     } else {
       setFlightsInfo(queryResponseObj[0].message.data);
     }
+    // For price refinements
+    const filteredByPrice = flightsInfo.filter((flight) => {
+      return parseFloat(flight.price.grandTotal) < maxPrice
+    });
+
+    filterByPrice()
+
+    console.log(maxPrice)
+
        const handleResizeWindow = () => setWidth(window.innerWidth);
     // subscribe to window resize event "onComponentDidMount"
     window.addEventListener("resize", handleResizeWindow);
@@ -67,7 +80,7 @@ export function FlightResultsWrap() {
       // unsubscribe "onComponentDestroy"
       window.removeEventListener("resize", handleResizeWindow);
     };
-  }, [checkedItems, queryResponseObj]);
+  }, [checkedItems, queryResponseObj, maxPrice]);
  
   // }, [checkedItems, flightsInfo]);
 
@@ -75,26 +88,20 @@ export function FlightResultsWrap() {
     const key = e.target.value;
     const isChecked = e.target.checked;
     setCheckedItems({ ...checkedItems, [key]: isChecked });
-    if (e.target.checked === true) {
-    }
   };
   const reRenderPostFilter = () => {
-    console.log("ITS WORKING")
     setFlightsInfo(queryResponseObj[0].message.data);
-    // setCarrierIndex(() => {
-    //   return carrierIndex + 1
-    // })
-  }
-  // console.log(carrierRefineObject)
+  };
+  const priceRefine = () => {
+
+  };
+
   const filterByPrice = () => {
-    console.log(queryResponseObj);
-    const filtered = flightsInfo.filter((flight) => {
-      const num = parseFloat(flight.travelerPricings[0].price.total);
-      return num < maxPrice;
+    const filteredByPrice = flightsInfo.filter((flight) => {
+      return parseFloat(flight.price.grandTotal) < maxPrice
     });
-    console.log(maxPrice);
-    console.log(filtered);
-    setFlightsInfo(filtered);
+    console.log(filteredByPrice)
+    setFlightsInfo(filteredByPrice);
   };
   return (
     <div
@@ -127,7 +134,7 @@ export function FlightResultsWrap() {
               <h1>Stops</h1>
               <label aria-label="Nonstop">
                 <h2>Nonstop</h2>
-                <input type="checkbox"></input>
+                <input onChange={priceRefine} type="checkbox"></input>
               </label>
               <label aria-label="Incls. Stops">
                 <h2>Incl.Stops</h2>
@@ -156,20 +163,19 @@ export function FlightResultsWrap() {
             </section>
             <section>
               <h1>
-                Max Price {maxPrice}
-                {maxPrice === "2000" ? "+" : null}
+                Max Price {maxPrice}{console.log(maxPrice)}
+                {maxPrice === "2000" ? " +" : null}
               </h1>
               <label aria-label="Price">
                 <input
                   type="range"
-                  min={0}
-                  max={2500}
+                  min={lowValueRef}
+                  max={2000}
                   step={500}
                   value={maxPrice}
                   list="priceMarkers"
                   onChange={(e) => {
                     setMaxPrice(e.target.value);
-                    console.log(maxPrice);
                     filterByPrice();
                   }}
                 ></input>
