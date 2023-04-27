@@ -96,7 +96,8 @@ function FlightSearchModal() {
       // const pull = await fetch("http://localhost:8000/query"
       const pull = await fetch("https://paperplanes-server.vercel.app/query", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json"
+       },
         body: JSON.stringify(body),
       });
       const data = await pull.json();
