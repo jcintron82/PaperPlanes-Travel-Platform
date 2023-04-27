@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const corsOptions = {
-  origin: '*',
+  origin: 'https://paper-planes-travel-platform.vercel.app/',
   credentials: true };
   app.use(cors(corsOptions));
 const cookieSession = require("cookie-session")
