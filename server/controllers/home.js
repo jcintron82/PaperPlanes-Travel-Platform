@@ -62,7 +62,6 @@ module.exports = {
       console.log(response.data);
       response.data = response;
       const data = JSON.parse(response.data.body);
-      res.setHeader('Access-Control-Allow-Origin', 'https://paper-planes-travel-platform.vercel.app');
       return res.json({message:data, travelerCounts, carriers})
       // return amadeus.shopping.flightOffers.pricing.post(
       //   JSON.stringify({
