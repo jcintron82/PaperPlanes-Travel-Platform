@@ -93,8 +93,8 @@ app.use("/", mainRoutes);
 
 app.use(flash());
 
-//Server Running
-// app.listen(10000, () => {
-//   console.log("Server is running on port 8000");
-// });
+// Server Running
+app.listen(10000, () => {
+  console.log("Server is running on port 8000");
+});
 app.use(express.json());
