@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const corsOptions = {
-  origin: 'https://paper-planes-travel-platform.vercel.app/',
+  origin: 'https://paper-planes-travel-platform.vercel.app',
   credentials: true };
   app.use(cors(corsOptions));
 const cookieSession = require("cookie-session")
@@ -22,7 +22,7 @@ const cookieParser = require("cookie-parser");
 app.use(function (req, res, next) {
 
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'https://paper-planes-travel-platform.vercel.app/');
+  res.setHeader('Access-Control-Allow-Origin', 'https://paper-planes-travel-platform.vercel.app');
 
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
