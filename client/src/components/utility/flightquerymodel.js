@@ -80,8 +80,9 @@ function FlightSearchModal() {
     nonStop: false,
   };
   const flightQuery = async (e) => {
-    navigate('/loading');
-    setIsLoading(!isLoading);
+    e.preventDefault();
+    // navigate('/loading');
+    // setIsLoading(!isLoading);
     body.adults = travelerCounts.adults;
     body.children = travelerCounts.children;
     body.maxPrice = searchParams.maxPrice;
@@ -93,8 +94,8 @@ function FlightSearchModal() {
     queryResponseObj.arrival = arrivalLocation;
 
     try {
-      // const pull = await fetch("http://localhost:8000/query"
-      const pull = await fetch("https://paperplanes-server.vercel.app/query", {
+      const pull = await fetch("http://localhost:8000/query", {
+      // const pull = await fetch("https://paperplanes-server.vercel.app/query", {
         method: "POST",
         headers: { "Content-Type": "application/json"
        },
@@ -105,8 +106,8 @@ function FlightSearchModal() {
     } catch (err) {
       console.log(err);
     }
-    const pull = await fetch("https://paperplanes-server.vercel.app/query");
-    // const pull = await fetch("http://localhost:8000/query");
+    // const pull = await fetch("https://paperplanes-server.vercel.app/query");
+    const pull = await fetch("http://localhost:8000/query");
     const data = await pull.json();
     console.log(data);
     const finalIndex = (data.carriers.length -1)
@@ -115,7 +116,19 @@ function FlightSearchModal() {
     // setDepartureLocation(data.message.data);
     setQueryStatus(!queryRecieved);
     queryResponseObj[0] = data;
+    queryResponseObj[0].filtered = [];
+    let grandTotal = 0;
+    const flightsByPrice = data.message.data.forEach((flight) => {
+      if (flight.price.grandTotal === grandTotal){
+        return;
+      }
+      else {
+        queryResponseObj[0].filtered.push(flight);
+        grandTotal = flight.price.grandTotal;
+      }
+    })
     queryResponseObj[1] = data;
+    console.log( queryResponseObj[0])
     navigate("/flightquery");
     callCitySearchAPI();
     // return { message: queryResponseObj };
@@ -444,7 +457,7 @@ function FlightSearchModal() {
               ) : null}
             </div>
           </section>
-          <button className="searchBtn" onClick={flightQuery}>
+          <button type="button" className="searchBtn" onClick={(e) => flightQuery(e)}>
             Submit
           </button>
         </form>

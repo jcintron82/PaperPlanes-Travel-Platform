@@ -1,7 +1,10 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-app.use(cors)
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true };
+  app.use(cors(corsOptions));
 const cookieSession = require("cookie-session")
 const mongoose = require("mongoose");
 const bp = require('body-parser')
@@ -20,7 +23,7 @@ const cookieParser = require("cookie-parser");
 app.use(function (req, res, next) {
 
   // Website you wish to allow to connec
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
 
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -45,7 +48,7 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   res.header("Access-Control-Allow-credentials", true);
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, UPDATE");
->>>>>>> c6e6c7bc69fe18a821552b950d5e42b640634d54
+
   next();
 })
 //Use .env file in config folder
@@ -105,7 +108,7 @@ app.use("/", mainRoutes);
 app.use(flash());
 
 // Server Running
-app.listen(10000, () => {
+app.listen(8000, () => {
   console.log("Server is running on port 8000");
 });
 app.use(express.json());

@@ -9,7 +9,7 @@ import { FlightDetailsModal } from "./flightdetailsmodal";
 
 //-------------End of img imports for rec travel tabs-------------//
 export function FlightResultsWrap() {
-  const [lowValueRef, setLowValueRef] = useState(0);
+  const [lowValueRef, setLowValueRef] = useState(queryResponseObj[0].message.data[0].price.grandTotal);
   const [infoModal, setInfoModal] = useState();
   const [maxPrice, setMaxPrice] = useState(2000);
   const [carrierIndex, setCarrierIndex] = useState(queryResponseObj[0].carriers.length -1);
@@ -17,26 +17,26 @@ export function FlightResultsWrap() {
   const [selectIndex, setSelectIndex] = useState();
   const [width, setWidth] = useState(window.innerWidth);
   const [flightsInfo, setFlightsInfo] = useState(
-    queryResponseObj[0].message.data ? queryResponseObj[0].message.data : null
+    queryResponseObj[0].filtered ? queryResponseObj[0].filtered : null
   );
   const [checkedItems, setCheckedItems] = useState({});
   const [metaInfoRef, refInView] = useInView({
     threshold: 1,
     // rootMargin:
   });
-  console.log(queryResponseObj)
+
   const [selectedCarriers, setSelectedCarriers] = useState([]);
   const filteredCarriers = [];
   //This block is necessary for converting the carrier codes into full names
   //The other option is use the carrier code API but this was the DRYest solution
-  for (let i = 0; i < flightsInfo.length; i++) {
-    for (const [key, value] of Object.entries(
-      queryResponseObj[1].carriers[0].carriers
-    )) {
-      if (flightsInfo[i].itineraries[0].segments[0].carrierCode === key)
-        flightsInfo[i].itineraries[0].segments[0].carrierCode = value;
-    }
-  }
+  // for (let i = 0; i < flightsInfo.length; i++) {
+  //   for (const [key, value] of Object.entries(
+  //     queryResponseObj[1].carriers[0].carriers
+  //   )) {
+  //     if (flightsInfo[i].itineraries[0].segments[0].carrierCode === key)
+  //       flightsInfo[i].itineraries[0].segments[0].carrierCode = value;
+  //   }
+  // }
   const convertAirlineCodes = (obj) => {
     for (let i = 0; i < flightsInfo.length; i++) {
       for (const [key, value] of Object.entries(
@@ -47,7 +47,10 @@ export function FlightResultsWrap() {
       }
     }
   };
-  useEffect(() => {
+  const setPriceFilter = (flights) => {
+    setFlightsInfo(flights)
+  }
+  useEffect( () => {
     // setLowValueRef(parseFloat(queryResponseObj[0].message.data[0].price.grandTotal) + 1)
     const selectedArr = [];
     //For the airline refinements
@@ -57,21 +60,19 @@ export function FlightResultsWrap() {
       }
     });
     if (selectedArr.length > 0) {
-      const filtered = flightsInfo.filter((flight) => {
+      const filtered = queryResponseObj[0].filtered.filter((flight) => {
         return selectedArr.includes(flight.validatingAirlineCodes[0]);
-      });    
+      });
+      const filteredByPrice = flightsInfo.filter((flight) => {
+        return parseFloat(flight.price.grandTotal) < maxPrice
+      });
+      setPriceFilter(filteredByPrice);
       setFlightsInfo(filtered)
+      console.log(flightsInfo)
+      console.log(filtered)
     } else {
-      setFlightsInfo(queryResponseObj[0].message.data);
+      setFlightsInfo(queryResponseObj[0].filtered);
     }
-    // For price refinements
-    const filteredByPrice = flightsInfo.filter((flight) => {
-      return parseFloat(flight.price.grandTotal) < maxPrice
-    });
-
-    filterByPrice()
-
-    console.log(maxPrice)
 
        const handleResizeWindow = () => setWidth(window.innerWidth);
     // subscribe to window resize event "onComponentDidMount"
@@ -89,19 +90,15 @@ export function FlightResultsWrap() {
     const isChecked = e.target.checked;
     setCheckedItems({ ...checkedItems, [key]: isChecked });
   };
-  const reRenderPostFilter = () => {
-    setFlightsInfo(queryResponseObj[0].message.data);
-  };
+  // const reRenderPostFilter = () => {
+  //   setFlightsInfo(queryResponseObj[0].message.data);
+  // };
   const priceRefine = () => {
 
   };
 
   const filterByPrice = () => {
-    const filteredByPrice = flightsInfo.filter((flight) => {
-      return parseFloat(flight.price.grandTotal) < maxPrice
-    });
-    console.log(filteredByPrice)
-    setFlightsInfo(filteredByPrice);
+    
   };
   return (
     <div
@@ -169,14 +166,13 @@ export function FlightResultsWrap() {
               <label aria-label="Price">
                 <input
                   type="range"
-                  min={lowValueRef}
+                  min={Math.round(lowValueRef / 100) * 100}
                   max={2000}
                   step={500}
                   value={maxPrice}
                   list="priceMarkers"
-                  onChange={(e) => {
-                    setMaxPrice(e.target.value);
-                    filterByPrice();
+                  onChange={async (e) => {
+                     setMaxPrice(e.target.value);
                   }}
                 ></input>
                 <datalist id="priceMarkers">
@@ -317,7 +313,7 @@ export function FlightResultsWrap() {
           />
         ) : null}{" "}
         {width >= 1024 ? (
-         <FlightsSearchBar updateState={() => reRenderPostFilter()}/>
+         <FlightsSearchBar />
         ) : null}
         {width < 1100 ? (
           <section className="mobiledisclamier">

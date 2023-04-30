@@ -182,10 +182,9 @@ h3{
     background-color: black;
 }
 .flighttimesmainwrap > h6{
-    margin: 0.4rem 0 .65rem;
+    margin: 5% 0 10%;
     font-size: 1.15em;
     text-align: left;
-    width: 74%;
     height: 14%;
 }
 .flighttimesmainwrap > span{
@@ -256,7 +255,8 @@ h2{
 .carrierwrap{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 39%;
 }
 .carrierwrap > * {
     font-size: 2.1em;
@@ -438,7 +438,7 @@ h2{
     justify-content: center;
     align-self: center;
     min-height: 48px;
-    margin: 2.5rem;
+    margin: 10vh 0 5vh;
     border-radius: 0.5rem;
     gap: 2.5px;
     border: solid 1px rgb(115, 115, 115, 43%);
