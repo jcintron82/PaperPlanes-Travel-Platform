@@ -81,7 +81,7 @@ function FlightSearchModal() {
   };
   const flightQuery = async (e) => {
     e.preventDefault();
-    // navigate('/loading');
+    navigate('/loading');
     // setIsLoading(!isLoading);
     body.adults = travelerCounts.adults;
     body.children = travelerCounts.children;
@@ -103,6 +103,7 @@ function FlightSearchModal() {
       });
       const data = await pull.json();
       console.log(body);
+      queryResponseObj.dates = body;
     } catch (err) {
       console.log(err);
     }
@@ -238,9 +239,8 @@ function FlightSearchModal() {
       // unsubscribe "onComponentDestroy"
       window.removeEventListener("resize", handleResizeWindow);
     };
-  }, [headerInView]);
+  }, [headerInView,localStorage.getItem("username")]);
   
-  const opacityColor = "rgba(255, 0 ,0)";
   return (
     <div className="maindiv">
      

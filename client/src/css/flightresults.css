@@ -26,6 +26,9 @@
     gap: 20px;
     justify-content: space-between;
 }
+html{
+    overflow-x: hidden;
+}
 .mainarticle{
     position: fixed;
     transform: translate(0%, 16%);
@@ -102,20 +105,61 @@
     width: 94%;
     margin: 1rem;
     align-self: center;
-
 }
 .mobiledisclamier > hr, .desktopdisclaimerwrap > hr {
     height: 0.05rem;
+    margin-top: .5rem;
     background: rgb(38, 38, 38, 35%);
 }
 .desktopdisclaimerwrap{
     width: 50%;
+    display: flex;
     font-size: .5em;
     align-self: center;
     transform: translate(88px, 0px);
+    flex-direction: column;
+    align-items: center;
+    margin-left: 2%;
+    margin-bottom: 1rem;
 }
 .desktopdisclaimerwrap, .mobiledisclamier > * {
     padding:0
+}
+.desktopdisclaimerwrap > p {
+    padding-right: 0.12rem;
+    font-size: 1.5em;
+    /* margin-top: 1rem; */
+    font-weight: 500;
+    align-self: flex-start;
+    margin-bottom: 0;
+    padding-left: 0.7rem;
+    text-align: center;
+    width: 100%;
+    padding-bottom: 1.5rem;
+    margin-top: 0;
+}
+.desktopdisclaimerwrap > p > h1{
+    margin: 0;
+    position: RELATIVE;
+    text-align: center;
+    width: 11rem;
+    top: 32px;
+    font-weight: 400;
+    font-size: 1.3em;
+    color: rgb(30, 58, 138, 85%);
+    letter-spacing: .02rem;
+    right: -50%;
+    transform: translate(-2%, 0vh);
+}
+.desktopdisclaimerwrap > p > img {
+    width: 90vw;
+    border-radius: 0.7rem;
+    margin-top: 1rem;
+    margin-top: 0;
+    align-self: center;
+    max-width: 33.5rem;
+    height: 10vh;
+    border-radius: .2rem;
 }
 .flightResultsWrapOpenModal{
     display: flex;
@@ -391,6 +435,7 @@ h2{
     display: flex;
     flex-direction: column;
     gap: 20px;
+    padding-bottom: 2rem;
 }
 .loadingdiv{
     display: flex;

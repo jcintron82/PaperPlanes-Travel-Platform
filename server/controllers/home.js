@@ -41,7 +41,7 @@ module.exports = {
         children:children,
         currencyCode:'USD',
         max: 250,
-        nonStop: false,
+        nonStop: true,
         travelClass: flightClass,
         maxPrice: maxPrice
         // originLocationCode: 'LAX',

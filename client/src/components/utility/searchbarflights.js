@@ -3,9 +3,11 @@ import { travelerCounts } from "./numoftravalersmodal";
 import { searchParams } from "./refinsesearchmodal";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-export const FlightsSearchBar = ({ updateState }) => {
+export const FlightsSearchBar = ({ setSearchState }) => {
     const departureRef = useRef('');
     const arrivalRef = useRef('');
+    const retRef = useRef('');
+    const depRef = useRef(new Date(queryResponseObj[0].message.data[0].itineraries[0].segments[0].departure.at));
     const [arrival, setArrival] = useState('');
     const [departureDate, setDepartureDate] = useState('');
     const [returnDate, setReturnDate] = useState('');
@@ -63,10 +65,11 @@ export const FlightsSearchBar = ({ updateState }) => {
         }
         const pull = await fetch("http://localhost:8000/query");
         const data = await pull.json();
-        console.log(data);
+        queryResponseObj.dates = body;
         // setDepartureLocation(data.message.data);
         setQueryStatus(!queryRecieved);
-        queryResponseObj[0] = data;
+        queryResponseObj.filtered = data;
+        setSearchState()
         console.log(data)
         navigate("/flightquery");
         // updateState();
@@ -128,7 +131,9 @@ return (
     <p>
       {queryResponseObj.departure.slice(0,-5)} to{" "}
       {queryResponseObj.arrival.slice(0,-5)}
-      <br></br> Apr 29 - Apr 30
+      <br></br> 
+      {new Date(queryResponseObj.dates.departureDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+    {queryResponseObj.dates.returnDate ?" - " + new Date(queryResponseObj.dates.returnDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : null }
     </p>
     <form className="metainfoform">
       <label>
@@ -179,11 +184,13 @@ return (
       </label>
       <label>
         <input
+        ref={depRef}
         onChange={(e) => setDepartureDate(e.target.value)}
         type="date"></input>
       </label>
       <label>
         <input
+        ref={retRef}
           onChange={(e) => updateDatesAndFilters(e, "returnDate")}
         type="date"></input>
       </label>

@@ -27,7 +27,7 @@ export function Header({ renderLogoutState, renderLoginState, message, headerCla
 
   const login = async (e) => {
     try {
-      const push = await fetch("https://paperplanes-server.vercel.app/login", {
+      const push = await fetch("http://localhost:8000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -47,7 +47,7 @@ export function Header({ renderLogoutState, renderLoginState, message, headerCla
 
   const getUser = async (e) => {
     try {
-      const push = await fetch("https://paperplanes-server.vercel.app/getUser", {
+      const push = await fetch("http://localhost:8000/getUser", {
         method: "GET",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -134,11 +134,11 @@ export function Header({ renderLogoutState, renderLoginState, message, headerCla
             ></path>
           </svg>
         </button>
-        {localStorage.getItem('username') ? <div>
-          <h1>Welcome Back {localStorage.getItem('username')}!</h1>
+        {localStorage.getItem('username') ? <div className="welcomemainwrap">
+          <h1 className="welcomewrap">Welcome Back {localStorage.getItem('username')}!</h1>
                
        <button
-          className="loginbtn"
+          className="logoutbtn"
           onClick={(e) => {
             logout();
             renderLogoutState();
@@ -173,7 +173,7 @@ export function Header({ renderLogoutState, renderLoginState, message, headerCla
           className="loginbtn"
           onClick={async (e) => {
             login();
-            await renderLoginState();
+            // await renderLoginState();
           }}
         >
           Login

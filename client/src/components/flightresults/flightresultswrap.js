@@ -3,14 +3,18 @@ import { Header } from "../utility/header";
 import { queryResponseObj } from "../utility/flightquerymodel";
 import { FlightsSearchBar } from "../utility/searchbarflights";
 import { useEffect, useState, useRef } from "react";
+import adbanner from '../../images/resultspage/adbanner.avif'
 import { useInView } from "react-intersection-observer";
 import { CSSTransition } from "react-transition-group";
 import { FlightDetailsModal } from "./flightdetailsmodal";
+import { setRef } from "@mui/material";
 
 //-------------End of img imports for rec travel tabs-------------//
 export function FlightResultsWrap() {
   const [lowValueRef, setLowValueRef] = useState(queryResponseObj[0].message.data[0].price.grandTotal);
   const [infoModal, setInfoModal] = useState();
+  const [refineReset, setRefineReset] = useState(false);
+  const [flightResults, setResults] = useState(true);
   const [maxPrice, setMaxPrice] = useState(2000);
   const [carrierIndex, setCarrierIndex] = useState(queryResponseObj[0].carriers.length -1);
   const [carrierRefineObject, setCarrierRefineObject] = useState(queryResponseObj[0].carriers[carrierIndex].carriers);
@@ -29,7 +33,8 @@ export function FlightResultsWrap() {
   const filteredCarriers = [];
   //This block is necessary for converting the carrier codes into full names
   //The other option is use the carrier code API but this was the DRYest solution
-  // for (let i = 0; i < flightsInfo.length; i++) {
+  const convertAirlineCodes = () => {
+     // for (let i = 0; i < flightsInfo.length; i++) {
   //   for (const [key, value] of Object.entries(
   //     queryResponseObj[1].carriers[0].carriers
   //   )) {
@@ -37,16 +42,16 @@ export function FlightResultsWrap() {
   //       flightsInfo[i].itineraries[0].segments[0].carrierCode = value;
   //   }
   // }
-  const convertAirlineCodes = (obj) => {
-    for (let i = 0; i < flightsInfo.length; i++) {
-      for (const [key, value] of Object.entries(
-        queryResponseObj[1].carriers[0].carriers
-      )) {
-        if (flightsInfo[i].itineraries[0].segments[0].carrierCode === value)
-          flightsInfo[i].itineraries[0].segments[0].carrierCode = key;
-      }
-    }
   };
+    for (let i = 0; i < flightsInfo.length; i++) {
+    for (const [key, value] of Object.entries(
+      queryResponseObj[1].carriers[0].carriers
+    )) {
+      if (flightsInfo[i].itineraries[0].segments[0].carrierCode === key)
+        flightsInfo[i].itineraries[0].segments[0].carrierCode = value;
+    }
+  }
+  // convertAirlineCodes();
   const setPriceFilter = (flights) => {
     setFlightsInfo(flights)
   }
@@ -67,9 +72,8 @@ export function FlightResultsWrap() {
         return parseFloat(flight.price.grandTotal) < maxPrice
       });
       setPriceFilter(filteredByPrice);
-      setFlightsInfo(filtered)
-      console.log(flightsInfo)
-      console.log(filtered)
+      setFlightsInfo(filtered);
+      
     } else {
       setFlightsInfo(queryResponseObj[0].filtered);
     }
@@ -81,21 +85,79 @@ export function FlightResultsWrap() {
       // unsubscribe "onComponentDestroy"
       window.removeEventListener("resize", handleResizeWindow);
     };
-  }, [checkedItems, queryResponseObj, maxPrice]);
- 
-  // }, [checkedItems, flightsInfo]);
+  }, [checkedItems, queryResponseObj, maxPrice, refineReset]);
+
 
   const filterFlights = (e, type, carrier) => {
     const key = e.target.value;
     const isChecked = e.target.checked;
     setCheckedItems({ ...checkedItems, [key]: isChecked });
   };
-  // const reRenderPostFilter = () => {
-  //   setFlightsInfo(queryResponseObj[0].message.data);
-  // };
-  const priceRefine = () => {
-
+  const flightFilterDropDownPricing = (input) => {
+    const lowToHigh = flightsInfo.sort((flightA, flightB) => {
+      const priceA = parseInt( flightA.id);
+      const priceB = parseInt( flightB.id );
+      return priceA + priceB;
+    });
+    const highToLow = lowToHigh.reverse();
+    console.log(lowToHigh)
+    console.log(highToLow)
+    if (input === 'priceLow'){
+      //Do not take out the refineReset. Tracking flightsInfo in the useEffect
+      //causes infinite re-renders. Leave the func like this and track refineReset
+      setFlightsInfo(() => lowToHigh);
+      setRefineReset(!refineReset);
+      console.log("LOW PRICE")
+    }
+    else{
+      setFlightsInfo(() => highToLow);
+      
+      console.log("HIGH  PRICE")
+      setRefineReset(!refineReset);
+    }
   };
+  const flightFilterTimes = (input) => {
+    console.log(input);
+    const filterByTimes = queryResponseObj[0].message.data.sort((flightA, flightB) => {
+      const durationA = new Date(flightA.itineraries[0].segments[0].arrival.at);
+      const durationB = new Date(flightB.itineraries[0].segments[0].arrival.at);
+        return durationA - durationB;
+    });
+    setRefineReset(!refineReset)
+  };
+  const flightFilterDropDown = (e) => {
+    const typeOfFilter = e.target.value;
+    if (typeOfFilter === 'priceLow' || typeOfFilter === "priceHigh"){
+      flightFilterDropDownPricing(typeOfFilter)
+    }
+    if (typeOfFilter === 'earlyDep' || typeOfFilter === "earlyArr"){
+      flightFilterTimes(typeOfFilter)
+    }
+    if (typeOfFilter === 'duration'){
+      const lowToHighDuration = flightsInfo.sort((flightA, flightB) => {
+        const durationA = flightA.itineraries[0].message.data;
+        const durationB = flightB.itineraries[0].message.data;
+        return durationA - durationB;
+      });
+      console.log(lowToHighDuration)
+
+    } 
+  };
+
+ const switchResultPreferences = (input) => {
+  if (input === 'moreFlights'){
+    setFlightsInfo(queryResponseObj[0].message.data);
+    console.log("1389")
+  }
+  else if (input === 'lessFlights'){
+    setFlightsInfo(queryResponseObj[0].filtered);
+    console.log("5555")
+  }
+  else {
+    console.log("BROKEN 145")
+  }
+  setResults(!flightResults);
+};
 
   const filterByPrice = () => {
     
@@ -127,17 +189,17 @@ export function FlightResultsWrap() {
           > */}
         {width > 1100 ? (
           <aside className={"refinewraptop"}>
-            <section>
+            {/* <section>
               <h1>Stops</h1>
               <label aria-label="Nonstop">
                 <h2>Nonstop</h2>
-                <input onChange={priceRefine} type="checkbox"></input>
+                <input type="checkbox"></input>
               </label>
               <label aria-label="Incls. Stops">
                 <h2>Incl.Stops</h2>
                 <input type="checkbox"></input>
               </label>
-            </section>
+            </section> */}
             <section>
               <h1>Airlines</h1>
               {Object.entries(carrierRefineObject).map(
@@ -160,7 +222,7 @@ export function FlightResultsWrap() {
             </section>
             <section>
               <h1>
-                Max Price {maxPrice}{console.log(maxPrice)}
+                Max Price {maxPrice}
                 {maxPrice === "2000" ? " +" : null}
               </h1>
               <label aria-label="Price">
@@ -313,7 +375,7 @@ export function FlightResultsWrap() {
           />
         ) : null}{" "}
         {width >= 1024 ? (
-         <FlightsSearchBar />
+         <FlightsSearchBar setSearchState={() => setFlightsInfo(queryResponseObj.filtered)}/>
         ) : null}
         {width < 1100 ? (
           <section className="mobiledisclamier">
@@ -330,19 +392,28 @@ export function FlightResultsWrap() {
               availability. You can review any additional fees before checkout.
               Prices are not final until you complete your purchase.
             </p>
+            {/* <button>{flightResults  ? "All Flights" : "Less Flights"}</button> */}
           </section>
         ) : (
           <section className="desktopdisclaimerwrap">
-            <h1>IMg Wrap</h1>
+            <p><h1>Dont delay. Book today.</h1><img src={adbanner}></img></p>
             <hr></hr>
             <p>
               Prices displayed include taxes and may change based on
               availability. You can review any additional fees before checkout.
               Prices are not final until you complete your purchase.
             </p>
+            {/* <button onClick={() => switchResultPreferences('moreFlights')}>{flightResults  ? "All Flights" : "Less Flights"}</button> */}
+            <select onChange={(e) => flightFilterDropDown(e)}>
+              <option value="priceLow">Price (Low - High)</option>
+              <option value="priceHigh">Price (High - Low)</option>
+              <option value="duration">Duration (Least to Most)</option>
+              <option value="earlyArr">Earliest (Arrival)</option>
+            </select>
           </section>
         )}
         <section className="flightparent">
+          {console.log(flightsInfo)}
           {flightsInfo.map((item, index) => (
             <button
               className="ticketbtns"

@@ -15,7 +15,7 @@ html{
 .headercolored{
     display: flex;
     justify-content: space-between;
-    position: fixed;
+    position: absolute;
     top: 0;
     background-color: white;
     color: #F0FAFF;
@@ -187,6 +187,29 @@ p{
     color: #05203C;
     padding: 0;
 }
+.welcomemainwrap{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* height: 0rem; */
+    gap: 20px;
+    padding-top: 3rem;
+}
+.welcomewrap {
+    font-size: 1em;
+}
+.logoutbtn{
+    width: 90%;
+    height: 3rem;
+    max-width: 20rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #F0F9FF;
+    background-color: #286DA4;
+    letter-spacing: .05rem;
+}
 a{
     color: white;
     padding-left: .25rem;
@@ -197,6 +220,7 @@ a{
     max-height: 17rem;
     border-top-right-radius: .5rem;
     border-top-left-radius: .5rem;
+    margin-top: 0;
 }
 .loginbtn{
     width: 50%;
