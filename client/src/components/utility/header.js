@@ -27,7 +27,7 @@ export function Header({ renderLogoutState, renderLoginState, message, headerCla
 
   const login = async (e) => {
     try {
-      const push = await fetch("http://localhost:8000/login", {
+      const push = await fetch("https://paperplanes-server.vercel.app/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -47,7 +47,7 @@ export function Header({ renderLogoutState, renderLoginState, message, headerCla
 
   const getUser = async (e) => {
     try {
-      const push = await fetch("http://localhost:8000/getUser", {
+      const push = await fetch("https://paperplanes-server.vercel.app/getUser", {
         method: "GET",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
