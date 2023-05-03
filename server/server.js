@@ -21,9 +21,11 @@ const cookieParser = require("cookie-parser");
 // const postRoutes = require("./routes/posts");
 
 app.use(function (req, res, next) {
-
-  // Website you wish to allow to connec
-  res.setHeader('Access-Control-Allow-Origin', 'https://paper-planes-travel-platform.vercel.app, http://localhost:3000');
+  const allowedOrigins = ['https://paper-planes-travel-platform.vercel.app', 'http://localhost:3000'];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
 
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
