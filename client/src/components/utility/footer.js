@@ -41,19 +41,16 @@ export const Footer = () => {
           style={{ backgroundColor: 'red'}}
         /> */}
         <li>
-          <a href="#">Home</a>
+          <a href="/home">Home</a>
         </li>
         <li>
-          <a href="/register">About Us</a>
+          <a href="/home">About Us</a>
         </li>
         <li>
-          <a href="/register">Contact</a>
+          <a href="/home"> Terms of Service</a>
         </li>
         <li>
-          <a href="/register"> Terms of Service</a>
-        </li>
-        <li>
-          <a href="/register">Cookie Policy</a>
+          <a href="/home">Cookie Policy</a>
         </li>
         <li></li>
       </ul>

@@ -18,12 +18,17 @@
 }
 .closemodalbtn{
     border-radius: 50%;
-    background: transparent;
+    background: #9CA3AF;
+    width: 40px;
+    height: 40px;
+    font-weight: 600;
     color: white;
     font-size: 1.5em;
     align-self: flex-end;
     margin-right: 0.5rem;
     border: transparent;
+    display: flex;
+    align-items: center;
 }
 .exitmodalsvg{
     width: 2rem;
@@ -48,7 +53,7 @@
 }
 .pricingparagraph{
     background: white;
-    padding-right: 0;
+    padding: 0;
 }
 .finalpricingwrap{
     font-size: .7em;
@@ -96,7 +101,7 @@
     width: 90%;
     display: flex;
     justify-content: flex-start;
-    font-size: 1.04em;
+    font-size: 1.2em;
     align-items: flex-start;
     flex-direction: column;
     padding: 1rem 0 3rem 0;
@@ -113,6 +118,11 @@
     stroke-width: 2px;
     height: 10rem
 }
+@media(min-width:420px){
+    .arrowsvgs{
+        stroke-width: 1px;
+    }
+}
 .offerbtnwrap{
     display: flex;
     /* height: 10rem; */
@@ -120,9 +130,10 @@
     align-items: center;
 }
 .selectOfferBtn{
-    margin: 2rem 0;
+    margin: 1rem 0;
     height: 2.9rem;
     width: 11rem;
+    display: flex;
     border-radius: 0.5rem;
     font-size: 1em;
     font-weight: 600;
@@ -131,6 +142,8 @@
     color: #F0F9FF;
     align-self: flex-end;
     padding: 1rem 0;
+    justify-content: center;
+    align-items: center;
 }
 .durationdesktopwrap{
     display: flex;
@@ -222,4 +235,12 @@
     .finalpricingwrap{
         padding: 0;
     }
+    .closemodalbtn{
+        top: 5.5%;
+    }
 } 
+@media(min-width:1024px){
+    .closemodalbtn:hover{
+        background: maroon;
+    }
+}

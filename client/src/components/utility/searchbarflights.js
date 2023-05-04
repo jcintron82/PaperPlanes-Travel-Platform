@@ -186,7 +186,8 @@ return (
         <input
         ref={depRef}
         onChange={(e) => setDepartureDate(e.target.value)}
-        type="date"></input>
+        type="date"
+        placeholder={new Date().toLocaleDateString()}></input>
       </label>
       <label>
         <input

@@ -282,6 +282,7 @@ img{
     -moz-box-shadow: -9px 12px 13px -3px rgb(30, 41, 59);
     letter-spacing: .04rem;
 }
+
 .maxpricelabelwrap{
     display: flex;
     flex-direction: column;

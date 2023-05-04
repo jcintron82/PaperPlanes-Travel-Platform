@@ -323,10 +323,10 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
       ) : null}
       {emailScreen ? (
         <article className="infowrap">
-          
           <label>
             Email for Order
             <input
+            required
               onChange={(e) => recordOrderEmail(e, "emailAddress")}
               type="email"
               placeholder="example@email.com"
@@ -335,6 +335,7 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
           <label>
             Phone Number for Order
             <input
+            required
               onChange={(e) => recordOrderNum(e, "number")}
               type="tel"
               maxLength="12"
@@ -342,6 +343,7 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
             ></input>
           </label>
           <button
+          type="button"
             className="nextbtn"
             onClick={(e) => {
               setEmailScreen(false);

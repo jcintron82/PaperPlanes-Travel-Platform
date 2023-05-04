@@ -11,7 +11,8 @@ import { setRef } from "@mui/material";
 
 //-------------End of img imports for rec travel tabs-------------//
 export function FlightResultsWrap() {
-  const [lowValueRef, setLowValueRef] = useState(queryResponseObj[0].message.data[0].price.grandTotal);
+  const [lowValueRef, setLowValueRef] = useState(parseInt(queryResponseObj[0].message.data[0].price.grandTotal));
+  const [highValueRef, setHighValueRef] = useState(queryResponseObj[0].message.data[queryResponseObj[0].message.data.length - 1].price.grandTotal);
   const [infoModal, setInfoModal] = useState();
   const [refineReset, setRefineReset] = useState(false);
   const [flightResults, setResults] = useState(true);
@@ -28,7 +29,7 @@ export function FlightResultsWrap() {
     threshold: 1,
     // rootMargin:
   });
-
+console.log(parseInt(lowValueRef + 1))
   const [selectedCarriers, setSelectedCarriers] = useState([]);
   const filteredCarriers = [];
   //This block is necessary for converting the carrier codes into full names
@@ -51,10 +52,6 @@ export function FlightResultsWrap() {
         flightsInfo[i].itineraries[0].segments[0].carrierCode = value;
     }
   }
-  // convertAirlineCodes();
-  const setPriceFilter = (flights) => {
-    setFlightsInfo(flights)
-  }
   useEffect( () => {
     // setLowValueRef(parseFloat(queryResponseObj[0].message.data[0].price.grandTotal) + 1)
     const selectedArr = [];
@@ -68,16 +65,19 @@ export function FlightResultsWrap() {
       const filtered = queryResponseObj[0].filtered.filter((flight) => {
         return selectedArr.includes(flight.validatingAirlineCodes[0]);
       });
-      const filteredByPrice = flightsInfo.filter((flight) => {
-        return parseFloat(flight.price.grandTotal) < maxPrice
+      // setFlightsInfo(filteredByPrice);
+      const filteredByPrice = filtered.filter((flight) => {
+        return parseFloat(flight.price.grandTotal) < (maxPrice + 1)
       });
-      setPriceFilter(filteredByPrice);
-      setFlightsInfo(filtered);
+      setFlightsInfo(filteredByPrice);
       
     } else {
-      setFlightsInfo(queryResponseObj[0].filtered);
+      const filteredByPrice = queryResponseObj[0].filtered.filter((flight) => {
+        return parseFloat(flight.price.grandTotal) < (maxPrice + 1)
+      });
+      setFlightsInfo(filteredByPrice);
     }
-
+    
        const handleResizeWindow = () => setWidth(window.innerWidth);
     // subscribe to window resize event "onComponentDidMount"
     window.addEventListener("resize", handleResizeWindow);
@@ -85,7 +85,7 @@ export function FlightResultsWrap() {
       // unsubscribe "onComponentDestroy"
       window.removeEventListener("resize", handleResizeWindow);
     };
-  }, [checkedItems, queryResponseObj, maxPrice, refineReset]);
+  }, [checkedItems, queryResponseObj, maxPrice]);
 
 
   const filterFlights = (e, type, carrier) => {
@@ -100,30 +100,27 @@ export function FlightResultsWrap() {
       return priceA + priceB;
     });
     const highToLow = lowToHigh.reverse();
-    console.log(lowToHigh)
-    console.log(highToLow)
     if (input === 'priceLow'){
       //Do not take out the refineReset. Tracking flightsInfo in the useEffect
       //causes infinite re-renders. Leave the func like this and track refineReset
       setFlightsInfo(() => lowToHigh);
       setRefineReset(!refineReset);
-      console.log("LOW PRICE")
     }
     else{
-      setFlightsInfo(() => highToLow);
-      
-      console.log("HIGH  PRICE")
+      setFlightsInfo(() => lowToHigh);
       setRefineReset(!refineReset);
     }
+    console.log(flightsInfo)
   };
   const flightFilterTimes = (input) => {
-    console.log(input);
-    const filterByTimes = queryResponseObj[0].message.data.sort((flightA, flightB) => {
+    const filterByTimes = flightsInfo.sort((flightA, flightB) => {
       const durationA = new Date(flightA.itineraries[0].segments[0].arrival.at);
       const durationB = new Date(flightB.itineraries[0].segments[0].arrival.at);
         return durationA - durationB;
     });
+    setFlightsInfo(filterByTimes)
     setRefineReset(!refineReset)
+    console.log(flightsInfo)
   };
   const flightFilterDropDown = (e) => {
     const typeOfFilter = e.target.value;
@@ -133,35 +130,34 @@ export function FlightResultsWrap() {
     if (typeOfFilter === 'earlyDep' || typeOfFilter === "earlyArr"){
       flightFilterTimes(typeOfFilter)
     }
-    if (typeOfFilter === 'duration'){
-      const lowToHighDuration = flightsInfo.sort((flightA, flightB) => {
-        const durationA = flightA.itineraries[0].message.data;
-        const durationB = flightB.itineraries[0].message.data;
-        return durationA - durationB;
-      });
-      console.log(lowToHighDuration)
+    // if (typeOfFilter === 'duration'){
+    //   const lowToHighDuration = flightsInfo.sort((flightA, flightB) => {
+    //     const durationA = flightA.itineraries[0].message.data;
+    //     const durationB = flightB.itineraries[0].message.data;
+    //     return durationA - durationB;
+    //   });
 
-    } 
+    // } 
   };
 
- const switchResultPreferences = (input) => {
-  if (input === 'moreFlights'){
-    setFlightsInfo(queryResponseObj[0].message.data);
-    console.log("1389")
-  }
-  else if (input === 'lessFlights'){
-    setFlightsInfo(queryResponseObj[0].filtered);
-    console.log("5555")
-  }
-  else {
-    console.log("BROKEN 145")
-  }
-  setResults(!flightResults);
-};
+//  const switchResultPreferences = (input) => {
+//   if (input === 'moreFlights'){
+//     setFlightsInfo(queryResponseObj[0].message.data);
+//     console.log("1389")
+//   }
+//   else if (input === 'lessFlights'){
+//     setFlightsInfo(queryResponseObj[0].filtered);
+//     console.log("5555")
+//   }
+//   else {
+//     console.log("BROKEN 145")
+//   }
+//   setResults(!flightResults);
+// };
 
-  const filterByPrice = () => {
+//   const filterByPrice = () => {
     
-  };
+//   };
   return (
     <div
       className={
@@ -208,6 +204,7 @@ export function FlightResultsWrap() {
                     <label key={key} aria-label="Airlines">
                       <h2>{value}</h2>
                       <input
+                      className="check"
                         value={key}
                         onChange={(e) => {
                           filterFlights(e, "airlines", key);
@@ -222,19 +219,29 @@ export function FlightResultsWrap() {
             </section>
             <section>
               <h1>
-                Max Price {maxPrice}
-                {maxPrice === "2000" ? " +" : null}
+                Max Price ${maxPrice}
+                {maxPrice >= "2000" ? " +" : null}
+                {console.log(maxPrice)}
               </h1>
               <label aria-label="Price">
                 <input
                   type="range"
-                  min={Math.round(lowValueRef / 100) * 100}
-                  max={2000}
+                  //The adding 1 and 2001 is to ensure theres always at least one
+                  //ticket shown and that the subsequent range steps are correct
+                  min={lowValueRef + 1}
+                  max={lowValueRef + 2001}
                   step={500}
-                  value={maxPrice}
+                  // value={maxPrice}
                   list="priceMarkers"
                   onChange={async (e) => {
-                     setMaxPrice(e.target.value);
+                   if(e.target.value < 500){
+                    console.log(e.target.value)
+                    setMaxPrice(() => Math.ceil(e.target.value))
+                   }
+                   else {
+                    console.log(e.target.value)
+                    setMaxPrice(() => Math.floor(e.target.value / 100) * 100 )
+                   }
                   }}
                 ></input>
                 <datalist id="priceMarkers">
@@ -246,7 +253,7 @@ export function FlightResultsWrap() {
                 </datalist>
               </label>
             </section>
-            <section className="timebtnswrap">
+            {/* <section className="timebtnswrap">
               <button aria-label="Morning">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                   <title>sun-angle</title>
@@ -268,7 +275,7 @@ export function FlightResultsWrap() {
                 </svg>
                 Night
               </button>
-            </section>
+            </section> */}
           </aside>
         ) : null}
         {/* </CSSTransition> */}
@@ -404,10 +411,10 @@ export function FlightResultsWrap() {
               Prices are not final until you complete your purchase.
             </p>
             {/* <button onClick={() => switchResultPreferences('moreFlights')}>{flightResults  ? "All Flights" : "Less Flights"}</button> */}
-            <select onChange={(e) => flightFilterDropDown(e)}>
+            <select className="filterselect" onChange={(e) => flightFilterDropDown(e)}>
               <option value="priceLow">Price (Low - High)</option>
               <option value="priceHigh">Price (High - Low)</option>
-              <option value="duration">Duration (Least to Most)</option>
+              {/* <option value="duration">Duration (Least to Most)</option> */}
               <option value="earlyArr">Earliest (Arrival)</option>
             </select>
           </section>
@@ -454,30 +461,8 @@ export function FlightResultsWrap() {
                       <br></br>
                       {"(" +
                         item.itineraries[0].segments[0].departure.iataCode +
-                        ")"}
+                        ")"} 
                     </h1>
-                    <hr></hr>
-                    <article className="durationwrap">
-                      {/* <div className="planesvgwrap">
-                    <svg
-                      className="durationplanesvg"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                    >
-                      <title>airplane-takeoff</title>
-                      <path d="M2.5,19H21.5V21H2.5V19M22.07,9.64C21.86,8.84 21.03,8.36 20.23,8.58L14.92,10L8,3.57L6.09,4.08L10.23,11.25L5.26,12.58L3.29,11.04L1.84,11.43L3.66,14.59L4.43,15.92L6.03,15.5L11.34,14.07L15.69,12.91L21,11.5C21.81,11.26 22.28,10.44 22.07,9.64Z" />
-                    </svg></div> */}
-
-                      {/* <div className="planesvgwrap">
-                    <svg
-                      className="durationplanesvg"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                    >
-                      <title>airplane-landing</title>
-                      <path d="M2.5,19H21.5V21H2.5V19M9.68,13.27L14.03,14.43L19.34,15.85C20.14,16.06 20.96,15.59 21.18,14.79C21.39,14 20.92,13.17 20.12,12.95L14.81,11.53L12.05,2.5L10.12,2V10.28L5.15,8.95L4.22,6.63L2.77,6.24V11.41L4.37,11.84L9.68,13.27Z" />
-                    </svg></div> */}
-                    </article>
                     <h1 className="flightTimesWrap">
                       {new Date(
                         item.itineraries[0].segments[0].arrival.at
@@ -489,8 +474,10 @@ export function FlightResultsWrap() {
                         item.itineraries[0].segments[0].arrival.iataCode +
                         ")"}{" "}
                     </h1>
+                    <article className="carriernamewrap">
                     <h6>{queryResponseObj.departure} to {queryResponseObj.arrival}</h6>
                     <span>{item.itineraries[0].segments[0].carrierCode}</span>
+                    </article>
                   </section>
                 </div>
                 <section className="flightdetailspricewrap">

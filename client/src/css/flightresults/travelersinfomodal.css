@@ -15,7 +15,7 @@
     color: #0F172A;
     height: 30rem;
     opacity: 1;
-    background: #b6bac2;
+    background-color: hsl(214 17% 84% / 1);
     box-shadow: -10px 13px 0px 2px rgb(108, 124, 145, .75);
     -webkit-box-shadow: -10px 13px 0px -1px rgb(108, 124, 145, .75);
     -moz-box-shadow: -10px 13px 0px -1px rgb(108, 124, 145, .75);
@@ -91,6 +91,13 @@ input[type=tel],input[type=email]{
     justify-content: center;
     gap: 48px;
 }
+.infowrap > label > input, .travelersinfomodal > div > article >label>input,
+.travelersinfomodal > div > article >label>select {
+    background-color: white;
+    box-shadow:0px 0px 53px -17px rgba(30,41,59,0.75);
+    -webkit-box-shadow: 0px 0px 53px -17px rgba(30,41,59,0.75);
+    -moz-box-shadow:0px 0px 53px -17px rgba(30,41,59,0.75);
+}
 .infowrappeople{
     display: flex;
     flex-flow: row wrap;
@@ -109,8 +116,12 @@ input[type=tel],input[type=email]{
     border-radius: 0.25rem;
     border: transparent;
     height: 2.5rem;
+    box-shadow: -2px 4px 14px 0px rgba(30,41,59,69%);
+    -webkit-box-shadow: -2px 4px 14px 0px rgba(56, 66, 83, 0.69);
+    -moz-box-shadow: -2px 4px 14px 0px rgba(30,41,59,69%);
     font-weight: 600;
-    font-size: 100%;
+    letter-spacing: .05rem;
+    font-size: 1.25em;
     background-color: #05203C;
     color: white;
 }
@@ -142,20 +153,31 @@ input, select {
     font-size: 1.2em;
     border: solid #C2C2C2 2px;
     text-align: center;
+    background: rgb(212, 212, 212, 30%);
+    color: #1E293B;
     min-height: 40px;
 
+}
+input[type="date"]::placeholder{
+    color: rgb(245, 245, 245);
 }
 .nextbtn{
     width: 100%;
     align-self: center;
     border-radius: 0.25rem;
     border: transparent;
+    letter-spacing: .05rem;
     height: 8vh;
     min-height: 2.2rem;
     font-weight: 600;
-    font-size: 100%;
+    font-size: 1.25em;
     background-color: #1C294A;
     color: #F1F5F9;
+    letter-spacing: .05rem;
+    font-size: 1.25em;
+    box-shadow: -5px 4px 14px 0px rgba(30,41,59,69%);
+    -webkit-box-shadow: -5px 4px 14px 0px rgba(30,41,59,69%);
+    -moz-box-shadow: -5px 4px 14px 0px rgba(30,41,59,69%);
     max-width: 17rem;
 }
 .countrypopup{

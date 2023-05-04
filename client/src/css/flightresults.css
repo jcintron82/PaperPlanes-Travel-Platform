@@ -261,10 +261,22 @@ h3{
     text-align: left;
     color: #1F2937;
 }
-
+.carriernamewrap{
+    margin-top: 1vh;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.carriernamewrap > h6{
+    font-size: 1.25em;
+}
+.carriernamewrap > span{
+    font-size: 1.35em;
+}
 .pricemain{
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
 }
 .durationwrap{
     display: flex;
@@ -299,8 +311,16 @@ h2{
 .carrierwrap{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 39%;
+    justify-content: flex-start;
+    gap: 18%;
+}
+.filterselect {
+    font-size: 2em;
+    font-weight: 500;
+    text-align: center;
+}
+.filterselect > option {
+    text-align: center;
 }
 .carrierwrap > * {
     font-size: 2.1em;
@@ -316,6 +336,9 @@ h2{
     font-weight: 600;
     font-size: 1.55em;
     border: transparent;
+    box-shadow: -9px 12px 13px -3px rgb(30, 41, 59);
+    -webkit-box-shadow: 2px 6px 11px -5px rgb(30, 41, 59);
+    -moz-box-shadow: -9px 12px 13px -3px rgb(30, 41, 59);
     border-radius: 0.5rem;
     width: 7rem;
 }
@@ -401,7 +424,6 @@ h2{
     max-width: 30rem;
     align-items: f;
     gap: 5px;
-    height: 3.5rem;
     color: #1E293B;
     font-weight: 500;
     font-size: 1em;
@@ -422,14 +444,19 @@ h2{
 }
 .flightmetainfowrap > form > button {
     width: 71%;
+    max-width: 10rem;
     border-radius: 0.5rem;
     border: transparent;
     background: rgb(30, 64, 175, 88%);
     color: white;
     letter-spacing: .05rem;
+    box-shadow: -9px 12px 13px -3px rgb(30, 41, 59);
+    -webkit-box-shadow: 0px 7px 10px -6px rgb(30, 41, 59);
+    -moz-box-shadow: -9px 12px 13px -3px rgb(30, 41, 59);
     font-weight: 500;
-    height: 63px;
-    font-size: 1.3em;
+    height: 60%;
+    margin: .25% 0 0 .25%;
+    font-size: 1.2em;
 }
 .flightparent{
     display: flex;
@@ -498,8 +525,8 @@ h2{
 .metainfoform{
     display: flex;
     width: 100%;
-    margin-right: 2vw;
 }
+
 .metainfoform > input {
     background: rgba(133, 150, 163, 10%);
     font-size: .8em;
