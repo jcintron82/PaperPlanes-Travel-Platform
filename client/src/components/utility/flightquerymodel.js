@@ -33,6 +33,7 @@ const queryResponseObj = [];
 const autocompleteAPIValuesHold = {};
 
 function FlightSearchModal() {
+  const [incorrectInfo, setINcorrectInfoModal] = useState(false);
   const [departureLocation, setDepartureLocation] = useState("");
   const [arrivalLocation, setArrivalLocation] = useState("");
   const [hotelOrFlight, sethotelOrFlight] = useState(true);
@@ -81,7 +82,6 @@ function FlightSearchModal() {
   };
   const flightQuery = async (e) => {
     e.preventDefault();
-    navigate('/loading');
     // setIsLoading(!isLoading);
     body.adults = travelerCounts.adults;
     body.children = travelerCounts.children;
@@ -92,7 +92,11 @@ function FlightSearchModal() {
     body.arrival = body.arrival.slice(-3);
     queryResponseObj.departure = departureLocation;
     queryResponseObj.arrival = arrivalLocation;
-
+    if(body.departure === ""){
+      setINcorrectInfoModal(true)
+    }
+    else {
+      navigate('/loading');
     try {
       const pull = await fetch("http://localhost:8000/query", {
       // const pull = await fetch("https://paperplanes-server.vercel.app/query", {
@@ -132,6 +136,7 @@ function FlightSearchModal() {
     console.log( queryResponseObj[0])
     navigate("/flightquery");
     callCitySearchAPI();
+  }
     // return { message: queryResponseObj };
   };
   const setInputMessage = () => {
@@ -243,7 +248,7 @@ function FlightSearchModal() {
   
   return (
     <div className="maindiv">
-     
+      {incorrectInfo ? <div>INCORRECT</div> : null}
       <Header
        ref={headerRef}
         headerClass={headerInView ? "headercolored" : "headermainwrap"}
@@ -310,31 +315,7 @@ function FlightSearchModal() {
                 <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
               </svg>
             </button>
-            {/* <button
-              type="button"
-              onClick={hotelFlightSwitch}
-              className="flighthotelbtn"
-            >
-              {hotelOrFlight ? (
-                <svg
-                  className="flighthotelsvg"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                >
-                  <title>airplane</title>
-                  <path d="M20.56 3.91C21.15 4.5 21.15 5.45 20.56 6.03L16.67 9.92L18.79 19.11L17.38 20.53L13.5 13.1L9.6 17L9.96 19.47L8.89 20.53L7.13 17.35L3.94 15.58L5 14.5L7.5 14.87L11.37 11L3.94 7.09L5.36 5.68L14.55 7.8L18.44 3.91C19 3.33 20 3.33 20.56 3.91Z" />
-                </svg>
-              ) : (
-                <svg
-                  className="flighthotelsvg"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                >
-                  <title>bed</title>
-                  <path d="M19,7H11V14H3V5H1V20H3V17H21V20H23V11A4,4 0 0,0 19,7M7,13A3,3 0 0,0 10,10A3,3 0 0,0 7,7A3,3 0 0,0 4,10A3,3 0 0,0 7,13Z" />
-                </svg>
-              )}
-            </button> */}
+        
           </section>
 
           <label className="locationinputswrap">

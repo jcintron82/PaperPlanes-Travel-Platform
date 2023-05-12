@@ -7,7 +7,7 @@ export const FlightsSearchBar = ({ setSearchState }) => {
     const departureRef = useRef('');
     const arrivalRef = useRef('');
     const retRef = useRef('');
-    const depRef = useRef(new Date(queryResponseObj[0].message.data[0].itineraries[0].segments[0].departure.at));
+    const depRef = useRef(queryResponseObj[0].message.data[0] ? new Date(queryResponseObj[0].message.data[0].itineraries[0].segments[0].departure.at) : 'N/A');
     const [arrival, setArrival] = useState('');
     const [departureDate, setDepartureDate] = useState('');
     const [returnDate, setReturnDate] = useState('');

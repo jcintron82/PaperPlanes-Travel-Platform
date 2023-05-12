@@ -1,0 +1,12 @@
+
+
+ export const SimpleSnackbar = () => {
+
+  return (
+    <div>
+        Please correct the missing fields.
+    </div>
+  );
+}
+
+export default SimpleSnackbar;

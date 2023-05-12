@@ -1,21 +1,27 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-const User = require('../models/User')
+const User = require("../models/User");
 module.exports = {
-    postUser: async (req,res) => {
-     try {
-            await User.create({
-              firstName: req.body.firstName,
-              lastName: req.body.lastName,
-              userName: req.body.username, 
-              password: req.body.password,
-              
-            })
-            res.redirect('http://localhost:3000/')
-          }
-          catch (err) {
-            console.log(err)
-          }
-
-    },
-}
+  postUser: async (req, res) => {
+    try {
+      await User.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        userName: req.body.username,
+        password: req.body.password,
+      });
+      fetch("https://connect.squareupsandbox.com/v2/customers", {
+        body: { customerBillingInfo },
+        headers: {
+          Authorization: "Bearer {ACCESS_TOKEN}",
+          "Content-Type": "application/json",
+          "Square-Version": "2023-04-19",
+        },
+        method: "POST",
+      });
+      res.redirect("http://localhost:3000/");
+    } catch (err) {
+      console.log(err);
+    }
+  },
+};

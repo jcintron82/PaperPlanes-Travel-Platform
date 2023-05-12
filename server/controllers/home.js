@@ -59,10 +59,13 @@ module.exports = {
     }).then(function(response){
       response.data.splice(0, response.data - 1);
       carriers.push(response.result.dictionaries);
+      console.log("YOUR DATA")
       console.log(response.data);
       response.data = response;
       const data = JSON.parse(response.data.body);
-      return res.json({message:data, travelerCounts, carriers})
+      return res.json({message:data, travelerCounts, carriers});
+
+     
       // return amadeus.shopping.flightOffers.pricing.post(
       //   JSON.stringify({
       //     'data': {

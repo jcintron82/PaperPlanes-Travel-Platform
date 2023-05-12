@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
+import * as React from 'react';
 import { FinalBookingModal } from './finalbookingmodal.js'
 import { queryResponseObj } from "../utility/flightquerymodel";
+import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import BounceLoader from "react-spinners/BounceLoader";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "../../css/flightresults/detailsmodal.css";
@@ -9,6 +14,7 @@ import "../../css/flightresults/travelersinfomodal.css";
 
 export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
   const [autocompleteOne, setAutoCompleteOne] = useState("test");
+  const [snackbarOpen, setSnackbarOpen] = useState(true);
   const [countrySearchPopUp, setCountrySearchPopUp] = useState(false);
   const [emailScreen, setEmailScreen] = useState(false);
   const [addressScreen, setAddressScreen] = useState(false);
@@ -26,9 +32,9 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
   const [travelerId, setTravelerId] = useState(0);
   const [travelersInfo, setTravelerInfo] = useState({
     contact: {
-      emailAddress: "johndoe@example.com",
+      emailAddress: "",
       phones: [
-        { deviceType: "MOBILE", countryCallingCode: "1", number: "5555555555" },
+        { deviceType: "MOBILE", countryCallingCode: "1", number: "" },
       ],
     },
   });
@@ -41,6 +47,30 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
     const options = { month:'long', day:'numeric', year:'numeric', time:'none'};
     return new Intl.DateTimeFormat("en-US", options).format(date);
   };
+    //SnackBar logic
+    const [open, setOpen] = React.useState(true);
+    const handleClick = () => {
+      setOpen(false);
+    };
+    const handleClose = () => {
+      setOpen(false);
+    };
+  
+    const action = (
+      <React.Fragment>
+        <Button color="secondary" size="small" onClick={handleClose}>
+          UNDO
+        </Button>
+        <IconButton
+          size="small"
+          aria-label="close"
+          color="inherit"
+          onClick={handleClose}
+        >
+          <CloseIcon fontSize="small" />
+        </IconButton>
+      </React.Fragment>
+    );
   const stateCodes = [
     "AK",
     "AL",
@@ -162,11 +192,13 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
   //Changes the ORDER email and contact number, changing it
   //on the obj template so all descendents have mathching values
   const recordOrderEmail = (e, value) => {
+    console.log(travelersInfo.contact.emailAddress)
     travelersInfo.contact.emailAddress = e.target.value.toLowerCase();
     travelersArr[travelerId].contact.emailAddress =
       e.target.value.toLowerCase();
   };
   const recordOrderNum = (e, value) => {
+    console.log( travelersInfo.contact.phones[0].number)
     travelersInfo.contact.phones[0].number = e.target.value;
     travelersArr[travelerId].contact.phones[0].number = e.target.value;
   };
@@ -179,6 +211,7 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
     // travelersArr[travelerId].firstName = e.target.value
   };
   const recordTravelerAddress = (e, key) => {
+
     const index = travelersArr.length - 1;
     const capitalizedWords = capitalizeWords(e.target.value);
     if(key === 'countryCode'){
@@ -279,6 +312,7 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
     const breakpoint = 1024;
   return (
     <form className={openModal === true ? "travelersinfomodal" : "hide"}>
+ 
       {openFinalBookingModal ? <FinalBookingModal /> : null}
       { buyOffer ? 
        <BounceLoader
@@ -323,6 +357,12 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
       ) : null}
       {emailScreen ? (
         <article className="infowrap">
+             <Snackbar 
+             open={open}
+             autoHideDuration={6000}
+             onClose={handleClose}
+             message="Please fill out all input fields."
+             action={action}/>
           <label>
             Email for Order
             <input
@@ -337,7 +377,7 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
             <input
             required
               onChange={(e) => recordOrderNum(e, "number")}
-              type="tel"
+              type="number"
               maxLength="12"
               placeholder="610-555-8282"
             ></input>
@@ -346,8 +386,13 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
           type="button"
             className="nextbtn"
             onClick={(e) => {
-              setEmailScreen(false);
-              setTravelerInfoScreen(true);
+              if(travelersInfo.contact.phones[0].number === '' || travelersInfo.contact.emailAddress === ''){
+                setOpen(true);
+              }
+              else {
+                setEmailScreen(false);
+                setTravelerInfoScreen(true);
+              };
             }}
           >
             Next
@@ -489,8 +534,10 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
                   </select>
                 </label>
                 <label>
-                  Country
+                  Country Code
                   <input
+                  type="text"
+                  maxLength={2}
                   required
                     onChange={(e) =>
                       recordTravelerAddress(e, "countryCode", travelerId)
@@ -501,38 +548,69 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
                   Zip Code
                   <input
                   required
-                    onChange={(e) =>
-                      recordTravelerAddress(e, "postalCode", travelerId)
+                  type="number" pattern="\d*" maxlength="5"
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value.length > 5) {
+                      e.target.value = value.slice(0, 5);
                     }
+                    recordTravelerAddress(e, "postalCode", travelerId);
+                  }}
                   ></input>
                 </label>
-                <div>  <button
+                <div>   <Snackbar 
+             open={open}
+             autoHideDuration={6000}
+             onClose={handleClose}
+             message="Please fill out all input fields."
+             action={action}/><button
                 className="nextbtn"
                   type="button"
                   onClick={(e) => {
-                    setAddressScreen(false);
-                    setTravelerAddressPlaceholder(
-                      travelersArr[travelersArr.length - 1].contact.address.lines +
-                        ", " +
-                        travelersArr[travelersArr.length - 1].contact.address.cityName +
-                        ", " +
-                        travelersArr[travelersArr.length - 1].contact.address.stateCode +
-                        ", " +
-                        travelersArr[travelersArr.length - 1].contact.address.countryCode +
-                        " " +
-                        travelersArr[travelersArr.length - 1].contact.address.postalCode
-                    );
+                    console.log(travelersArr)
+                    if(travelersArr[travelersArr.length - 1].contact.address.countryCode === '' || travelersArr[travelersArr.length - 1].contact.address.cityName === '' || travelersArr[travelersArr.length - 1].contact.address.stateCode === '' ||
+                    travelersArr[travelersArr.length - 1].contact.address.lines[0] === '' || travelersArr[travelersArr.length - 1].contact.address.postalCode === ''){
+                      setOpen(true)
+                    }
+                    else{
+                      setAddressScreen(false);
+                      setTravelerAddressPlaceholder(
+                        travelersArr[travelersArr.length - 1].contact.address.lines +
+                          ", " +
+                          travelersArr[travelersArr.length - 1].contact.address.cityName +
+                          ", " +
+                          travelersArr[travelersArr.length - 1].contact.address.stateCode +
+                          ", " +
+                          travelersArr[travelersArr.length - 1].contact.address.countryCode +
+                          " " +
+                          travelersArr[travelersArr.length - 1].contact.address.postalCode
+                      );
+                    }
+                   
                   }}
                 >
                   Confirm
                 </button></div> </div>
             ) : null}
+                <Snackbar 
+             open={open}
+             autoHideDuration={6000}
+             onClose={handleClose}
+             message="Please fill out all input fields."
+             action={action}/>
             <button
               type="button"
               className="pplscreenbtn"
               onClick={(e) => {
-                setTravelerInfoScreen(false);
-                setDocumentsScreen(true);
+                if(travelersArr[travelersArr.length - 1].name.firstName === '' || travelersArr[travelersArr.length - 1].name.lastName  === '' || travelersArr[travelersArr.length - 1].name.firstName  === '' ||
+                travelersArr[travelersArr.length - 1].dateOfBirth === '' || travelersArr[travelersArr.length - 1].gender === '' || travelersArr[travelersArr.length - 1].contact.address.lines[0] === ''){
+                  setOpen(true)
+                }
+                else{
+                  setTravelerInfoScreen(false);
+                  setDocumentsScreen(true);
+                }
+               
               }}
             >
               Next
@@ -595,18 +673,6 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
                 onChange={(e) => recordDocumentData(e, "number", travelerId)}
               ></input>
             </label>
-            {countrySearchPopUp ? (
-              <label className="countrypopup">
-                Please input your location city and country
-                <input
-                  list="locationslist"
-                  onChange={(e) => updateSearchParams(e)}
-                ></input>
-                <datalist id="locationslist">
-                  <option value={autocompleteOne}>dd</option>
-                </datalist>
-              </label>
-            ) : null}
             <label>
               Nationality
               <input
@@ -622,15 +688,28 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
                 <option value="null"> "Don't see your country?"</option> */}
               </input>
             </label>
+            <Snackbar 
+             open={open}
+             autoHideDuration={6000}
+             onClose={handleClose}
+             message="Please fill out all input fields."
+             action={action}/>
             <button
               type="button"
               className="nextbtn"
               onClick={(e) => {
-                setDocumentsScreen(false);
-                setConfirmationScreen(true);
-                passportInfo.push(travelersArr[travelerId].documents[0]);
-                personalInfo.push(travelersArr[travelerId].name);
-                // personalInfo.push(travelersArr[travelerId].name)
+                if(travelersArr[travelersArr.length - 1].documents[0].birthPlace === '' || travelersArr[travelersArr.length - 1].documents[0].documentType === '' || travelersArr[travelersArr.length - 1].documents[0].expiryDate === '' ||
+                travelersArr[travelersArr.length - 1].documents[0].issuanceCountry === '' || travelersArr[travelersArr.length - 1].documents[0].nationality === '' || travelersArr[travelersArr.length - 1].documents[0].number === ''){
+                  setOpen(true);
+                }
+                else{
+                  setDocumentsScreen(false);
+                  setConfirmationScreen(true);
+                  passportInfo.push(travelersArr[travelerId].documents[0]);
+                  personalInfo.push(travelersArr[travelerId].name);
+                  // personalInfo.push(travelersArr[travelerId].name)
+                }
+               
               }}
             >
               Next

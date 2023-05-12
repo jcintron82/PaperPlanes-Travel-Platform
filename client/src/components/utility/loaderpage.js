@@ -1,6 +1,14 @@
 import BounceLoader from "react-spinners/BounceLoader";
-import PlaneSVG from '../../images/plane.svg'
+import PlaneSVG from '../../images/plane.svg';
+import { useNavigate } from "react-router-dom";
 export const LoadingPage = () => {
+  const navigate = useNavigate();
+  //To send back to homepage if the API call fails for any reason
+  const badResponseHandler = () => {
+    setTimeout(function() {
+      navigate('/')
+    }, 10000)
+  }
     return (
         <div className="loadingdiv">
             <object className="planeSVG" type="image/svg+xml" data={PlaneSVG}></object>
