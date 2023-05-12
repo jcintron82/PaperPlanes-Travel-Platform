@@ -30,7 +30,7 @@ export function FlightResultsWrap() {
   const [carrierRefineObject, setCarrierRefineObject] = useState(
  queryResponseObj[0].carriers[queryResponseObj[0].carriers.length - 1].carriers
   );
-  const [selectIndex, setSelectIndex] = useState();
+  const [selectIndex, setSelectIndex] = useState(0);
   const [width, setWidth] = useState(window.innerWidth);
   const [flightsInfo, setFlightsInfo] = useState(
     queryResponseObj[0].filtered ? queryResponseObj[0].filtered : {}
@@ -54,6 +54,7 @@ export function FlightResultsWrap() {
     //   }
     // }
   };
+  console.log(flightsInfo)
   const navigate = useNavigate();
   if (queryResponseObj[0].message.data.length === 0) {
     if (width < 1024) {
@@ -180,6 +181,7 @@ export function FlightResultsWrap() {
   //   const filterByPrice = () => {
 
   //   };
+  {console.log(selectIndex)}
   return (
     <div
       className={
@@ -369,7 +371,8 @@ export function FlightResultsWrap() {
             }
             includedCheckedbags={
               flightsInfo[selectIndex].travelerPricings[0]
-                .fareDetailsBySegment[0].includedCheckedBags.quantity
+                .fareDetailsBySegment[0].includedCheckedBags.quantity ? flightsInfo[selectIndex].travelerPricings[0]
+                .fareDetailsBySegment[0].includedCheckedBags.quantity : 0
             }
             infoModalClose={() => {
               setInfoModal(false);
@@ -447,8 +450,10 @@ export function FlightResultsWrap() {
               className="ticketbtns"
               type="button"
               onClick={() => {
+                console.log(index)
                 setInfoModal(true);
                 setSelectIndex(index);
+       
               }}
               // className={
               //   deleteIndex === index ? "highlightselectedproduct" : "priceli"

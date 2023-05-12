@@ -19,7 +19,7 @@ module.exports = {
         },
         method: "POST",
       });
-      res.redirect("http://localhost:3000/");
+      res.redirect("https://paper-planes-travel-platform.vercel.app/");
     } catch (err) {
       console.log(err);
     }

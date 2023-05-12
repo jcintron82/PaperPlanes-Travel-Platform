@@ -442,6 +442,14 @@ h2{
     font-size: 1em;
     align-self: center;
 }
+.frownsvg{
+    width:30px;
+    position: relative;
+    top: 6px;
+}
+.bookinglinks{
+    color: #255bd0;
+}
 .noresultswrap{
     display: flex;
     justify-content: center;
