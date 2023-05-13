@@ -96,7 +96,9 @@ function FlightSearchModal() {
       setINcorrectInfoModal(true)
     }
     else {
-      navigate('/loading');
+      if(width < 750){
+        navigate('/loading')
+      }
     try {
       const pull = await fetch("https://paperplanes-server.vercel.app/query", {
         method: "POST",
