@@ -75,6 +75,9 @@ export function FlightResultsWrap() {
   }
 
   useEffect(() => {
+    if (!queryResponseObj[0].message) {
+      navigate('/');
+    };
     // setLowValueRef(parseFloat(queryResponseObj[0].message.data[0].price.grandTotal) + 1)
     const selectedArr = [];
     //For the airline refinements
@@ -369,11 +372,11 @@ export function FlightResultsWrap() {
               flightsInfo[selectIndex].travelerPricings[0]
                 .fareDetailsBySegment[0].cabin
             }
-            includedCheckedbags={
-              flightsInfo[selectIndex].travelerPricings[0]
-                .fareDetailsBySegment[0].includedCheckedBags.quantity ? flightsInfo[selectIndex].travelerPricings[0]
-                .fareDetailsBySegment[0].includedCheckedBags.quantity : 0
-            }
+            // includedCheckedbags={
+            //   flightsInfo[selectIndex].travelerPricings[0]
+            //     .fareDetailsBySegment[0].includedCheckedBags.quantity ? flightsInfo[selectIndex].travelerPricings[0]
+            //     .fareDetailsBySegment[0].includedCheckedBags.quantity : 0
+            // }
             infoModalClose={() => {
               setInfoModal(false);
             }}

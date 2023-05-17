@@ -3,11 +3,16 @@ import "../../css/utility/home.css";
 import "../../css/utility/header.css";
 import "../../css/utility/travelersmodal.css";
 import adPicOne from "../../images/home/adone.jpg";
+import * as React from 'react';
 import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import BounceLoader from "react-spinners/BounceLoader";
 import { CSSTransition } from "react-transition-group";
 import { useNavigate } from "react-router-dom";
+import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import { Header } from "./header";
 import { SafetyModal } from './safetymodal'
 import { TravelersPopup } from "./numoftravalersmodal";
@@ -35,6 +40,7 @@ const autocompleteAPIValuesHold = {};
 function FlightSearchModal() {
   const [incorrectInfo, setINcorrectInfoModal] = useState(false);
   const [departureLocation, setDepartureLocation] = useState("");
+  const [open, setOpen] = useState(false);
   const [arrivalLocation, setArrivalLocation] = useState("");
   const [hotelOrFlight, sethotelOrFlight] = useState(true);
   const [roundTripSelected, setRoundTrip] = useState(false);
@@ -92,15 +98,16 @@ function FlightSearchModal() {
     body.arrival = body.arrival.slice(-3);
     queryResponseObj.departure = departureLocation;
     queryResponseObj.arrival = arrivalLocation;
-    if(body.departure === ""){
+    if(body.departure === "" || body.arrival === "" || body.departure === "" || body.departureDate === ''){
       setINcorrectInfoModal(true)
+      setOpen(true)
     }
     else {
       if(width < 750){
         navigate('/loading')
       }
     try {
-      const pull = await fetch("https://paperplanes-server.vercel.app/query", {
+      const pull = await fetch("http://localhost:8000/query", {
         method: "POST",
         headers: { "Content-Type": "application/json"
        },
@@ -113,7 +120,7 @@ function FlightSearchModal() {
       console.log(err);
     }
     // const pull = await fetch("https://paperplanes-server.vercel.app/query");
-    const pull = await fetch("https://paperplanes-server.vercel.app/query");
+    const pull = await fetch("http://localhost:8000/query");
     const data = await pull.json();
     console.log(data);
     const finalIndex = (data.carriers.length -1)
@@ -246,10 +253,39 @@ function FlightSearchModal() {
       window.removeEventListener("resize", handleResizeWindow);
     };
   }, [headerInView,localStorage.getItem("username")]);
-  
+
+     //SnackBar logic
+
+     const handleClick = () => {
+       setOpen(false);
+     };
+     const handleClose = () => {
+       setOpen(false);
+     };
+   
+     const action = (
+       <React.Fragment>
+         <Button color="secondary" size="small" onClick={handleClose}>
+           UNDO
+         </Button>
+         <IconButton
+           size="small"
+           aria-label="close"
+           color="inherit"
+           onClick={handleClose}
+         >
+           <CloseIcon fontSize="small" />
+         </IconButton>
+       </React.Fragment>
+     );
   return (
     <div className="maindiv">
-      {incorrectInfo ? <div>INCORRECT</div> : null}
+      <Snackbar 
+             open={open}
+             autoHideDuration={6000}
+             onClose={handleClose}
+             message="Please fill out all input fields."
+             action={action}/> 
       <Header
        ref={headerRef}
         headerClass={headerInView ? "headercolored" : "headermainwrap"}

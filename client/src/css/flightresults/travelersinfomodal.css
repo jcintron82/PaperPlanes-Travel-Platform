@@ -1,8 +1,9 @@
 .travelersinfomodal{
     position: absolute;
     display: flex;
-    top: 60%;
+    top: 20rem;
     left: 51%;
+    padding-bottom: 1.5rem;
     justify-content: center;
     align-items: flex-start;
     transform: translate(-50%, -50%);
@@ -13,7 +14,6 @@
     max-width: 42rem;
     border-radius: 0.75rem;
     color: #0F172A;
-    height: 30rem;
     opacity: 1;
     background-color: hsl(214 17% 84% / 1);
     box-shadow: -10px 13px 0px 2px rgb(108, 124, 145, .75);
@@ -94,9 +94,17 @@ input[type=tel],input[type=email]{
 .infowrap > label > input, .travelersinfomodal > div > article >label>input,
 .travelersinfomodal > div > article >label>select {
     background-color: white;
+    width: 92%;
+    text-align: left;
     box-shadow:0px 0px 53px -17px rgba(30,41,59,0.75);
     -webkit-box-shadow: 0px 0px 53px -17px rgba(30,41,59,0.75);
     -moz-box-shadow:0px 0px 53px -17px rgba(30,41,59,0.75);
+}
+.hide{
+    display: none;
+}
+.travwrap{
+    width: 90vw;
 }
 .infowrappeople{
     display: flex;
@@ -128,6 +136,9 @@ input[type=tel],input[type=email]{
 .infowrappeople:first-child{
     min-width: 100%;
 }
+#stateselect{
+    width: 103%;
+}
 label {
     display: flex;
     justify-content: center;
@@ -139,11 +150,16 @@ label {
     color: #1E293B;
     font-weight: 500;
     font-size: 1em;
-    text-indent: 5px;
+    text-indent: 1.5px;
     text-align: left;
+    margin: .5rem 0;
+}
+#addressbtn{
+    margin-top: 10%;
+    margin-left: 0.5rem;
 }
 input, select {
-    width: 90%;
+    width: 100%;
     border-radius: 0.4rem;
     border: transparent;
     padding: 0.5rem 0;
@@ -162,7 +178,7 @@ input[type="date"]::placeholder{
     color: rgb(245, 245, 245);
 }
 .nextbtn{
-    width: 100%;
+    width: 90%;
     align-self: center;
     border-radius: 0.25rem;
     border: transparent;
@@ -221,8 +237,8 @@ input[type="date"]::placeholder{
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 70vh;
     height: 100%;
-    gap: 15px;
 }
 .travelerNumWrap{
     position: absolute;
@@ -313,7 +329,7 @@ article > h1 {
       }
   @media(min-width:760px){
     .travelersinfomodal{
-        top: 45vh;
+        /* top: 45vh; */
         width: 89%;
         max-width: 50rem;
         left: 50%;

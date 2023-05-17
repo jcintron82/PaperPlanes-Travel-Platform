@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import * as React from 'react';
+import { useNavigate } from "react-router-dom";
 import { FinalBookingModal } from './finalbookingmodal.js'
 import { queryResponseObj } from "../utility/flightquerymodel";
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 import BounceLoader from "react-spinners/BounceLoader";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "../../css/flightresults/detailsmodal.css";
@@ -38,6 +42,11 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
       ],
     },
   });
+  useEffect(() => {
+
+  }, [addressScreen]);
+
+  const navigate = useNavigate();
   const passportInfo = [];
   const personalInfo = [];
   const loopedObject = travelersArr.length < 1 ? null : Object.entries(travelersArr[travelersArr.length - 1]);
@@ -49,13 +58,13 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
   };
     //SnackBar logic
     const [open, setOpen] = React.useState(true);
-    const handleClick = () => {
-      setOpen(false);
-    };
+
     const handleClose = () => {
       setOpen(false);
     };
-  
+    const handleAddressClose = () => {
+      setSnackbarOpen(false);
+    };
     const action = (
       <React.Fragment>
         <Button color="secondary" size="small" onClick={handleClose}>
@@ -71,6 +80,11 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
         </IconButton>
       </React.Fragment>
     );
+    const clearValues = (obj) => {
+      for (const key in obj) {
+        obj[key] = '';
+      }
+    }
   const stateCodes = [
     "AK",
     "AL",
@@ -130,7 +144,10 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
     "WV",
     "WY",
   ];
-
+  if (!queryResponseObj[1].message){
+    return navigate('/')
+  } 
+  
   const confirmTravNum = async (e) => {
     e.preventDefault();
     const id = travelersArr.length + 1;
@@ -218,7 +235,7 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
       travelersArr[index].contact.address.countryCode = e.target.value.toUpperCase();
     }
     else {
-      key === 'lines' ? travelersArr[index].contact.address.lines[0] = capitalizedWords :
+      key === 'lines' ? travelersArr[index].contact.address.lines = capitalizedWords :
       travelersArr[index].contact.address[key] = capitalizedWords;
     }
   }
@@ -248,7 +265,6 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
       })
       .join(" ");
   };
-  
   const confirmFlightOffer = async () => {
     //Converting the converted carrier code back to its airline code for
     //search purposes
@@ -306,10 +322,29 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
       console.log(err);
     }
   };
+
   const finalTravelerNumber =
     queryResponseObj[0].travelerCounts.adults +
     queryResponseObj[0].travelerCounts.children;
     const breakpoint = 1024;
+    //MUI modal code, open state at top of file
+    const style = {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      width: '75vw',
+      maxWidth:'30rem',
+      bgcolor: 'background.paper',
+      border: '2px solid #000',
+      boxShadow: 24,
+      p: 4,
+      borderRadius: '10px',
+      border:'none',
+      display:'flex',
+      justifyContent:'center'
+    };
+
   return (
     <form className={openModal === true ? "travelersinfomodal" : "hide"}>
  
@@ -388,8 +423,10 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
             onClick={(e) => {
               if(travelersInfo.contact.phones[0].number === '' || travelersInfo.contact.emailAddress === ''){
                 setOpen(true);
+                console.log(1)
               }
               else {
+                console.log(2)
                 setEmailScreen(false);
                 setTravelerInfoScreen(true);
               };
@@ -400,9 +437,9 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
         </article>
       ) : null}
       {travelerInfoscren ? (
-        <div>
+        <div className="travwrap">
         <h1 className="travheader">Traveler {travelersArr.length} </h1>
-          <article className="infowrappeople">
+          <article className={"infowrappeople"}>
             <label>
               Title
               <select
@@ -417,7 +454,7 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
               </select>
             </label>
             <label>
-              First Name
+              First Name*
               <input
               required
                 onChange={(e) =>
@@ -435,7 +472,7 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
               ></input>
             </label>
             <label>
-              Last Name
+              Last Name*
               <input
               required
                 onChange={(e) =>
@@ -458,7 +495,7 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
               </select>
             </label>
             <label>
-              Date of Birth
+              Date of Birth*
               <input
               required
                 type="date"
@@ -468,7 +505,7 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
               ></input>
             </label>
             <label>
-              Gender
+              Gender*
               <select
               required
                 onChange={(e) =>
@@ -480,123 +517,139 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
                 <option value="FEMALE">FEMALE</option>
               </select>
             </label>
-            <label onClick={() => setAddressScreen(true)}>
-              Street Address
+            <label>
+              Street Address*
               <input
+              disabled
               required
                 type="text"
                 placeholder={travelerAddressPlaceholder}
-                onFocus={() => setAddressScreen(true)}
+                // onFocus={() => {!snackbarOpen ? null : setSnackbarOpen(true); clearValues(travelersArr[0].contact.address)}}
               ></input>
             </label>
-            {/* <CSSTransition
-              in={addressScreen}
-              timeout={400}
-              classNames="addressscreen"
-            > */}
-            {addressScreen ? (
-              <div className="addressscreen">
-                <label>
-                  Street Address
-                  <input
-                  required
-                    onChange={(e) =>
-                      recordTravelerAddress(e, "lines", travelerId)
-                    }
-                  ></input>
-                </label>
-                <label>
-                  City
-                  <input
-                  required
-                    onChange={(e) =>
-                      recordTravelerAddress(e, "cityName", travelerId)
-                    }
-                  ></input>
-                </label>
-                <label>
-                  State
-                  <select
-                  required
-                    onChange={(e) =>
-                      recordTravelerAddress(e, "stateCode", travelerId)
-                    }
-                  >
-                    <option value=""></option>
-                    {stateCodes.map((value, index) => {
-                      return (
-                        <option key={index} value={value}>
-                          {value}
-                        </option>
-                      );
-                    })}
-                    ;
-                  </select>
-                </label>
-                <label>
-                  Country Code
-                  <input
-                  type="text"
-                  maxLength={2}
-                  required
-                    onChange={(e) =>
-                      recordTravelerAddress(e, "countryCode", travelerId)
-                    }
-                  ></input>
-                </label>
-                <label>
-                  Zip Code
-                  <input
-                  required
-                  type="number" pattern="\d*" maxlength="5"
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (value.length > 5) {
-                      e.target.value = value.slice(0, 5);
-                    }
-                    recordTravelerAddress(e, "postalCode", travelerId);
-                  }}
-                  ></input>
-                </label>
-                <div>   <Snackbar 
-             open={open}
-             autoHideDuration={6000}
-             onClose={handleClose}
-             message="Please fill out all input fields."
-             action={action}/><button
-                className="nextbtn"
-                  type="button"
-                  onClick={(e) => {
-                    console.log(travelersArr)
-                    if(travelersArr[travelersArr.length - 1].contact.address.countryCode === '' || travelersArr[travelersArr.length - 1].contact.address.cityName === '' || travelersArr[travelersArr.length - 1].contact.address.stateCode === '' ||
-                    travelersArr[travelersArr.length - 1].contact.address.lines[0] === '' || travelersArr[travelersArr.length - 1].contact.address.postalCode === ''){
-                      setOpen(true)
-                    }
-                    else{
-                      setAddressScreen(false);
-                      setTravelerAddressPlaceholder(
-                        travelersArr[travelersArr.length - 1].contact.address.lines +
-                          ", " +
-                          travelersArr[travelersArr.length - 1].contact.address.cityName +
-                          ", " +
-                          travelersArr[travelersArr.length - 1].contact.address.stateCode +
-                          ", " +
-                          travelersArr[travelersArr.length - 1].contact.address.countryCode +
-                          " " +
-                          travelersArr[travelersArr.length - 1].contact.address.postalCode
-                      );
-                    }
-                   
-                  }}
-                >
-                  Confirm
-                </button></div> </div>
-            ) : null}
+           
+               <Modal
+               open={snackbarOpen}
+               onClose={handleAddressClose}
+               aria-labelledby="modal-modal-title"
+               aria-describedby="modal-modal-description"
+             >
+               <Box sx={style}>
+                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                 <div >
+               <label>
+                 Street Address
+                 <input
+                 required
+                   onChange={(e) =>
+                    
+                     recordTravelerAddress(e, "lines", travelerId)
+                   }
+                 ></input>
+               </label>
+               <label>
+                 City
+                 <input
+                 required
+                   onChange={(e) =>
+                     recordTravelerAddress(e, "cityName", travelerId)
+                   }
+                 ></input>
+               </label>
+               <label>
+                 State
+                 <select
+                 id="stateselect"
+                 required
+                   onChange={(e) =>
+                     recordTravelerAddress(e, "stateCode", travelerId)
+                   }
+                 >
+                   <option value=""></option>
+                   {stateCodes.map((value, index) => {
+                     return (
+                       <option key={index} value={value}>
+                         {value}
+                       </option>
+                     );
+                   })}
+                   ;
+                 </select>
+               </label>
+               <label>
+                 Country Code
+                 <input
+                 type="text"
+                 maxLength={2}
+                 required
+                   onChange={(e) =>
+                     recordTravelerAddress(e, "countryCode", travelerId)
+                   }
+                 ></input>
+               </label>
+               <label>
+                 Zip Code
+                 <input
+                 required
+                 type="number" pattern="\d*" maxlength="5"
+                 onChange={(e) => {
+                   const value = e.target.value;
+                   if (value.length > 5) {
+                     e.target.value = value.slice(0, 5);
+                   }
+                   recordTravelerAddress(e, "postalCode", travelerId);
+                 }}
+                 ></input>
+               </label>
+                  <Snackbar 
+            open={open}
+            autoHideDuration={6000}
+            onClose={handleClose}
+            message="Please fill out all input fields."
+            action={action}/>
+            <button
+               className="nextbtn"
+               id="addressbtn"
+                 type="button"
+                 onClick={(e) => {
+
+                   if(travelersArr[travelersArr.length - 1].contact.address.countryCode === '' || travelersArr[travelersArr.length - 1].contact.address.cityName === '' || travelersArr[travelersArr.length - 1].contact.address.stateCode === '' ||
+                   travelersArr[travelersArr.length - 1].contact.address.lines[0] === '' || travelersArr[travelersArr.length - 1].contact.address.postalCode === ''){
+                     setOpen(true)
+                     console.log(1)
+                   }
+                   else{
+                    setSnackbarOpen(false);
+                    console.log(2)
+                    
+                     setTravelerAddressPlaceholder(
+                       travelersArr[travelersArr.length - 1].contact.address.lines +
+                         ", " +
+                         travelersArr[travelersArr.length - 1].contact.address.cityName +
+                         ", " +
+                         travelersArr[travelersArr.length - 1].contact.address.stateCode +
+                         ", " +
+                         travelersArr[travelersArr.length - 1].contact.address.countryCode +
+                         " " +
+                         travelersArr[travelersArr.length - 1].contact.address.postalCode
+                     );
+                     console.log("HI")
+                   }
+                 }}
+               >
+                 Confirm
+               </button> </div>.
+                 </Typography>
+               </Box>
+             </Modal>
+             
+{/* 
+            ) : null} */}
                 <Snackbar 
              open={open}
              autoHideDuration={6000}
              onClose={handleClose}
-             message="Please fill out all input fields."
+             message="Please fill out the required fields."
              action={action}/>
             <button
               type="button"
@@ -623,7 +676,7 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
           <h1 className="travheader">Traveler {travelersArr.length} </h1>
           <article className="infowrappeople">
             <label>
-              Document Type
+              Document Type*
               <select
               required
                 onChange={(e) =>
@@ -638,7 +691,7 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
               </select>
             </label>
             <label>
-              Birth Place
+              Birth Place*
               <input
                 onChange={(e) =>
                   recordDocumentData(e, "birthPlace", travelerId)
@@ -646,7 +699,7 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
               ></input>
             </label>
             <label>
-              Issuing Country
+              Issuing Country*
               <input
               required
                 maxLength={2}
@@ -657,7 +710,7 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
               ></input>
             </label>
             <label>
-              Expiration Date
+              Expiration Date*
               <input
                 type="date"
                 onChange={(e) =>
@@ -666,7 +719,7 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
               ></input>
             </label>
             <label>
-              Document Number
+              Document Number*
               <input
               required
                 type="number"
@@ -674,7 +727,7 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
               ></input>
             </label>
             <label>
-              Nationality
+              Nationality*
               <input
               required
                 maxLength={2}
