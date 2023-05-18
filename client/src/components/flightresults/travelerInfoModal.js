@@ -347,7 +347,10 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
       justifyContent:'center',
       marginTop:0,
       paddingBottom:'12%',
-      paddingTop:'1rem',   };
+      paddingTop:'1rem',  
+      overflowX: 'scroll'
+    
+    };
 
   return (
     <form className={openModal === true ? travelerInfoscren ? "travelersinfomodal2" : "travelersinfomodal" : "hide"}>
