@@ -88,8 +88,6 @@ export function FlightResultsWrap() {
       }
     }
   }
-  console.log( flightsInfo[selectIndex].itineraries[0].segments[0].departure
-    .terminal)
   useEffect(() => {
     if (queryResponseObj[0].message) {
       setLowValueRef(
