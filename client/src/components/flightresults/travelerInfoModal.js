@@ -195,7 +195,6 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
         },
       ],
     };
-    console.dir(newObj);
     travelersArr.push(newObj);
 
     setTravlerCount(false);
@@ -209,13 +208,11 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
   //Changes the ORDER email and contact number, changing it
   //on the obj template so all descendents have mathching values
   const recordOrderEmail = (e, value) => {
-    console.log(travelersInfo.contact.emailAddress)
     travelersInfo.contact.emailAddress = e.target.value.toLowerCase();
     travelersArr[travelerId].contact.emailAddress =
       e.target.value.toLowerCase();
   };
   const recordOrderNum = (e, value) => {
-    console.log( travelersInfo.contact.phones[0].number)
     travelersInfo.contact.phones[0].number = e.target.value;
     travelersArr[travelerId].contact.phones[0].number = e.target.value;
   };
@@ -247,7 +244,6 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
     }
     if (key === "nationality" || key === "issuanceCountry") {
       travelersArr[index].documents[0][key] = e.target.value.toUpperCase();
-      console.dir(travelersArr[0]);
       setConfirmationScreenData(travelersArr[travelerId]);
     } else {
       travelersArr[index].documents[0][key] = capitalizedWords;
@@ -430,10 +426,8 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
             onClick={(e) => {
               if(travelersInfo.contact.phones[0].number === '' || travelersInfo.contact.emailAddress === ''){
                 setOpen(true);
-                console.log(1)
               }
               else {
-                console.log(2)
                 setEmailScreen(false);
                 setTravelerInfoScreen(true);
               };
@@ -623,12 +617,9 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
                    if(travelersArr[travelersArr.length - 1].contact.address.countryCode === '' || travelersArr[travelersArr.length - 1].contact.address.cityName === '' || travelersArr[travelersArr.length - 1].contact.address.stateCode === '' ||
                    travelersArr[travelersArr.length - 1].contact.address.lines[0] === '' || travelersArr[travelersArr.length - 1].contact.address.postalCode === ''){
                      setOpen(true)
-                     console.log(1)
                    }
                    else{
                     setSnackbarOpen(false);
-                    console.log(2)
-                    
                      setTravelerAddressPlaceholder(
                        travelersArr[travelersArr.length - 1].contact.address.lines +
                          ", " +
@@ -640,7 +631,6 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
                          " " +
                          travelersArr[travelersArr.length - 1].contact.address.postalCode
                      );
-                     console.log("HI")
                    }
                  }}
                >
@@ -786,8 +776,6 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
                 <h2 className="namechild1"><div>Name: </div>
                 {loopedObject[2][1].firstName} {loopedObject[2][1].middleName}{" "}
                 {loopedObject[2][1].lastName} {loopedObject[2][1].suffix}</h2>
-      
-
                 <h2 className="namechild2"><div>Birth Info: </div>           
               {formatDate(loopedObject[1][1])}, {loopedObject[5][1][0].birthPlace}</h2>
               <h2 className="namechild3"> <div>Gender: </div>
@@ -826,7 +814,7 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
                 setTravelerId(travelersArr.length - 1)
               }}
             >
-              Next {console.log(travelerId )}
+              Next
             </button>
           )}{" "}
         </section>
