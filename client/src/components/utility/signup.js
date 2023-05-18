@@ -1,6 +1,5 @@
 import "../../css/utility/signuppage.css";
 import registerpagepic from '../../images/register/registerpagepic.avif'
-import { useState } from "react";
 import { Header } from './header.js'
 import { useNavigate } from "react-router-dom";
 
