@@ -161,6 +161,36 @@ html{
     height: 10vh;
     border-radius: .2rem;
 }
+.mobilerefinesections {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 0;
+    font-size: .7em;
+}
+.mobilerefinesections > label{
+    max-width: 25%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+    gap: 0;
+}
+.refineflightsmobilebtn{
+    background-color: rgb(30, 64, 175, 88%);
+    color: #F9FAFB;
+    height: 2.5rem;
+    letter-spacing: .055rem;
+    font-weight: 600;
+    font-size: 1em;
+    border: transparent;
+    box-shadow: -9px 12px 13px -3px rgb(30, 41, 59);
+    -webkit-box-shadow: 2px 6px 11px -5px rgb(30, 41, 59);
+    -moz-box-shadow: -9px 12px 13px -3px rgb(30, 41, 59);
+    border-radius: 0.5rem;
+    width: 7rem;
+    margin-top: 1rem;
+    align-self: flex-end;
+}
 .flightResultsWrapOpenModal{
     display: flex;
     flex-direction: column;
@@ -341,6 +371,7 @@ h2{
     -moz-box-shadow: -9px 12px 13px -3px rgb(30, 41, 59);
     border-radius: 0.5rem;
     width: 7rem;
+    margin-top: 1rem;
 }
 
 .flightTimesWrap{
@@ -449,6 +480,9 @@ h2{
 }
 .bookinglinks{
     color: #255bd0;
+}
+.metainfoform > label > input{
+    width: 90%;
 }
 .noresultswrap{
     display: flex;
@@ -732,5 +766,8 @@ h2{
         transform: translate(65vw, -102%);
     }
 }
-
-/******For the inidividual flight tab results*******/
+@media(min-width:475px){
+    .carrierwrap > button{
+        margin-top: 0;
+    }
+}

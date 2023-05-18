@@ -58,7 +58,7 @@ html, body{
     box-shadow: 8px -9px 4px 0px rgba(15,23,42,0.75);
     -webkit-box-shadow: 8px -9px 4px 0px rgba(15,23,42,0.75);
     -moz-box-shadow: 8px -9px 4px 0px rgba(15,23,42,0.75);
-
+    margin: 0;
 }
 .locationinputs{
     width: 100%;
@@ -90,6 +90,7 @@ html, body{
 .dateselectionwrap{
     display: flex;
     flex-flow: row wrap;
+    margin: 0;
 }
 .depaturedateinput{
     padding: 0.5rem;

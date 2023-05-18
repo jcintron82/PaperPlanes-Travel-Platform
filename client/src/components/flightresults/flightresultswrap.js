@@ -3,6 +3,10 @@ import { Header } from "../utility/header";
 import { queryResponseObj } from "../utility/flightquerymodel";
 import { FlightsSearchBar } from "../utility/searchbarflights";
 import { useEffect, useState, useRef } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
 import adbanner from "../../images/resultspage/adbanner.avif";
 import { useInView } from "react-intersection-observer";
 import { FlightDetailsModal } from "./flightdetailsmodal";
@@ -28,9 +32,11 @@ export function FlightResultsWrap() {
   const [maxPrice, setMaxPrice] = useState(2000);
   const carrierIndex = useRef(queryResponseObj[0].carriers.length - 1);
   const [carrierRefineObject, setCarrierRefineObject] = useState(
- queryResponseObj[0].carriers[queryResponseObj[0].carriers.length - 1].carriers
+    queryResponseObj[0].carriers[queryResponseObj[0].carriers.length - 1]
+      .carriers
   );
   const [selectIndex, setSelectIndex] = useState(0);
+  const [refineWrapDisplay, setRefineWrapDisplay] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
   const [flightsInfo, setFlightsInfo] = useState(
     queryResponseObj[0].filtered ? queryResponseObj[0].filtered : {}
@@ -44,17 +50,26 @@ export function FlightResultsWrap() {
   const filteredCarriers = [];
   //This block is necessary for converting the carrier codes into full names
   //The other option is use the carrier code API but this was the DRYest solution
-  const convertAirlineCodes = () => {
-    // for (let i = 0; i < flightsInfo.length; i++) {
-    //   for (const [key, value] of Object.entries(
-    //     queryResponseObj[1].carriers[0].carriers
-    //   )) {
-    //     if (flightsInfo[i].itineraries[0].segments[0].carrierCode === key)
-    //       flightsInfo[i].itineraries[0].segments[0].carrierCode = value;
-    //   }
-    // }
+  const style = {
+    position: "absolute",
+    display:'flex',
+    flexDirection:'column',
+    top: "45%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "75vw",
+    maxHeight: "37rem",
+    paddingLeft: 0,
+    maxWidth: "30rem",
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+    borderRadius: "10px",
+    border: "none",
+    display: "flex",
+    justifyContent: "center",
   };
-  console.log(flightsInfo)
   const navigate = useNavigate();
   if (queryResponseObj[0].message.data.length === 0) {
     if (width < 1024) {
@@ -73,11 +88,16 @@ export function FlightResultsWrap() {
       }
     }
   }
-
+  console.log( flightsInfo[selectIndex].itineraries[0].segments[0].departure
+    .terminal)
   useEffect(() => {
-    if (!queryResponseObj[0].message) {
-      navigate('/');
-    };
+    if (queryResponseObj[0].message) {
+      setLowValueRef(
+        parseInt(queryResponseObj[0].message.data[0].price.grandTotal)
+      );
+    } else {
+      navigate("/");
+    }
     // setLowValueRef(parseFloat(queryResponseObj[0].message.data[0].price.grandTotal) + 1)
     const selectedArr = [];
     //For the airline refinements
@@ -113,7 +133,8 @@ export function FlightResultsWrap() {
       // unsubscribe "onComponentDestroy"
       window.removeEventListener("resize", handleResizeWindow);
     };
-  }, [checkedItems, queryResponseObj, maxPrice]);
+    
+  }, [checkedItems, queryResponseObj, maxPrice, refineWrapDisplay]);
 
   const filterFlights = (e, type, carrier) => {
     const key = e.target.value;
@@ -136,7 +157,6 @@ export function FlightResultsWrap() {
       setFlightsInfo(() => lowToHigh);
       setRefineReset(!refineReset);
     }
-    console.log(flightsInfo);
   };
   const flightFilterTimes = (input) => {
     const filterByTimes = flightsInfo.sort((flightA, flightB) => {
@@ -146,7 +166,6 @@ export function FlightResultsWrap() {
     });
     setFlightsInfo(filterByTimes);
     setRefineReset(!refineReset);
-    console.log(flightsInfo);
   };
   const flightFilterDropDown = (e) => {
     const typeOfFilter = e.target.value;
@@ -156,35 +175,25 @@ export function FlightResultsWrap() {
     if (typeOfFilter === "earlyDep" || typeOfFilter === "earlyArr") {
       flightFilterTimes(typeOfFilter);
     }
-    // if (typeOfFilter === 'duration'){
-    //   const lowToHighDuration = flightsInfo.sort((flightA, flightB) => {
-    //     const durationA = flightA.itineraries[0].message.data;
-    //     const durationB = flightB.itineraries[0].message.data;
-    //     return durationA - durationB;
-    //   });
-
-    // }
   };
+  {
 
-  //  const switchResultPreferences = (input) => {
-  //   if (input === 'moreFlights'){
-  //     setFlightsInfo(queryResponseObj[0].message.data);
-  //     console.log("1389")
-  //   }
-  //   else if (input === 'lessFlights'){
-  //     setFlightsInfo(queryResponseObj[0].filtered);
-  //     console.log("5555")
-  //   }
-  //   else {
-  //     console.log("BROKEN 145")
-  //   }
-  //   setResults(!flightResults);
-  // };
+  }
+  const mobileSortClick = () => {
+    setCheckedItems(prevCheckedItems => {
+      // Reset the state to an empty object
+      const resetCheckedItems = {};
 
-  //   const filterByPrice = () => {
+      // Merge the empty object with the new key-value pair
+      const updatedCheckedItems = { ...resetCheckedItems};
 
-  //   };
-  {console.log(selectIndex)}
+      return updatedCheckedItems;
+    });
+    setRefineWrapDisplay(true);
+    console.log(queryResponseObj[0].filtered)
+    setFlightsInfo(queryResponseObj[0].filtered);
+    console.log(flightsInfo)
+  };
   return (
     <div
       className={
@@ -225,30 +234,29 @@ export function FlightResultsWrap() {
             </section> */}
             <section>
               <h1>Airlines</h1>
-              {Object.entries(carrierRefineObject ? carrierRefineObject : {}).map(
-                ([key, value], index) => {
-                  return (
-                    <label key={key} aria-label="Airlines">
-                      <h2>{value}</h2>
-                      <input
-                        className="check"
-                        value={key}
-                        onChange={(e) => {
-                          filterFlights(e, "airlines", key);
-                          filteredCarriers.push(key);
-                        }}
-                        type="checkbox"
-                      ></input>
-                    </label>
-                  );
-                }
-              )}
+              {Object.entries(
+                carrierRefineObject ? carrierRefineObject : {}
+              ).map(([key, value], index) => {
+                return (
+                  <label key={key} aria-label="Airlines">
+                    <h2>{value}</h2>
+                    <input
+                      className="check"
+                      value={key}
+                      onChange={(e) => {
+                        filterFlights(e, "airlines", key);
+                        filteredCarriers.push(key);
+                      }}
+                      type="checkbox"
+                    ></input>
+                  </label>
+                );
+              })}
             </section>
             <section>
               <h1>
                 Max Price ${maxPrice}
                 {maxPrice >= "2000" ? " +" : null}
-                {console.log(maxPrice)}
               </h1>
               <label aria-label="Price">
                 <input
@@ -258,14 +266,12 @@ export function FlightResultsWrap() {
                   min={lowValueRef + 1}
                   max={lowValueRef + 2001}
                   step={500}
-                  // value={maxPrice}
+                  value={maxPrice}
                   list="priceMarkers"
                   onChange={async (e) => {
                     if (e.target.value < 500) {
-                      console.log(e.target.value);
                       setMaxPrice(() => Math.ceil(e.target.value));
                     } else {
-                      console.log(e.target.value);
                       setMaxPrice(() => Math.floor(e.target.value / 100) * 100);
                     }
                   }}
@@ -287,7 +293,12 @@ export function FlightResultsWrap() {
             tripTypeTwoWay={
               flightsInfo[selectIndex].itineraries[1] ? true : false
             }
-            originLocation={
+            originLocation={ flightsInfo[selectIndex].itineraries[0].segments[0].departure
+              .terminal === undefined ? 
+              " (" +
+              flightsInfo[selectIndex].itineraries[0].segments[0].departure
+                .iataCode +
+              ")" :
               " (" +
               flightsInfo[selectIndex].itineraries[0].segments[0].departure
                 .iataCode +
@@ -302,7 +313,11 @@ export function FlightResultsWrap() {
               hour: "2-digit",
               minute: "2-digit",
             })}
-            arrivalLocation={
+            arrivalLocation={  flightsInfo[selectIndex].itineraries[0].segments[0].arrival
+              .terminal === undefined ?  " (" +
+              flightsInfo[selectIndex].itineraries[0].segments[0].arrival
+                .iataCode +
+              ")":
               " (" +
               flightsInfo[selectIndex].itineraries[0].segments[0].arrival
                 .iataCode +
@@ -392,13 +407,90 @@ export function FlightResultsWrap() {
         ) : null}
         {width < 1100 ? (
           <section className="mobiledisclamier">
-            <button className="filterbtn">
+            <button className="filterbtn" onClick={mobileSortClick}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <title>filter</title>
                 <path d="M6,13H18V11H6M3,6V8H21V6M10,18H14V16H10V18Z" />
               </svg>
               Sort & Filter
             </button>
+            <Modal
+              open={refineWrapDisplay}
+              // onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+          <aside className={"refinewraptop"}>
+            {/* <section>
+              <h1>Stops</h1>
+              <label aria-label="Nonstop">
+                <h2>Nonstop</h2>
+                <input type="checkbox"></input>
+              </label>
+              <label aria-label="Incls. Stops">
+                <h2>Incl.Stops</h2>
+                <input type="checkbox"></input>
+              </label>
+            </section> */}
+              <h1>Airlines</h1>
+            <section className="mobilerefinesections">
+              {Object.entries(
+                carrierRefineObject ? carrierRefineObject : {}
+              ).map(([key, value], index) => {
+                return (
+                  <label key={key} aria-label="Airlines">
+                    <h2>{value}</h2>
+                    <input
+                      className="check"
+                      value={key}
+                      onChange={(e) => {
+                        filterFlights(e, "mobile", key);
+                        filteredCarriers.push(key);
+                      }}
+                      type="checkbox"
+                    ></input>
+                  </label>
+                );
+              })}
+            </section>
+            <section>
+              <h1>
+                Max Price ${maxPrice}
+                {maxPrice >= "2000" ? " +" : null}
+              </h1>
+              <label aria-label="Price">
+                <input
+                  type="range"
+                  //The adding 1 and 2001 is to ensure theres always at least one
+                  //ticket shown and that the subsequent range steps are correct
+                  min={lowValueRef + 1}
+                  max={lowValueRef + 2001}
+                  step={500}
+                  // value={maxPrice}
+                  list="priceMarkers"
+                  onChange={async (e) => {
+                    if (e.target.value < 500) {
+                      setMaxPrice(() => Math.ceil(e.target.value));
+                    } else {
+                      setMaxPrice(() => Math.floor(e.target.value / 100) * 100);
+                    }
+                  }}
+                ></input>
+                <datalist id="priceMarkers">
+                  <option value={0} label="$0"></option>
+                  <option value={500} label="$500"></option>
+                  <option value={1000} label="$1000"></option>
+                  <option value={1500} label="$1500"></option>
+                  <option value={2000} label="Custom Value"></option>
+                </datalist>
+              </label>
+            </section>
+            
+          </aside>
+            <button className="refineflightsmobilebtn" onClick={() => setRefineWrapDisplay(false)}>View Flights</button>
+              </Box>
+            </Modal>
             <hr></hr>
             {queryResponseObj[0].message.data.length === 0 ? (
               <div className="noresultswrap">
@@ -453,10 +545,8 @@ export function FlightResultsWrap() {
               className="ticketbtns"
               type="button"
               onClick={() => {
-                console.log(index)
                 setInfoModal(true);
                 setSelectIndex(index);
-       
               }}
               // className={
               //   deleteIndex === index ? "highlightselectedproduct" : "priceli"

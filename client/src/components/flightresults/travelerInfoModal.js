@@ -327,26 +327,30 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
     queryResponseObj[0].travelerCounts.adults +
     queryResponseObj[0].travelerCounts.children;
     const breakpoint = 1024;
-    //MUI modal code, open state at top of file
+    //MUI modal code, open state at top of fil
     const style = {
       position: 'absolute',
       top: '50%',
       left: '50%',
       transform: 'translate(-50%, -50%)',
       width: '75vw',
+      minHeight:'88vh',
+      maxHeight:'85vh',
+      padding:'.5rem',
       maxWidth:'30rem',
       bgcolor: 'background.paper',
-      border: '2px solid #000',
       boxShadow: 24,
       p: 4,
       borderRadius: '10px',
       border:'none',
       display:'flex',
-      justifyContent:'center'
-    };
+      justifyContent:'center',
+      marginTop:0,
+      paddingBottom:'12%',
+      paddingTop:'1rem',   };
 
   return (
-    <form className={openModal === true ? "travelersinfomodal" : "hide"}>
+    <form className={openModal === true ? travelerInfoscren ? "travelersinfomodal2" : "travelersinfomodal" : "hide"}>
  
       {openFinalBookingModal ? <FinalBookingModal /> : null}
       { buyOffer ? 
@@ -672,7 +676,7 @@ export function TravelerInfoModal({ openModal, selectIndex, completeBooking }) {
         </div>
       ) : null}
       {documentsScreen ? (
-        <div>
+        <div id="documents">
           <h1 className="travheader">Traveler {travelersArr.length} </h1>
           <article className="infowrappeople">
             <label>
