@@ -376,7 +376,7 @@ function FlightSearchModal() {
               className="locationinputsarrival"
               required
               onChange={(e) => updateSearchParams(e, "departure")}
-              placeholder="Departing From..."
+              placeholder="Los Angeles, LAX"
             ></input>
 
             <datalist id="locationslist">
@@ -391,7 +391,7 @@ function FlightSearchModal() {
               className="locationinputs"
               required
               onChange={(e) => updateArrivalParams(e, "arrival")}
-              placeholder={arrivalMessage}
+              placeholder="San Francisco, SFO"
             ></input>
             <datalist id="arrivallist">
               <option value={autocompleteOneArrival}></option>
@@ -412,12 +412,14 @@ function FlightSearchModal() {
                     required
                     onChange={(e) => updateDatesAndFilters(e, "departureDate")}
                     type="date"
+                    value='2023-07-10'
                   ></input>
                   <input
                     className="arrivaldateinput"
                     required
                     onChange={(e) => updateDatesAndFilters(e, "returnDate")}
                     type="date"
+                    value='2023-07-17'
                   ></input>
                 </div>
               ) : (
@@ -427,6 +429,7 @@ function FlightSearchModal() {
                     required
                     onChange={(e) => updateDatesAndFilters(e, "departureDate")}
                     type="date"
+                    value='2023-07-10'
                   ></input>
                 </label>
               )}
@@ -489,7 +492,7 @@ function FlightSearchModal() {
             </div>
           </section>
           <button type="button" className="searchBtn" onClick={(e) => flightQuery(e)}>
-            Submit
+            Take a test flight
           </button>
         </form>
       </div>
