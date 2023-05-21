@@ -120,8 +120,11 @@ function FlightSearchModal() {
       queryResponseObj.dates = body;
     } catch (err) {
       console.log(err);
-      setTimeout(() => setIsLoading(false), 2500);
-      setErrorSnackbar(true);
+      setTimeout(() => {
+        setIsLoading(false);
+        setErrorSnackbar(true);
+      }, 2500);
+     
     }
     const pull = await fetch("https://paperplanes-server.vercel.app/query");
     // const pull = await fetch("http://localhost:8000/query");
@@ -294,7 +297,7 @@ function FlightSearchModal() {
              open={errorSnackbar}
              autoHideDuration={6000}
              onClose={() => setErrorSnackbar(false)}
-             message="Please fill out all input fields."
+             message="There was an error, please select your date(s) again. "
              action={action}/> 
       <Header
        ref={headerRef}
