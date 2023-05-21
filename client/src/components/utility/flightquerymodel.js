@@ -103,9 +103,10 @@ function FlightSearchModal() {
       setOpen(true)
     }
     else {
-      if(width < 750){
-        navigate('/loading')
-      }
+      // if(width > 750){
+      //   navigate('/loading')
+      // }
+      setIsLoading(true)
     try {
       const pull = await fetch("https://paperplanes-server.vercel.app/query", {
         method: "POST",
@@ -118,6 +119,7 @@ function FlightSearchModal() {
       queryResponseObj.dates = body;
     } catch (err) {
       console.log(err);
+      setIsLoading(false);
     }
     const pull = await fetch("https://paperplanes-server.vercel.app/query");
     // const pull = await fetch("http://localhost:8000/query");
