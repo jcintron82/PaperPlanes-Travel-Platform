@@ -42,6 +42,7 @@ function FlightSearchModal() {
   const [departureLocation, setDepartureLocation] = useState("");
   const [open, setOpen] = useState(false);
   const [arrivalLocation, setArrivalLocation] = useState("");
+  const [errorSnackbar, setErrorSnackbar] = useState(false);
   const [hotelOrFlight, sethotelOrFlight] = useState(true);
   const [roundTripSelected, setRoundTrip] = useState(false);
   const [oneWaySelected, setOneWay] = useState(false);
@@ -119,7 +120,8 @@ function FlightSearchModal() {
       queryResponseObj.dates = body;
     } catch (err) {
       console.log(err);
-      setIsLoading(false);
+      setTimeout(() => setIsLoading(false), 2500);
+      setErrorSnackbar(true);
     }
     const pull = await fetch("https://paperplanes-server.vercel.app/query");
     // const pull = await fetch("http://localhost:8000/query");
@@ -286,6 +288,12 @@ function FlightSearchModal() {
              open={open}
              autoHideDuration={6000}
              onClose={handleClose}
+             message="Please fill out all input fields."
+             action={action}/>
+              <Snackbar 
+             open={errorSnackbar}
+             autoHideDuration={6000}
+             onClose={() => setErrorSnackbar(false)}
              message="Please fill out all input fields."
              action={action}/> 
       <Header
