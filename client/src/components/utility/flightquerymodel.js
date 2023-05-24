@@ -412,14 +412,12 @@ function FlightSearchModal() {
                     required
                     onChange={(e) => updateDatesAndFilters(e, "departureDate")}
                     type="date"
-                    value='2023-07-10'
                   ></input>
                   <input
                     className="arrivaldateinput"
                     required
                     onChange={(e) => updateDatesAndFilters(e, "returnDate")}
                     type="date"
-                    value='2023-07-17'
                   ></input>
                 </div>
               ) : (
@@ -429,7 +427,6 @@ function FlightSearchModal() {
                     required
                     onChange={(e) => updateDatesAndFilters(e, "departureDate")}
                     type="date"
-                    value='2023-07-10'
                   ></input>
                 </label>
               )}
@@ -492,7 +489,7 @@ function FlightSearchModal() {
             </div>
           </section>
           <button type="button" className="searchBtn" onClick={(e) => flightQuery(e)}>
-            Take a test flight
+            Submit
           </button>
         </form>
       </div>

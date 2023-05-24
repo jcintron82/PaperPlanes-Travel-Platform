@@ -1,9 +1,9 @@
 var Amadeus = require('amadeus');
 
-let originLocation = 'Los Angeles, LAX';
-let destinationLocation = 'San Francisco, SFO';
-let departureDate = '2023-07-10';
-let returnDate = '2023-07-17';
+let originLocation = '';
+let destinationLocation = '';
+let departureDate = '';
+let returnDate = '';
 let adults = 2;
 let children = 1;
 let maxPrice = 5000;
