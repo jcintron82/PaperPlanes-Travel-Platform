@@ -63,18 +63,15 @@ module.exports = {
       console.log(response.data);
       response.data = response;
       const data = JSON.parse(response.data.body);
+      res.setHeader('Access-Control-Allow-Origin', 'https://paper-planes-travel-platform.vercel.app');
+      // Request methods you wish to allow
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+      // Request headers you wish to allow
+      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+      // Set to true if you need the website to include cookies in the requests sent
+      // to the API (e.g. in case you use sessions)
+      res.setHeader('Access-Control-Allow-Credentials', true);
       return res.json({message:data, travelerCounts, carriers});
-
-     
-      // return amadeus.shopping.flightOffers.pricing.post(
-      //   JSON.stringify({
-      //     'data': {
-      //       'type': 'flight-offers-pricing',
-      //       'flightOffers': response.data
-      //     }
-      //   })
-      // )
-  // }).then(function(response){
      
   }).catch(function(responseError){
       console.log(responseError);
