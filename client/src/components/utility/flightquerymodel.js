@@ -148,7 +148,7 @@ function FlightSearchModal() {
       }
     })
     queryResponseObj[1] = data;
-    console.log( queryResponseObj[0])
+    console.log( queryResponseObj[0] )
     navigate("/flightquery");
     callCitySearchAPI();
   }

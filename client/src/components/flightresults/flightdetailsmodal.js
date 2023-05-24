@@ -50,21 +50,7 @@ export function FlightDetailsModal({
   return (
     <article className={travelerInfoModal ? "flightdetailmodalwrap detailswrapblurred" :"flightdetailmodalwrap"}>
       { travelerInfoModal ? <TravelerInfoModal completeBooking={() => setTravelerInfoModal(false)} selectIndex={flightID} btnClick={() => endTravelerInfoModal()(false)}openModal={travelerInfoModal}/> : null}
-      <button onClick={infoModalClose} className="closemodalbtn"><svg
-            className="exitsvg"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            ></path>
-          </svg></button>
+      <button onClick={infoModalClose} className="closemodalbtn">X</button>
       <section className="metainfowrap">
         <p className="pricingparagraph"><h1 className="finalpricingwrap">Tickets: {perTicketPrice}/ea</h1><h1  className="finalpricingwrap">Total: {totalPrice}</h1></p>
         <div className="cabinwrap">Cabin: {cabinClass}</div>
